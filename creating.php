@@ -1,4 +1,70 @@
+<html>
+<head><title></title></head>
+<body>
+    <script type="text/javascript">
+    var nu = 2;
+function myFunction() {
+    /*var para = document.createElement("P");
+    var t = document.createTextNode("This is a paragraph.");
+    para.appendChild(t);
+    document.getElementById("myDIV").appendChild(para);*/
+
+    var ic = document.createTextNode("Cantidad: ");
+    var ic1 = document.createElement('INPUT');
+    ic1.setAttribute('type', 'number');
+    ic1.setAttribute('name', 'cant'+nu);
+    var io = document.createTextNode(" Concepto: ");
+    var io2 = document.createElement('INPUT');
+    io2.setAttribute('type', 'text');
+    io2.setAttribute('name', 'concepto'+nu);
+    var ip = document.createTextNode(" Precio: ");
+    var ip3 = document.createElement('INPUT');
+    ip3.setAttribute('type', 'number');
+    ip3.setAttribute('name', 'precio'+nu);
+    ip3.setAttribute('step', 'any');
+    var ie = document.createTextNode("€");
+    var b = document.createElement('BR');
+    
+
+    var wrapper = document.getElementById("divWrapper");
+    wrapper.appendChild(ic);
+    wrapper.appendChild(ic1);
+    wrapper.appendChild(io);
+    wrapper.appendChild(io2);
+    wrapper.appendChild(ip);
+    wrapper.appendChild(ip3);
+    wrapper.appendChild(ie);
+    wrapper.appendChild(b);
+    nu = nu+1;
+}
+    </script>
+    <form enctype="multipart/form-data" action="" method="post">
+        Fecha: <input type="date" name="fecha" value="<?php echo date('Y-m-d'); ?>"/><br>
+        Nº de factura: <input type="number" name="num"/><br>
+        Método de pago: <input type="text" name="pago"/><br><br>
+        <!--Cliente: <br><input type="text" name="cli1"/><br><input type="text" name="cli2"/><br><input type="text" name="cli3"/><br><input type="text" name="cli4"/><br><input type="text" name="cli5"/><br><br>-->
+        Cliente: <br><textarea name="cli1" rows="5"></textarea>
+        <div id="divWrapper">
+        <br>Cantidad: <input type="number" name="cant1"/> Concepto: <input type="text" name="concepto1"/> Precio: <input type="number" name="precio1" step="any"/>€<br>
+        </div>
+        <button type="button" onclick="myFunction()">Añadir</button><br><br>
+        IVA: <input type="number" name="iva" value="21"/><br><br>
+        <input type="submit" name="crear" value="Crear"/>
+    </form>
 <?php
+if(isset($_POST['crear'])){
+    $fecha = date_format(date_create_from_format('Y-m-d', $_POST['fecha']), 'd/m/Y');
+    $numero = $_POST['num'];
+    $pago = $_POST['pago'];
+    $cli1 = $_POST['cli1'];
+    //$cli2 = $_POST['cli2'];
+    //$cli3 = $_POST['cli3'];
+    //$cli4 = $_POST['cli4'];
+    //$cli5 = $_POST['cli5'];
+    $iva = $_POST['iva'];
+    
+
+
 /** Error reporting */
 error_reporting(E_ALL);
 ini_set('display_errors', TRUE);
@@ -15,6 +81,15 @@ $objPHPExcel = new PHPExcel();
 
 $worksheet = $objPHPExcel->getActiveSheet();
 
+//Uniendo celdas - Merge Cells
+$arrayMerges = array('E2:G6','A46:G46','A1:C2','A3:C3','A4:C4','A5:C5','A6:C6','A7:C7','F10:G10','B12:E12','F44:G44');
+
+foreach ($arrayMerges as &$valor) {
+    $objPHPExcel->setActiveSheetIndex(0)->mergeCells($valor);
+}
+
+unset($valor);
+/*
 $objPHPExcel->setActiveSheetIndex(0)
             ->mergeCells('A46:G46')
             ->mergeCells('A1:C2')
@@ -30,14 +105,14 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->mergeCells('E6:G6')
             ->mergeCells('F10:G10')
             ->mergeCells('B12:E12')
-            ->mergeCells('F44:G44');
+            ->mergeCells('F44:G44');*/
 
 for ($i=13; $i<=41; $i++){
     $objPHPExcel->setActiveSheetIndex(0)
                 ->mergeCells('B'.$i.':E'.$i);
 }
 
-
+//Añadiendo bordes - Adding borders
 $borderArray = array(
   'borders' => array(
     'outline' => array(
@@ -46,7 +121,15 @@ $borderArray = array(
   )
 );
 
-$worksheet->getStyle('E2:G6')->applyFromArray($borderArray);
+$arrayBordes = array('E2:G6', 'A10:B10', 'C10:D10', 'E10:G10', 'A12', 'B12:E12', 'F12', 'G12', 'A13:A41', 'B13:E41', 'F13:F41', 'G13:G41');
+
+foreach ($arrayBordes as &$valor) {
+    $worksheet->getStyle($valor)->applyFromArray($borderArray);
+}
+
+unset($valor);
+
+/*$worksheet->getStyle('E2:G6')->applyFromArray($borderArray);
 $worksheet->getStyle('A10:B10')->applyFromArray($borderArray);
 $worksheet->getStyle('C10:D10')->applyFromArray($borderArray);
 $worksheet->getStyle('E10:G10')->applyFromArray($borderArray);
@@ -57,10 +140,27 @@ $worksheet->getStyle('G12')->applyFromArray($borderArray);
 $worksheet->getStyle('A13:A41')->applyFromArray($borderArray);
 $worksheet->getStyle('B13:E41')->applyFromArray($borderArray);
 $worksheet->getStyle('F13:F41')->applyFromArray($borderArray);
-$worksheet->getStyle('G13:G41')->applyFromArray($borderArray);
+$worksheet->getStyle('G13:G41')->applyFromArray($borderArray);*/
 
 unset($borderArray);
 
+//Añadiendo lineas de puntos - Adding dotted lines
+$worksheet->getStyle('A13:G41')->getBorders()->getHorizontal()->setBorderStyle(PHPExcel_Style_Border::BORDER_DOTTED);
+$worksheet->getStyle('F44:G44')->getBorders()->getOutline()->setBorderStyle(PHPExcel_Style_Border::BORDER_THICK);
+
+/*$borderArray = array(
+  'borders' => array(
+    'horizontal' => array(
+      'style' => PHPExcel_Style_Border::BORDER_DOTTED
+    )
+  )
+);
+
+$worksheet->getStyle('A13:G41')->applyFromArray($borderArray);
+
+unset($borderArray);*/
+
+//Cambiando tamaño de las celdas - Changing cells dimensions
 $worksheet->getColumnDimension('A')->setWidth(11);
 $worksheet->getColumnDimension('B')->setWidth(13);
 $worksheet->getColumnDimension('C')->setWidth(11);
@@ -69,10 +169,21 @@ $worksheet->getColumnDimension('E')->setWidth(13);
 
 $worksheet->getRowDimension(46)->setRowHeight(45);
 
+//Centrando texto - Text alignement
 $worksheet->getStyle('A1:A7')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 $worksheet->getStyle('A12:G12')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+$worksheet->getStyle('B2:G6')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 $worksheet->getStyle('F44')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+$worksheet->getStyle('D10')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+$worksheet->getStyle('B10')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+$worksheet->getStyle('F10')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+$worksheet->getStyle('A10')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+$worksheet->getStyle('C10')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+$worksheet->getStyle('E10')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+$worksheet->getStyle('E44')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+$worksheet->getStyle('A46')->getAlignment()->setWrapText(true);
 
+//Cambiando tipo de letra, tamaño, ... - Changing letter type, size, ...
 $worksheet->getStyle('A1')->getFont()->setName('Britannic Bold')->setSize(13)->setBold(true);
 $worksheet->getStyle('A3')->getFont()->setName('Lucida Calligraphy')->setSize(10);
 $worksheet->getStyle('A4:A7')->getFont()->setName('Palatino Linotype')->setSize(10);
@@ -83,14 +194,16 @@ $worksheet->getStyle('C10')->getFont()->setName('Centaur')->setSize(10)->setBold
 $worksheet->getStyle('E10')->getFont()->setName('Centaur')->setSize(10)->setBold(true)->setItalic(true);
 
 $worksheet->getStyle('A46')->getFont()->setName('Arial')->setSize(6); 
-$worksheet->getStyle('A46')->getAlignment()->setWrapText(true);
 
+//Dando formato al texto - Formating text
+$worksheet->getStyle('B10')->getNumberFormat()->setFormatCode('dd/mm/yyyy');
+$worksheet->getStyle('A13:A41')->getNumberFormat()->setFormatCode('0');
 $worksheet->getStyle('F13:G41')->getNumberFormat()->setFormatCode('0.00€');
 $worksheet->getStyle('A44')->getNumberFormat()->setFormatCode('0.00€');
 $worksheet->getStyle('C44')->getNumberFormat()->setFormatCode('0.00€');
 $worksheet->getStyle('F44')->getNumberFormat()->setFormatCode('0.00€');
 
-// Add some data
+//Añadiendo datos por defecto - Adding default data
 $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('A1', 'MANTENIMIENTO DEL HOGAR')
             ->setCellValue('A3', '******* **** *******')
@@ -99,18 +212,39 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('A6', 'D.N.I **.***.***-*')
             ->setCellValue('A7', 'E-mail: *****.****@hotmail.com')
 
+            ->setCellValue('E2', $cli1)
+            //->setCellValue('E3', $cli2)
+            //->setCellValue('E4', $cli3)
+            //->setCellValue('E5', $cli4)
+            //->setCellValue('E6', $cli5)
+
             ->setCellValue('A10', 'Fecha: ')
+            ->setCellValue('B10', $fecha)
             ->setCellValue('C10', 'Factura Nº: ')
+            ->setCellValue('D10', $numero)
             ->setCellValue('E10', 'Método de pago: ')
+            ->setCellValue('F10', $pago)
 
             ->setCellValue('A12', 'Cantidad')
             ->setCellValue('B12', 'Concepto')
             ->setCellValue('F12', 'Precio')
-            ->setCellValue('G12', 'Importe')
-            ->setCellValue('A13', '3')
-            ->setCellValue('F13', '2.52')
-            ->setCellValue('A14', '7')
-            ->setCellValue('F14', '4.63');
+            ->setCellValue('G12', 'Importe');
+
+            $a = 1;
+            for ($i=13; $i<=41; $i++){
+                if (isset($_POST['cant'.$a])){
+                    //${"cant".$a} = $_POST['cant'.$a];
+                    //${"conc".$a} = $_POST['concepto'.$a];
+                    //${"precio".$a} = $_POST['precio'.$a];
+$objPHPExcel->setActiveSheetIndex(0)
+            ->setCellValue('A'.$i, $_POST['cant'.$a])
+            ->setCellValue('B'.$i, '    '.$_POST['concepto'.$a])
+            ->setCellValue('F'.$i, $_POST['precio'.$a]);
+                }
+                $a++;
+            }
+
+            
 
             for ($i=13; $i<=41; $i++){
                 $vaca = $worksheet->getCell('A'.$i)->getValue();
@@ -123,30 +257,32 @@ $objPHPExcel->setActiveSheetIndex(0)
 $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('A43', 'Subtotal')
             ->setCellValue('A44', '=SUM(G13:G41)')
-            ->setCellValue('C43', 'IVA 21%')
-            ->setCellValue('C44', '=A44*21%')
-            ->setCellValue('E44', 'Total:')
+            ->setCellValue('C43', 'IVA '.$iva.'%')
+            ->setCellValue('C44', '=A44*'.$iva.'%')
+            ->setCellValue('E44', 'TOTAL:')
             ->setCellValue('F44', '=A44+C44')
 
             ->setCellValue('A46', 'De conformidad con la Ley Orgánica de Protección de Datos de Carácter Personal 15/1999, le recordamos que sus datos han sido incorporados en un fichero de datos de carácter personal del que es titular ******* **** *******, debidamente registrado ante la AEPD y cuya finalidad es de gestión de datos de clientes para tareas contable, fiscal y administrativas, Así mismo, le informamos que sus datos podrán ser cedidos, siempre protegiendo los datos adecuadamente, a: administración tributaria y bancos, cajas de ahorros y cajas rurales. Puede ejercitar sus derechos de Acceso, Rectificación, Cancelación y Oposición en ******* ** - *****, ******* (*********) o enviando un correo electrónico a *****.****@hotmail.com.');
 
-
+//$objPHPExcel->getActiveSheet()->getHeaderFooter()->setOddFooter('&L&6&ArialDe conformidad con la Ley Orgánica de Protección de Datos de Carácter Personal 15/1999, le recordamos que sus datos han sido incorporados en un fichero de datos de carácter personal del que es titular ******* **** *******, debidamente registrado ante la AEPD y cuya finalidad es de gestión de datos de clientes para tareas contable, fiscal y administrativas, Así mismo, le informamos que sus datos podrán ser cedidos, siempre protegiendo los datos adecuadamente, a: administración tributaria y bancos, cajas de ahorros y cajas rurales. Puede ejercitar sus derechos de Acceso, Rectificación, Cancelación y Oposición en ******* ** - *****, ******* (*********) o enviando un correo electrónico a *****.****@hotmail.com.');
 // Rename worksheet
 $worksheet->setTitle('Factura');
 
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
-$objPHPExcel->setActiveSheetIndex(0);
+//$objPHPExcel->setActiveSheetIndex(0);
 
 // Save Excel 2007 file
 echo date('H:i:s') , " Write to Excel2007 format" , EOL;
 $callStartTime = microtime(true);
 
 $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-$objWriter->save('Factura.xlsx');
+$objWriter->save($numero.'.xlsx');
 $callEndTime = microtime(true);
 $callTime = $callEndTime - $callStartTime;
 
 echo date('H:i:s') , " File written to " , str_replace('.php', '.xlsx', pathinfo(__FILE__, PATHINFO_BASENAME)) , EOL;
 
-
+}
 ?>
+</body>
+</html>
