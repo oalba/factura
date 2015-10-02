@@ -8,20 +8,34 @@ IVA integer unsigned,
 cod_cli integer unsigned);
 
 CREATE TABLE clientes
-(cod_cli integer unsigned primary key,
+(cod_cli integer unsigned primary key AUTO_INCREMENT,
 nombre varchar(100),
 direccion varchar(100),
 telefono integer,
 email varchar(100),
 datos varchar(100));
 
+CREATE TABLE conceptos
+(cod_con integer unsigned primary key AUTO_INCREMENT,
+concepto varchar(500),
+precio decimal(4,2));
 
-conceptos
-con_con
-concepto
-precio
+CREATE TABLE tener_f_c
+(cod_con integer unsigned,
+cod_fac integer unsigned,
+cantidad integer,
+primary key(cod_con, cod_fac));
 
-tener_F_C
-cod_fac
-cod_con
-cantidad
+ALTER TABLE tener_f_c
+ADD CONSTRAINT fk_tener_f_c
+FOREIGN KEY (cod_fac) 
+REFERENCES facturas(cod_fac) 
+ON DELETE CASCADE 
+ON UPDATE CASCADE;
+
+ALTER TABLE tener_f_c
+ADD CONSTRAINT fk_tener_f_c2
+FOREIGN KEY (cod_con) 
+REFERENCES conceptos(cod_con) 
+ON DELETE CASCADE 
+ON UPDATE CASCADE;
