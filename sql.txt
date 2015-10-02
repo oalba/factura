@@ -1,15 +1,20 @@
-facturas
-cod_fac
-fecha
-iva
-cod_cli
+CREATE DATABASE facturas;
+USE facturas;
 
-clientes
-cod_cli
-nombre
-direccion
-telefono
-datos
+CREATE TABLE facturas
+(cod_fac integer unsigned primary key,
+fecha date,
+IVA integer unsigned,
+cod_cli integer unsigned);
+
+CREATE TABLE clientes
+(cod_cli integer unsigned primary key,
+nombre varchar(100),
+direccion varchar(100),
+telefono integer,
+email varchar(100),
+datos varchar(100));
+
 
 conceptos
 con_con
