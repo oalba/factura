@@ -13,15 +13,18 @@ function myFunction() {
     var ic1 = document.createElement('INPUT');
     ic1.setAttribute('type', 'number');
     ic1.setAttribute('name', 'cant'+nu);
+    ic1.setAttribute('Style', 'width:40Px');
     var io = document.createTextNode(" Concepto: ");
     var io2 = document.createElement('INPUT');
     io2.setAttribute('type', 'text');
     io2.setAttribute('name', 'concepto'+nu);
+    io2.setAttribute('size', '50');
     var ip = document.createTextNode(" Precio: ");
     var ip3 = document.createElement('INPUT');
     ip3.setAttribute('type', 'number');
     ip3.setAttribute('name', 'precio'+nu);
     ip3.setAttribute('step', 'any');
+    ip3.setAttribute('Style', 'width:60Px');
     var ie = document.createTextNode("€");
     var b = document.createElement('BR');
     
@@ -41,21 +44,26 @@ function myFunction() {
     <form enctype="multipart/form-data" action="" method="post">
         Fecha: <input type="date" name="fecha" value="<?php echo date('Y-m-d'); ?>"/><br>
         Nº de factura: <input type="number" name="num"/><br>
-        Método de pago: <input type="text" name="pago"/><br><br>
+        <!--Método de pago: <input type="text" name="pago"/><br><br>-->
+        <!--Método de pago: 
+        <select name="pago"/>
+            <option value="Transferencia" default>Transferencia</option>
+        </select>
+        <br><br>-->
         <!--Cliente: <br><input type="text" name="cli1"/><br><input type="text" name="cli2"/><br><input type="text" name="cli3"/><br><input type="text" name="cli4"/><br><input type="text" name="cli5"/><br><br>-->
         Cliente: <br><textarea name="cli1" rows="5"></textarea>
         <div id="divWrapper">
-        <br>Cantidad: <input type="number" name="cant1"/> Concepto: <input type="text" name="concepto1"/> Precio: <input type="number" name="precio1" step="any"/>€<br>
+        <br>Cantidad: <input type="number" name="cant1" Style="width:40Px"/> Concepto: <input type="text" name="concepto1" size="50"/> Precio: <input type="number" name="precio1" step="any" Style="width:60Px"/>€<br>
         </div>
         <button type="button" onclick="myFunction()">Añadir</button><br><br>
-        IVA: <input type="number" name="iva" value="21"/><br><br>
+        IVA: <input type="number" name="iva" value="21" Style="width:40Px"/><br><br>
         <input type="submit" name="crear" value="Crear"/>
     </form>
 <?php
 if(isset($_POST['crear'])){
     $fecha = date_format(date_create_from_format('Y-m-d', $_POST['fecha']), 'd/m/Y');
     $numero = $_POST['num'];
-    $pago = $_POST['pago'];
+    //$pago = $_POST['pago'];
     $cli1 = $_POST['cli1'];
     //$cli2 = $_POST['cli2'];
     //$cli3 = $_POST['cli3'];
@@ -82,7 +90,7 @@ $objPHPExcel = new PHPExcel();
 $worksheet = $objPHPExcel->getActiveSheet();
 
 //Uniendo celdas - Merge Cells
-$arrayMerges = array('E2:G6','A46:G46','A1:C2','A3:C3','A4:C4','A5:C5','A6:C6','A7:C7','F10:G10','B12:E12','F44:G44');
+$arrayMerges = array('E2:G6','A46:G46','A1:C2','A3:C3','A4:C4','A5:C5','A6:C6','A7:C7','B12:E12','F44:G44');
 
 foreach ($arrayMerges as &$valor) {
     $objPHPExcel->setActiveSheetIndex(0)->mergeCells($valor);
@@ -121,7 +129,7 @@ $borderArray = array(
   )
 );
 
-$arrayBordes = array('E2:G6', 'A10:B10', 'C10:D10', 'E10:G10', 'A12', 'B12:E12', 'F12', 'G12', 'A13:A41', 'B13:E41', 'F13:F41', 'G13:G41');
+$arrayBordes = array('E2:G6', 'A10:B10', 'C10:E10', 'F10:G10', 'A12', 'B12:E12', 'F12', 'G12', 'A13:A41', 'B13:E41', 'F13:F41', 'G13:G41');
 
 foreach ($arrayBordes as &$valor) {
     $worksheet->getStyle($valor)->applyFromArray($borderArray);
@@ -166,6 +174,7 @@ $worksheet->getColumnDimension('B')->setWidth(13);
 $worksheet->getColumnDimension('C')->setWidth(11);
 $worksheet->getColumnDimension('D')->setWidth(13);
 $worksheet->getColumnDimension('E')->setWidth(13);
+$worksheet->getColumnDimension('G')->setWidth(11);
 
 $worksheet->getRowDimension(46)->setRowHeight(45);
 
@@ -174,11 +183,10 @@ $worksheet->getStyle('A1:A7')->getAlignment()->setHorizontal(PHPExcel_Style_Alig
 $worksheet->getStyle('A12:G12')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 $worksheet->getStyle('B2:G6')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 $worksheet->getStyle('F44')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-$worksheet->getStyle('D10')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
 $worksheet->getStyle('B10')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-$worksheet->getStyle('F10')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+$worksheet->getStyle('G10')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
 $worksheet->getStyle('A10')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
-$worksheet->getStyle('C10')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+$worksheet->getStyle('F10')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
 $worksheet->getStyle('E10')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
 $worksheet->getStyle('E44')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
 $worksheet->getStyle('A46')->getAlignment()->setWrapText(true);
@@ -190,13 +198,13 @@ $worksheet->getStyle('A4:A7')->getFont()->setName('Palatino Linotype')->setSize(
 $worksheet->getStyle('A12:G12')->getFont()->setName('Century')->setSize(10);
 
 $worksheet->getStyle('A10')->getFont()->setName('Centaur')->setSize(10)->setBold(true)->setItalic(true);
-$worksheet->getStyle('C10')->getFont()->setName('Centaur')->setSize(10)->setBold(true)->setItalic(true);
-$worksheet->getStyle('E10')->getFont()->setName('Centaur')->setSize(10)->setBold(true)->setItalic(true);
+$worksheet->getStyle('F10')->getFont()->setName('Centaur')->setSize(10)->setBold(true)->setItalic(true);
+//$worksheet->getStyle('E10')->getFont()->setName('Centaur')->setSize(10)->setBold(true)->setItalic(true);
 
 $worksheet->getStyle('A46')->getFont()->setName('Arial')->setSize(6); 
 
 //Dando formato al texto - Formating text
-$worksheet->getStyle('B10')->getNumberFormat()->setFormatCode('dd/mm/yyyy');
+$worksheet->getStyle('G10')->getNumberFormat()->setFormatCode('dd/mm/yyyy');
 $worksheet->getStyle('A13:A41')->getNumberFormat()->setFormatCode('0');
 $worksheet->getStyle('F13:G41')->getNumberFormat()->setFormatCode('0.00€');
 $worksheet->getStyle('A44')->getNumberFormat()->setFormatCode('0.00€');
@@ -218,12 +226,12 @@ $objPHPExcel->setActiveSheetIndex(0)
             //->setCellValue('E5', $cli4)
             //->setCellValue('E6', $cli5)
 
-            ->setCellValue('A10', 'Fecha: ')
-            ->setCellValue('B10', $fecha)
-            ->setCellValue('C10', 'Factura Nº: ')
-            ->setCellValue('D10', $numero)
-            ->setCellValue('E10', 'Método de pago: ')
-            ->setCellValue('F10', $pago)
+            ->setCellValue('A10', 'Factura Nº: ')
+            ->setCellValue('B10', $numero)
+            /*->setCellValue('E10', 'Método de pago: ')
+            ->setCellValue('F10', $pago)*/
+            ->setCellValue('F10', 'Fecha: ')
+            ->setCellValue('G10', $fecha)
 
             ->setCellValue('A12', 'Cantidad')
             ->setCellValue('B12', 'Concepto')
@@ -272,15 +280,16 @@ $worksheet->setTitle('Factura');
 //$objPHPExcel->setActiveSheetIndex(0);
 
 // Save Excel 2007 file
-echo date('H:i:s') , " Write to Excel2007 format" , EOL;
+//echo date('H:i:s') , " Write to Excel2007 format" , EOL;
 $callStartTime = microtime(true);
 
 $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
 $objWriter->save($numero.'.xlsx');
 $callEndTime = microtime(true);
 $callTime = $callEndTime - $callStartTime;
+echo "La factura ".$numero.".xlsx se ha creado correctamente.";
 
-echo date('H:i:s') , " File written to " , str_replace('.php', '.xlsx', pathinfo(__FILE__, PATHINFO_BASENAME)) , EOL;
+//echo date('H:i:s') , " File written to " , str_replace('.php', '.xlsx', pathinfo(__FILE__, PATHINFO_BASENAME)) , EOL;
 
 }
 ?>
