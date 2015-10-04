@@ -115,10 +115,7 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->mergeCells('B12:E12')
             ->mergeCells('F44:G44');*/
 
-for ($i=13; $i<=41; $i++){
-    $objPHPExcel->setActiveSheetIndex(0)
-                ->mergeCells('B'.$i.':E'.$i);
-}
+
 
 //Añadiendo bordes - Adding borders
 $borderArray = array(
@@ -182,6 +179,7 @@ $worksheet->getRowDimension(46)->setRowHeight(45);
 $worksheet->getStyle('A1:A7')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 $worksheet->getStyle('A12:G12')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 $worksheet->getStyle('B2:G6')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+$worksheet->getStyle('B13:E41')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 $worksheet->getStyle('F44')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 $worksheet->getStyle('B10')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
 $worksheet->getStyle('G10')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
@@ -240,14 +238,36 @@ $objPHPExcel->setActiveSheetIndex(0)
 
             $a = 1;
             for ($i=13; $i<=41; $i++){
+
+    
+
                 if (isset($_POST['cant'.$a])){
                     //${"cant".$a} = $_POST['cant'.$a];
                     //${"conc".$a} = $_POST['concepto'.$a];
                     //${"precio".$a} = $_POST['precio'.$a];
+                    $letras = strlen($_POST['concepto'.$a]); //47
+if ($letras > 47){
+    $s = $i + 1;
+    $objPHPExcel->setActiveSheetIndex(0)->mergeCells('A'.$i.':A'.$s);
+$objPHPExcel->setActiveSheetIndex(0)
+                ->mergeCells('B'.$i.':E'.$s);
+    $worksheet->getStyle('B'.$i)->getAlignment()->setWrapText(true);
+    $objPHPExcel->setActiveSheetIndex(0)->mergeCells('F'.$i.':F'.$s);
+    $objPHPExcel->setActiveSheetIndex(0)->mergeCells('G'.$i.':G'.$s);
+
 $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('A'.$i, $_POST['cant'.$a])
             ->setCellValue('B'.$i, '    '.$_POST['concepto'.$a])
             ->setCellValue('F'.$i, $_POST['precio'.$a]);
+
+            $i++;
+            }else{
+$objPHPExcel->setActiveSheetIndex(0)->mergeCells('B'.$i.':E'.$i);
+$objPHPExcel->setActiveSheetIndex(0)
+            ->setCellValue('A'.$i, $_POST['cant'.$a])
+            ->setCellValue('B'.$i, '    '.$_POST['concepto'.$a])
+            ->setCellValue('F'.$i, $_POST['precio'.$a]);
+            }
                 }
                 $a++;
             }
