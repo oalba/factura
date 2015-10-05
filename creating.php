@@ -186,7 +186,7 @@ $worksheet->getRowDimension(46)->setRowHeight(45);
 $worksheet->getStyle('A1:A7')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 $worksheet->getStyle('A12:G12')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 $worksheet->getStyle('B2:G6')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
-$worksheet->getStyle('B13:E41')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+$worksheet->getStyle('A13:G41')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 $worksheet->getStyle('F44')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 $worksheet->getStyle('B10')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
 $worksheet->getStyle('G10')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
@@ -383,6 +383,10 @@ $objPHPExcel->setActiveSheetIndex(0)
                 if (($vaca!=0||$vaca!="")||($vacf!=0||$vacf!="")){
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G'.$i, '=A'.$i.'*F'.$i);
                 }
+                /*$vacc = $worksheet->getCell('B'.$i)->getValue();
+                if ($vacc==0||$vacc==""){
+                    $objPHPExcel->setActiveSheetIndex(0)->mergeCells('B'.$i.':E'.$i);
+                }*/
             }
 
 $objPHPExcel->setActiveSheetIndex(0)
