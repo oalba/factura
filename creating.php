@@ -13,12 +13,18 @@ function myFunction() {
     var ic1 = document.createElement('INPUT');
     ic1.setAttribute('type', 'number');
     ic1.setAttribute('name', 'cant'+nu);
+    ic1.setAttribute('value', '1');
+
     ic1.setAttribute('Style', 'width:40Px');
     var io = document.createTextNode(" Concepto: ");
-    var io2 = document.createElement('INPUT');
+    /*var io2 = document.createElement('INPUT');
     io2.setAttribute('type', 'text');
     io2.setAttribute('name', 'concepto'+nu);
-    io2.setAttribute('size', '50');
+    io2.setAttribute('size', '50');*/
+    var io2 = document.createElement('TEXTAREA');
+    io2.setAttribute('name', 'concepto'+nu);
+    io2.setAttribute('cols', '50');
+    io2.setAttribute('rows', '1');
     var ip = document.createTextNode(" Precio: ");
     var ip3 = document.createElement('INPUT');
     ip3.setAttribute('type', 'number');
@@ -53,7 +59,8 @@ function myFunction() {
         <!--Cliente: <br><input type="text" name="cli1"/><br><input type="text" name="cli2"/><br><input type="text" name="cli3"/><br><input type="text" name="cli4"/><br><input type="text" name="cli5"/><br><br>-->
         Cliente: <br><textarea name="cli1" rows="5"></textarea>
         <div id="divWrapper">
-        <br>Cantidad: <input type="number" name="cant1" Style="width:40Px"/> Concepto: <input type="text" name="concepto1" size="50"/> Precio: <input type="number" name="precio1" step="any" Style="width:60Px"/>€<br>
+        <br>Cantidad: <input type="number" name="cant1" value="1" Style="width:40Px"/> Concepto: <textarea name="concepto1" rows="1" cols="50"></textarea> Precio: <input type="number" name="precio1" step="any" Style="width:60Px"/>€<br>
+        <!--<br>Cantidad: <input type="number" name="cant1" Style="width:40Px"/> Concepto: <input type="text" name="concepto1" size="50"/> Precio: <input type="number" name="precio1" step="any" Style="width:60Px"/>€<br>-->
         </div>
         <button type="button" onclick="myFunction()">Añadir</button><br><br>
         IVA: <input type="number" name="iva" value="21" Style="width:40Px"/><br><br>
@@ -247,10 +254,108 @@ $objPHPExcel->setActiveSheetIndex(0)
                     //${"precio".$a} = $_POST['precio'.$a];
                     $letras = strlen($_POST['concepto'.$a]); //47
 if ($letras > 47){
-    $s = $i + 1;
+    /*$z = $letras / 47;
+    $r = $letras % 47;
+    if ($z > 1 && $r != 0) {
+        $z++;
+    }*/
+    for ($t=1; $t<=30; $t++){
+        if ($letras > (47*$t)){
+            $s = $i + $t;
+        }
+    }
+    /*if ($letras > 47){
+        $s = $i + 1;
+        if ($letras > (47*2)){
+            $s++;
+            if ($letras > (47*3)){
+                $s++;
+                if ($letras > (47*4)){
+                    $s++;
+                    if ($letras > (47*5)){
+                        $s++;
+                        if ($letras > (47*6)){
+                            $s++;
+                            if ($letras > (47*7)){
+                                $s++;
+                                if ($letras > (47*8)){
+                                    $s++;
+                                    if ($letras > (47*9)){
+                                        $s++;
+                                        if ($letras > (47*10)){
+                                            $s++;
+                                            if ($letras > (47*11)){
+                                                $s++;
+                                                if ($letras > (47*12)){
+                                                    $s++;
+                                                    if ($letras > (47*13)){
+                                                        $s++;
+                                                        if ($letras > (47*14)){
+                                                            $s++;
+                                                            if ($letras > (47*15)){
+                                                                $s++;
+                                                                if ($letras > (47*16)){
+                                                                    $s++;
+                                                                    if ($letras > (47*17)){
+                                                                        $s++;
+                                                                        if ($letras > (47*18)){
+                                                                            $s++;
+                                                                            if ($letras > (47*19)){
+                                                                                $s++;
+                                                                                if ($letras > (47*20)){
+                                                                                    $s++;
+                                                                                    if ($letras > (47*21)){
+                                                                                        $s++;
+                                                                                        if ($letras > (47*22)){
+                                                                                            $s++;
+                                                                                            if ($letras > (47*23)){
+                                                                                                $s++;
+                                                                                                if ($letras > (47*24)){
+                                                                                                    $s++;
+                                                                                                    if ($letras > (47*25)){
+                                                                                                        $s++;
+                                                                                                        if ($letras > (47*26)){
+                                                                                                            $s++;
+                                                                                                            if ($letras > (47*27)){
+                                                                                                                $s++;
+                                                                                                                if ($letras > (47*28)){
+                                                                                                                    $s++;
+                                                                                                                    if ($letras > (47*29)){
+                                                                                                                        $s++;
+                                                                                                                        if ($letras > (47*30)){
+                                                                                                                            $s++;
+                                                                                                                        }
+                                                                                                                    }
+                                                                                                                }
+                                                                                                            }
+                                                                                                        }
+                                                                                                    }
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }                                                            
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }*/
     $objPHPExcel->setActiveSheetIndex(0)->mergeCells('A'.$i.':A'.$s);
-$objPHPExcel->setActiveSheetIndex(0)
-                ->mergeCells('B'.$i.':E'.$s);
+    $objPHPExcel->setActiveSheetIndex(0)->mergeCells('B'.$i.':E'.$s);
     $worksheet->getStyle('B'.$i)->getAlignment()->setWrapText(true);
     $objPHPExcel->setActiveSheetIndex(0)->mergeCells('F'.$i.':F'.$s);
     $objPHPExcel->setActiveSheetIndex(0)->mergeCells('G'.$i.':G'.$s);
@@ -261,7 +366,7 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('F'.$i, $_POST['precio'.$a]);
 
             $i++;
-            }else{
+            }elseif ($letras != 0) {
 $objPHPExcel->setActiveSheetIndex(0)->mergeCells('B'.$i.':E'.$i);
 $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('A'.$i, $_POST['cant'.$a])
@@ -270,9 +375,7 @@ $objPHPExcel->setActiveSheetIndex(0)
             }
                 }
                 $a++;
-            }
-
-            
+            }            
 
             for ($i=13; $i<=41; $i++){
                 $vaca = $worksheet->getCell('A'.$i)->getValue();
