@@ -46,10 +46,80 @@ function myFunction() {
     wrapper.appendChild(b);
     nu = nu+1;
 }
+
+function change(obj) {
+    var selectBox = obj;
+    var selected = selectBox.options[selectBox.selectedIndex].value;
+    var textarea = document.getElementById("text_area");
+
+    if(selected === '1'){
+        textarea.style.display = "block";
+    }
+    else{
+        textarea.style.display = "none";
+    }
+}
     </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Para añadir un textarea con un select option -->
+<table>
+<tr class="odd gradeX">
+    <td class="col-lg-3">
+        <div>
+            <label>Show text area</label>
+            <select id="show" class="form-control" name="show_text_area" onchange="change(this)">
+                <option value="1">YES</option>
+                <option value="0">NO</option>
+            </select>
+
+        </div>
+    </td>
+    <td class="col-lg-3">
+        <div>
+            <label>Text area</label>
+            <textarea id="text_area" class="form-control" type="text" name="text_area" placeholder="Write something" rows="5" cols="50" style="display: none"></textarea>
+        </div>
+    </td>
+</tr>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <form enctype="multipart/form-data" action="" method="post">
         Fecha: <input type="date" name="fecha" value="<?php echo date('Y-m-d'); ?>"/><br>
         Nº de factura: <input type="number" name="num"/><br>
+
         <!--Método de pago: <input type="text" name="pago"/><br><br>-->
         <!--Método de pago: 
         <select name="pago"/>
