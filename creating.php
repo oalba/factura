@@ -21,10 +21,58 @@ function myFunction() {
     io2.setAttribute('type', 'text');
     io2.setAttribute('name', 'concepto'+nu);
     io2.setAttribute('size', '50');*/
+
+    /*var io3 = document.createElement('SELECT');
+    io3.setAttribute('id', 'show'+nu);
+    io3.setAttribute('name', 'show_text_area'+nu);
+    io3.setAttribute('onchange', 'change(this,'+1+')');
+    //io3.appendChild(op1);
+
+    var op1 = document.createElement('OPTION');
+    op1.setAttribute('value', '1');
+    var yes = document.createTextNode("Yes");
+    op1.appendChild(yes);*/
+    //document.getElementById("show"+nu).appendChild(op1);
+
+    //Create and append select list
+    var io3 = document.createElement("select");
+    io3.id = "mySelect";
+    io3.setAttribute('id', 'show'+nu);
+    io3.setAttribute('name', 'show_text_area'+nu);
+    io3.setAttribute('onchange', 'change(this,'+nu+')');
+
+    var no = document.createElement("option");
+    no.value = "0";
+    no.text = "No";
+    no.setAttribute('selected', 'selected');
+    io3.appendChild(no);
+
+    var yes = document.createElement("option");
+    yes.value = "1";
+    yes.text = "Yes";
+    io3.appendChild(yes);
+    
+    //Create array of options to be added
+    //var array = ["YES","NO"];
+    //Create and append the options
+    /*for (var i = 0; i < array.length; i++) {
+        var option = document.createElement("option");
+        option.value = array[i];
+        option.text = array[i];
+        if (array[i] == "NO") {
+            option.setAttribute('selected', 'selected');
+        }
+        io3.appendChild(option);
+    }*/
+
+
+
     var io2 = document.createElement('TEXTAREA');
+    io2.setAttribute('id', 'text_area'+nu);
     io2.setAttribute('name', 'concepto'+nu);
     io2.setAttribute('cols', '50');
     io2.setAttribute('rows', '1');
+    io2.setAttribute('style', 'display: none');
     var ip = document.createTextNode(" Precio: ");
     var ip3 = document.createElement('INPUT');
     ip3.setAttribute('type', 'number');
@@ -32,27 +80,37 @@ function myFunction() {
     ip3.setAttribute('step', 'any');
     ip3.setAttribute('Style', 'width:60Px');
     var ie = document.createTextNode("€");
-    var b = document.createElement('BR');
+    //var b = document.createElement('BR');
+    var hr = document.createElement('HR');
     
 
     var wrapper = document.getElementById("divWrapper");
+    wrapper.appendChild(hr);
     wrapper.appendChild(ic);
     wrapper.appendChild(ic1);
+    //wrapper.appendChild(b);
     wrapper.appendChild(io);
+    wrapper.appendChild(io3);
     wrapper.appendChild(io2);
+    //wrapper.appendChild(b);
     wrapper.appendChild(ip);
     wrapper.appendChild(ip3);
     wrapper.appendChild(ie);
-    wrapper.appendChild(b);
+    //wrapper.appendChild(b);
+
     nu = nu+1;
+
+
+    
 }
 
-function change(obj) {
+function change(obj,nue) {
     var selectBox = obj;
+    var nue = nue;
     var selected = selectBox.options[selectBox.selectedIndex].value;
-    var textarea = document.getElementById("text_area");
+    var textarea = document.getElementById("text_area"+nue);
 
-    if(selected === '1'){
+    if(selected === "1"){
         textarea.style.display = "block";
     }
     else{
@@ -62,20 +120,19 @@ function change(obj) {
     </script>
 
 
+    <!--<script type="text/javascript">
+    phpVars = new Array();
+    <?php 
+    //foreach($vars as $var) {
+    //    echo 'phpVars.push("' . $var . '");';
+    //};
+    ?>
+    </script>-->
 
-
-
-
-
-
-
-
-
-
-
-<!-- Para añadir un textarea con un select option -->
-<table>
-<tr class="odd gradeX">
+    <!-- Para añadir un textarea con un select option -->
+    <!--
+    <table>
+    <tr class="odd gradeX">
     <td class="col-lg-3">
         <div>
             <label>Show text area</label>
@@ -92,29 +149,8 @@ function change(obj) {
             <textarea id="text_area" class="form-control" type="text" name="text_area" placeholder="Write something" rows="5" cols="50" style="display: none"></textarea>
         </div>
     </td>
-</tr>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    </tr>
+    </table>-->
 
     <form enctype="multipart/form-data" action="" method="post">
         Fecha: <input type="date" name="fecha" value="<?php echo date('Y-m-d'); ?>"/><br>
@@ -129,7 +165,14 @@ function change(obj) {
         <!--Cliente: <br><input type="text" name="cli1"/><br><input type="text" name="cli2"/><br><input type="text" name="cli3"/><br><input type="text" name="cli4"/><br><input type="text" name="cli5"/><br><br>-->
         Cliente: <br><textarea name="cli1" rows="5"></textarea>
         <div id="divWrapper">
-        <br>Cantidad: <input type="number" name="cant1" value="1" Style="width:40Px"/> Concepto: <textarea name="concepto1" rows="1" cols="50"></textarea> Precio: <input type="number" name="precio1" step="any" Style="width:60Px"/>€<br>
+        <br><label>Cantidad:</label> <input type="number" name="cant1" value="1" Style="width:40Px"/> 
+        <label>Concepto:</label> 
+        <select id="show1" name="show_text_area1" onchange="change(this,1)">
+            <option value="1">Yes</option>
+            <option value="0" selected="selected">No</option>
+        </select><textarea id="text_area1" name="concepto1" rows="1" cols="50" style="display: none"></textarea>
+        <label>Precio:</label> <input type="number" name="precio1" step="any" Style="width:60Px"/>€<br>
+        <!--<br>Cantidad: <input type="number" name="cant1" value="1" Style="width:40Px"/> Concepto: <textarea name="concepto1" rows="1" cols="50"></textarea> Precio: <input type="number" name="precio1" step="any" Style="width:60Px"/>€<br>-->
         <!--<br>Cantidad: <input type="number" name="cant1" Style="width:40Px"/> Concepto: <input type="text" name="concepto1" size="50"/> Precio: <input type="number" name="precio1" step="any" Style="width:60Px"/>€<br>-->
         </div>
         <button type="button" onclick="myFunction()">Añadir</button><br><br>
