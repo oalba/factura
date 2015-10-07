@@ -112,71 +112,17 @@
         var selectBox = obj;
         var nue = nue;
         var selected = selectBox.options[selectBox.selectedIndex].value;
-        document.cookie = 'dato=aa';
+        var sele = selected.split("|");
         var textarea = document.getElementById("text_area"+nue);
 
-        if(selected === "1"){
+        if(sele[0] === "1"){
             textarea.style.display = "block";
         }
         else{
             textarea.style.display = "none";
         }
-        //ob_start(); //Start output buffer
-        //echo "selectBox.options[selectBox.selectedIndex].value;";
-        //$select = ob_get_contents(); //Grab output
-        //ob_end_clean(); //Discard output buffer
-        /*<?php
-        //$selecte='<script type="text/javascript"> document.write("aa"); </script>';
-        //$select='aa';
-        //$nom = 'dato';
-        //if(isset($_COOKIE[$nom]))
-        //$select=$_COOKIE[$nom];
-        $select=htmlentities($_COOKIE['dato']);
-        $sql2 = 'SELECT precio FROM conceptos WHERE concepto="'.$select.'"';
-        //$sql2 = 'SELECT precio FROM conceptos WHERE concepto="aa"';
-        $cons2 = mysql_query($sql2);
-        while ($data = mysql_fetch_array($cons2)) {
-            $precio[] = $data['precio'];
-        };
-        ?>
-
-        var precio = "<?php echo $precio[0]; ?>";
-        
-        document.getElementById("precio"+nue).value = precio;
-        document.cookie = 'dato=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';*/
+        document.getElementById("precio"+nue).value = sele[1];
     }</script>
-    <!--<?php
-    echo "
-    <script type=\"text/javascript\">function change(obj,nue) {
-        var selectBox = obj;
-        var nue = nue;
-        var selected = selectBox.options[selectBox.selectedIndex].value;
-        var textarea = document.getElementById(\"text_area\"+nue);
-
-        if(selected === \"1\"){
-            textarea.style.display = \"block\";
-        }
-        else{
-            textarea.style.display = \"none\";
-        }";
-        //ob_start(); //Start output buffer
-        //echo "selectBox.options[selectBox.selectedIndex].value;";
-        //$select = ob_get_contents(); //Grab output
-        //ob_end_clean(); //Discard output buffer
-        $selecte='aa';
-        $sql2 = 'SELECT precio FROM conceptos WHERE concepto="'.$selecte.'"';
-        //$sql2 = 'SELECT precio FROM conceptos WHERE concepto="aa"';
-        $cons2 = mysql_query($sql2);
-        while ($data = mysql_fetch_array($cons2)) {
-            $precio[] = $data['precio'];
-        };
-
-        echo "var precio = '$precio[0]';
-        
-        document.getElementById(\"precio\"+nue).value = precio;
-    }</script>";
-
-    ?>-->
 
     <style type="text/css">
         table { border: 1px solid black; border-collapse: collapse }
@@ -209,11 +155,11 @@
                     $sql = "SELECT * FROM conceptos";
                     $cons = mysql_query($sql);
                     while ($row = mysql_fetch_assoc($cons)) {
-                        print("<option value='".$row[concepto]."'>$row[concepto]  |  $row[precio]€</option>");
+                        print("<option value='".$row[concepto]."|".$row[precio]."'>$row[concepto]</option>");
                     }
                     ?>
                 </select><textarea id="text_area1" name="concepto1" rows="1" cols="50" style="display: none"></textarea></td>
-                <td><label>Precio:</label> <input id="precio1" type="text" name="precio1" step="any" Style="width:60Px" value=""/>€</td>
+                <td><label>Precio:</label> <input id="precio1" type="number" name="precio1" step="any" Style="width:60Px" value=""/>€</td>
             </tr>
             <!--<br>Cantidad: <input type="number" name="cant1" value="1" Style="width:40Px"/> Concepto: <textarea name="concepto1" rows="1" cols="50"></textarea> Precio: <input type="number" name="precio1" step="any" Style="width:60Px"/>€<br>-->
             <!--<br>Cantidad: <input type="number" name="cant1" Style="width:40Px"/> Concepto: <input type="text" name="concepto1" size="50"/> Precio: <input type="number" name="precio1" step="any" Style="width:60Px"/>€<br>-->
