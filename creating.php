@@ -470,7 +470,8 @@ $objPHPExcel->setActiveSheetIndex(0)
                     if ($_POST['conce'.$a] == 1) {
                         $concepto = $_POST['concepto'.$a];
                     }else{
-                        $concepto = $_POST['conce'.$a];
+                        $conc = explode('|', $_POST['conce'.$a]);
+                        $concepto = $conc[0];
                     }
                     $letras = strlen($concepto); //47
 if ($letras > 47){
