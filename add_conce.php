@@ -39,7 +39,7 @@ if(isset($_POST['guardar'])){
     $dp = mysql_connect("localhost", "root", "" );
 	mysql_select_db("facturas", $dp);
 
-    $sql = "SELECT * FROM conceptos WHERE concepto=$conce";
+    $sql = "SELECT * FROM conceptos WHERE concepto='$conce'";
     $cons = mysql_query($sql);
     if (mysql_num_rows($cons) == 0){
         $sartu="INSERT INTO conceptos (concepto, precio) VALUES ('$conce', '$precio')";
@@ -48,9 +48,9 @@ if(isset($_POST['guardar'])){
     } else {
         echo "¡ERROR! Este concepto ya existe.";
         $num_fila = 0; 
-        echo "<table border=1 align=center>";
-        echo "<tr bgcolor=\"bbbbbb\" align=center><th>Name</th><th>Telephone</th></tr>";
-        while ($row = mysql_fetch_assoc($phones)) {
+        echo "<table border=1>";
+        echo "<tr bgcolor=\"bbbbbb\" align=center><th>Concepto</th><th>Precio</th></tr>";
+        while ($row = mysql_fetch_assoc($cons)) {
             echo "<tr "; 
             if ($num_fila%2==0) 
                 echo "bgcolor=#dddddd"; //si el resto de la división es 0 pongo un color 
@@ -58,7 +58,7 @@ if(isset($_POST['guardar'])){
                 echo "bgcolor=#ddddff"; //si el resto de la división NO es 0 pongo otro color 
             echo ">";
             echo "<td>$row[concepto]</td>";
-            echo "<td>$row[precio]</td>";
+            echo "<td>$row[precio]€</td>";
             echo "<td><a href=\"edit_conce.php?concepto=$row[concepto]\"><input type=\"button\" value=\"Edit\"></a></td>";
             echo "<td><button onclick=\"seguro($row[concepto]);\">Delete</button></td>";
             echo "</tr>";

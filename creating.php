@@ -1,5 +1,5 @@
 <html>
-<head><title></title></head>
+<head><title>Añadir factura</title></head>
 <body>
     <script type="text/javascript">
     var nu = 2;
