@@ -4,45 +4,27 @@
     <script type="text/javascript">
     var nu = 2;
 function myFunction() {
-    /*var para = document.createElement("P");
-    var t = document.createTextNode("This is a paragraph.");
-    para.appendChild(t);
-    document.getElementById("myDIV").appendChild(para);*/
 
     var ic = document.createTextNode("Cantidad: ");
+
     var ic1 = document.createElement('INPUT');
     ic1.setAttribute('type', 'number');
     ic1.setAttribute('name', 'cant'+nu);
     ic1.setAttribute('value', '1');
-
     ic1.setAttribute('Style', 'width:40Px');
+
+    //---------------------------------------------
+
     var io = document.createTextNode(" Concepto: ");
-    /*var io2 = document.createElement('INPUT');
-    io2.setAttribute('type', 'text');
-    io2.setAttribute('name', 'concepto'+nu);
-    io2.setAttribute('size', '50');*/
 
-    /*var io3 = document.createElement('SELECT');
-    io3.setAttribute('id', 'show'+nu);
-    io3.setAttribute('name', 'show_text_area'+nu);
-    io3.setAttribute('onchange', 'change(this,'+1+')');
-    //io3.appendChild(op1);
-
-    var op1 = document.createElement('OPTION');
-    op1.setAttribute('value', '1');
-    var yes = document.createTextNode("Yes");
-    op1.appendChild(yes);*/
-    //document.getElementById("show"+nu).appendChild(op1);
-
-    //Create and append select list
     var io3 = document.createElement("select");
-    io3.id = "mySelect";
-    io3.setAttribute('id', 'show'+nu);
-    io3.setAttribute('name', 'show_text_area'+nu);
+    //io3.id = "mySelect";
+    //io3.setAttribute('id', 'show'+nu);
+    io3.setAttribute('name', 'conce'+nu);
     io3.setAttribute('onchange', 'change(this,'+nu+')');
 
     var no = document.createElement("option");
-    no.value = "0";
+    no.value = "No";
     no.text = "No";
     no.setAttribute('selected', 'selected');
     io3.appendChild(no);
@@ -65,38 +47,55 @@ function myFunction() {
         io3.appendChild(option);
     }*/
 
-
-
     var io2 = document.createElement('TEXTAREA');
     io2.setAttribute('id', 'text_area'+nu);
     io2.setAttribute('name', 'concepto'+nu);
     io2.setAttribute('cols', '50');
     io2.setAttribute('rows', '1');
     io2.setAttribute('style', 'display: none');
+
+    //---------------------------------------------
+
     var ip = document.createTextNode(" Precio: ");
+
     var ip3 = document.createElement('INPUT');
     ip3.setAttribute('type', 'number');
     ip3.setAttribute('name', 'precio'+nu);
     ip3.setAttribute('step', 'any');
     ip3.setAttribute('Style', 'width:60Px');
+
     var ie = document.createTextNode("€");
-    //var b = document.createElement('BR');
-    var hr = document.createElement('HR');
+    //var hr = document.createElement('HR');
     
 
-    var wrapper = document.getElementById("divWrapper");
+    /*var wrapper = document.getElementById("divWrapper");
     wrapper.appendChild(hr);
     wrapper.appendChild(ic);
     wrapper.appendChild(ic1);
-    //wrapper.appendChild(b);
     wrapper.appendChild(io);
     wrapper.appendChild(io3);
     wrapper.appendChild(io2);
-    //wrapper.appendChild(b);
     wrapper.appendChild(ip);
     wrapper.appendChild(ip3);
-    wrapper.appendChild(ie);
-    //wrapper.appendChild(b);
+    wrapper.appendChild(ie);*/
+
+    var tr = document.createElement('TR');
+    var td1 = document.createElement('TD');
+    var td2 = document.createElement('TD');
+    var td3 = document.createElement('TD');
+    td1.appendChild(ic);
+    td1.appendChild(ic1);
+    td2.appendChild(io);
+    td2.appendChild(io3);
+    td2.appendChild(io2);
+    td3.appendChild(ip);
+    td3.appendChild(ip3);
+    td3.appendChild(ie);
+    tr.appendChild(td1);
+    tr.appendChild(td2);
+    tr.appendChild(td3);
+    var wrapper = document.getElementById("myTable");
+    wrapper.appendChild(tr);
 
     nu = nu+1;
 
@@ -119,42 +118,15 @@ function change(obj,nue) {
 }
     </script>
 
-
-    <!--<script type="text/javascript">
-    phpVars = new Array();
-    <?php 
-    //foreach($vars as $var) {
-    //    echo 'phpVars.push("' . $var . '");';
-    //};
-    ?>
-    </script>-->
-
-    <!-- Para añadir un textarea con un select option -->
-    <!--
-    <table>
-    <tr class="odd gradeX">
-    <td class="col-lg-3">
-        <div>
-            <label>Show text area</label>
-            <select id="show" class="form-control" name="show_text_area" onchange="change(this)">
-                <option value="1">YES</option>
-                <option value="0">NO</option>
-            </select>
-
-        </div>
-    </td>
-    <td class="col-lg-3">
-        <div>
-            <label>Text area</label>
-            <textarea id="text_area" class="form-control" type="text" name="text_area" placeholder="Write something" rows="5" cols="50" style="display: none"></textarea>
-        </div>
-    </td>
-    </tr>
-    </table>-->
+    <style type="text/css">
+        table { border: 1px solid black; border-collapse: collapse }
+        td { border: 1px solid black }
+    </style>
 
     <form enctype="multipart/form-data" action="" method="post">
-        Fecha: <input type="date" name="fecha" value="<?php echo date('Y-m-d'); ?>"/><br>
-        Nº de factura: <input type="number" name="num"/><br>
+        Fecha: <input type="date" name="fecha" value="<?php echo date('Y-m-d'); ?>"/><br><br>
+
+        Nº de factura: <input type="number" name="num"/><br><br>
 
         <!--Método de pago: <input type="text" name="pago"/><br><br>-->
         <!--Método de pago: 
@@ -163,18 +135,22 @@ function change(obj,nue) {
         </select>
         <br><br>-->
         <!--Cliente: <br><input type="text" name="cli1"/><br><input type="text" name="cli2"/><br><input type="text" name="cli3"/><br><input type="text" name="cli4"/><br><input type="text" name="cli5"/><br><br>-->
-        Cliente: <br><textarea name="cli1" rows="5"></textarea>
-        <div id="divWrapper">
-        <br><label>Cantidad:</label> <input type="number" name="cant1" value="1" Style="width:40Px"/> 
-        <label>Concepto:</label> 
-        <select id="show1" name="show_text_area1" onchange="change(this,1)">
-            <option value="1">Yes</option>
-            <option value="0" selected="selected">No</option>
-        </select><textarea id="text_area1" name="concepto1" rows="1" cols="50" style="display: none"></textarea>
-        <label>Precio:</label> <input type="number" name="precio1" step="any" Style="width:60Px"/>€<br>
-        <!--<br>Cantidad: <input type="number" name="cant1" value="1" Style="width:40Px"/> Concepto: <textarea name="concepto1" rows="1" cols="50"></textarea> Precio: <input type="number" name="precio1" step="any" Style="width:60Px"/>€<br>-->
-        <!--<br>Cantidad: <input type="number" name="cant1" Style="width:40Px"/> Concepto: <input type="text" name="concepto1" size="50"/> Precio: <input type="number" name="precio1" step="any" Style="width:60Px"/>€<br>-->
-        </div>
+        Cliente: <br><textarea name="cli1" rows="5"></textarea><br><br>
+
+        Conceptos: 
+        <table id="myTable">
+            <tr>
+                <td><label>Cantidad:</label> <input type="number" name="cant1" value="1" Style="width:40Px"/> </td>
+                <td><label>Concepto:</label> 
+                <select name="conce1" onchange="change(this,1)">
+                    <option value="1">Yes</option>
+                    <option value="No" selected="selected">No</option>
+                </select><textarea id="text_area1" name="concepto1" rows="1" cols="50" style="display: none"></textarea></td>
+                <td><label>Precio:</label> <input type="number" name="precio1" step="any" Style="width:60Px"/>€</td>
+            </tr>
+            <!--<br>Cantidad: <input type="number" name="cant1" value="1" Style="width:40Px"/> Concepto: <textarea name="concepto1" rows="1" cols="50"></textarea> Precio: <input type="number" name="precio1" step="any" Style="width:60Px"/>€<br>-->
+            <!--<br>Cantidad: <input type="number" name="cant1" Style="width:40Px"/> Concepto: <input type="text" name="concepto1" size="50"/> Precio: <input type="number" name="precio1" step="any" Style="width:60Px"/>€<br>-->
+        </table>
         <button type="button" onclick="myFunction()">Añadir</button><br><br>
         IVA: <input type="number" name="iva" value="21" Style="width:40Px"/><br><br>
         <input type="submit" name="crear" value="Crear"/>
@@ -365,7 +341,12 @@ $objPHPExcel->setActiveSheetIndex(0)
                     //${"cant".$a} = $_POST['cant'.$a];
                     //${"conc".$a} = $_POST['concepto'.$a];
                     //${"precio".$a} = $_POST['precio'.$a];
-                    $letras = strlen($_POST['concepto'.$a]); //47
+                    if ($_POST['conce'.$a] == 1) {
+                        $concepto = $_POST['concepto'.$a];
+                    }else{
+                        $concepto = $_POST['conce'.$a];
+                    }
+                    $letras = strlen($concepto); //47
 if ($letras > 47){
     /*$z = $letras / 47;
     $r = $letras % 47;
@@ -475,7 +456,7 @@ if ($letras > 47){
 
 $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('A'.$i, $_POST['cant'.$a])
-            ->setCellValue('B'.$i, '    '.$_POST['concepto'.$a])
+            ->setCellValue('B'.$i, '    '.$concepto)
             ->setCellValue('F'.$i, $_POST['precio'.$a]);
 
             $i++;
@@ -483,7 +464,7 @@ $objPHPExcel->setActiveSheetIndex(0)
 $objPHPExcel->setActiveSheetIndex(0)->mergeCells('B'.$i.':E'.$i);
 $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('A'.$i, $_POST['cant'.$a])
-            ->setCellValue('B'.$i, '    '.$_POST['concepto'.$a])
+            ->setCellValue('B'.$i, '    '.$concepto)
             ->setCellValue('F'.$i, $_POST['precio'.$a]);
             }
                 }
