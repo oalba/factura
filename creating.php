@@ -5,11 +5,12 @@
     $dp = mysql_connect("localhost", "root", "" );
     mysql_select_db("facturas", $dp);
     ?>
-    <script type="text/javascript">
+<?php
+    echo "
+    <script type=\"text/javascript\">
     var nu = 2;
     function myFunction() {
-
-        var ic = document.createTextNode("Cantidad: ");
+        var ic = document.createTextNode('Cantidad: ');
 
         var ic1 = document.createElement('INPUT');
         ic1.setAttribute('type', 'number');
@@ -19,33 +20,44 @@
 
         //---------------------------------------------
 
-        var io = document.createTextNode(" Concepto: ");
+        var io = document.createTextNode(' Concepto: ');
 
-        var io3 = document.createElement("select");
-        //io3.id = "mySelect";
+        var io3 = document.createElement('select');
+        //io3.id = 'mySelect';
         //io3.setAttribute('id', 'show'+nu);
         io3.setAttribute('name', 'conce'+nu);
         io3.setAttribute('onchange', 'change(this,'+nu+')');
 
-        var no = document.createElement("option");
-        no.value = "No";
-        no.text = "No";
+        var no = document.createElement('option');
+        no.value = '';
+        no.text = '';
         no.setAttribute('selected', 'selected');
         io3.appendChild(no);
 
-        var yes = document.createElement("option");
-        yes.value = "1";
-        yes.text = "Otro";
-        io3.appendChild(yes);
+        var yes = document.createElement('option');
+        yes.value = '1';
+        yes.text = 'Otro';
+        io3.appendChild(yes);";
+
+        $sql = 'SELECT * FROM conceptos';
+        $cons = mysql_query($sql);
+        while ($row = mysql_fetch_assoc($cons)) {
+            echo "var abc = document.createElement('option');";
+            echo "abc.value = '$row[concepto]|$row[precio]';";
+            echo "abc.text = '$row[concepto]';";
+            echo "io3.appendChild(abc);";
+        }
+
         
+        echo "
         //Create array of options to be added
-        //var array = ["YES","NO"];
+        //var array = ['YES','NO'];
         //Create and append the options
         /*for (var i = 0; i < array.length; i++) {
-            var option = document.createElement("option");
+            var option = document.createElement('option');
             option.value = array[i];
             option.text = array[i];
-            if (array[i] == "NO") {
+            if (array[i] == 'NO') {
                 option.setAttribute('selected', 'selected');
             }
             io3.appendChild(option);
@@ -60,7 +72,7 @@
 
         //---------------------------------------------
 
-        var ip = document.createTextNode(" Precio: ");
+        var ip = document.createTextNode(' Precio: ');
 
         var ip3 = document.createElement('INPUT');
         ip3.setAttribute('type', 'number');
@@ -69,11 +81,11 @@
         ip3.setAttribute('step', 'any');
         ip3.setAttribute('Style', 'width:60Px');
 
-        var ie = document.createTextNode("€");
+        var ie = document.createTextNode('€');
         //var hr = document.createElement('HR');
         
 
-        /*var wrapper = document.getElementById("divWrapper");
+        /*var wrapper = document.getElementById('divWrapper');
         wrapper.appendChild(hr);
         wrapper.appendChild(ic);
         wrapper.appendChild(ic1);
@@ -99,14 +111,115 @@
         tr.appendChild(td1);
         tr.appendChild(td2);
         tr.appendChild(td3);
-        var wrapper = document.getElementById("myTable");
+        var wrapper = document.getElementById('myTable');
+        wrapper.appendChild(tr);
+
+        nu = nu+1;
+     }</script>";
+ 
+    ?>
+    <!--<script type="text/javascript">
+    var nu = 2;
+    function myFunction() {
+
+        var ic = document.createTextNode('Cantidad: ');
+
+        var ic1 = document.createElement('INPUT');
+        ic1.setAttribute('type', 'number');
+        ic1.setAttribute('name', 'cant'+nu);
+        ic1.setAttribute('value', '1');
+        ic1.setAttribute('Style', 'width:40Px');
+
+        //---------------------------------------------
+
+        var io = document.createTextNode(' Concepto: ');
+
+        var io3 = document.createElement('select');
+        //io3.id = 'mySelect';
+        //io3.setAttribute('id', 'show'+nu);
+        io3.setAttribute('name', 'conce'+nu);
+        io3.setAttribute('onchange', 'change(this,'+nu+')');
+
+        var no = document.createElement('option');
+        no.value = 'No';
+        no.text = 'No';
+        no.setAttribute('selected', 'selected');
+        io3.appendChild(no);
+
+        var yes = document.createElement('option');
+        yes.value = '1';
+        yes.text = 'Otro';
+        io3.appendChild(yes);
+        
+        //Create array of options to be added
+        //var array = ['YES','NO'];
+        //Create and append the options
+        /*for (var i = 0; i < array.length; i++) {
+            var option = document.createElement('option');
+            option.value = array[i];
+            option.text = array[i];
+            if (array[i] == 'NO') {
+                option.setAttribute('selected', 'selected');
+            }
+            io3.appendChild(option);
+        }*/
+
+        var io2 = document.createElement('TEXTAREA');
+        io2.setAttribute('id', 'text_area'+nu);
+        io2.setAttribute('name', 'concepto'+nu);
+        io2.setAttribute('cols', '50');
+        io2.setAttribute('rows', '1');
+        io2.setAttribute('style', 'display: none');
+
+        //---------------------------------------------
+
+        var ip = document.createTextNode(' Precio: ');
+
+        var ip3 = document.createElement('INPUT');
+        ip3.setAttribute('type', 'number');
+        ip3.setAttribute('id', 'precio'+nu);
+        ip3.setAttribute('name', 'precio'+nu);
+        ip3.setAttribute('step', 'any');
+        ip3.setAttribute('Style', 'width:60Px');
+
+        var ie = document.createTextNode('€');
+        //var hr = document.createElement('HR');
+        
+
+        /*var wrapper = document.getElementById('divWrapper');
+        wrapper.appendChild(hr);
+        wrapper.appendChild(ic);
+        wrapper.appendChild(ic1);
+        wrapper.appendChild(io);
+        wrapper.appendChild(io3);
+        wrapper.appendChild(io2);
+        wrapper.appendChild(ip);
+        wrapper.appendChild(ip3);
+        wrapper.appendChild(ie);*/
+
+        var tr = document.createElement('TR');
+        var td1 = document.createElement('TD');
+        var td2 = document.createElement('TD');
+        var td3 = document.createElement('TD');
+        td1.appendChild(ic);
+        td1.appendChild(ic1);
+        td2.appendChild(io);
+        td2.appendChild(io3);
+        td2.appendChild(io2);
+        td3.appendChild(ip);
+        td3.appendChild(ip3);
+        td3.appendChild(ie);
+        tr.appendChild(td1);
+        tr.appendChild(td2);
+        tr.appendChild(td3);
+        var wrapper = document.getElementById('myTable');
         wrapper.appendChild(tr);
 
         nu = nu+1;    
     }
 
 
-    </script>
+    </script>-->
 
     <script type="text/javascript">function change(obj,nue) {
         var selectBox = obj;
@@ -148,7 +261,7 @@
             <tr>
                 <td><label>Cantidad:</label> <input type="number" name="cant1" value="1" Style="width:40Px"/> </td>
                 <td><label>Concepto:</label> 
-                <select id="mySelect" name="conce1" onchange="change(this,1)">
+                <select name="conce1" onchange="change(this,1)">
                     <option selected="selected"></option>
                     <option value="1">Otro</option>
                     <?php
