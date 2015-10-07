@@ -1,122 +1,141 @@
 <html>
 <head><title>Añadir factura</title></head>
 <body>
+    <?php
+    $dp = mysql_connect("localhost", "root", "" );
+    mysql_select_db("facturas", $dp);
+    ?>
     <script type="text/javascript">
     var nu = 2;
-function myFunction() {
+    function myFunction() {
 
-    var ic = document.createTextNode("Cantidad: ");
+        var ic = document.createTextNode("Cantidad: ");
 
-    var ic1 = document.createElement('INPUT');
-    ic1.setAttribute('type', 'number');
-    ic1.setAttribute('name', 'cant'+nu);
-    ic1.setAttribute('value', '1');
-    ic1.setAttribute('Style', 'width:40Px');
+        var ic1 = document.createElement('INPUT');
+        ic1.setAttribute('type', 'number');
+        ic1.setAttribute('name', 'cant'+nu);
+        ic1.setAttribute('value', '1');
+        ic1.setAttribute('Style', 'width:40Px');
 
-    //---------------------------------------------
+        //---------------------------------------------
 
-    var io = document.createTextNode(" Concepto: ");
+        var io = document.createTextNode(" Concepto: ");
 
-    var io3 = document.createElement("select");
-    //io3.id = "mySelect";
-    //io3.setAttribute('id', 'show'+nu);
-    io3.setAttribute('name', 'conce'+nu);
-    io3.setAttribute('onchange', 'change(this,'+nu+')');
+        var io3 = document.createElement("select");
+        //io3.id = "mySelect";
+        //io3.setAttribute('id', 'show'+nu);
+        io3.setAttribute('name', 'conce'+nu);
+        io3.setAttribute('onchange', 'change(this,'+nu+')');
 
-    var no = document.createElement("option");
-    no.value = "No";
-    no.text = "No";
-    no.setAttribute('selected', 'selected');
-    io3.appendChild(no);
+        var no = document.createElement("option");
+        no.value = "No";
+        no.text = "No";
+        no.setAttribute('selected', 'selected');
+        io3.appendChild(no);
 
-    var yes = document.createElement("option");
-    yes.value = "1";
-    yes.text = "Yes";
-    io3.appendChild(yes);
-    
-    //Create array of options to be added
-    //var array = ["YES","NO"];
-    //Create and append the options
-    /*for (var i = 0; i < array.length; i++) {
-        var option = document.createElement("option");
-        option.value = array[i];
-        option.text = array[i];
-        if (array[i] == "NO") {
-            option.setAttribute('selected', 'selected');
-        }
-        io3.appendChild(option);
-    }*/
+        var yes = document.createElement("option");
+        yes.value = "1";
+        yes.text = "Otro";
+        io3.appendChild(yes);
+        
+        //Create array of options to be added
+        //var array = ["YES","NO"];
+        //Create and append the options
+        /*for (var i = 0; i < array.length; i++) {
+            var option = document.createElement("option");
+            option.value = array[i];
+            option.text = array[i];
+            if (array[i] == "NO") {
+                option.setAttribute('selected', 'selected');
+            }
+            io3.appendChild(option);
+        }*/
 
-    var io2 = document.createElement('TEXTAREA');
-    io2.setAttribute('id', 'text_area'+nu);
-    io2.setAttribute('name', 'concepto'+nu);
-    io2.setAttribute('cols', '50');
-    io2.setAttribute('rows', '1');
-    io2.setAttribute('style', 'display: none');
+        var io2 = document.createElement('TEXTAREA');
+        io2.setAttribute('id', 'text_area'+nu);
+        io2.setAttribute('name', 'concepto'+nu);
+        io2.setAttribute('cols', '50');
+        io2.setAttribute('rows', '1');
+        io2.setAttribute('style', 'display: none');
 
-    //---------------------------------------------
+        //---------------------------------------------
 
-    var ip = document.createTextNode(" Precio: ");
+        var ip = document.createTextNode(" Precio: ");
 
-    var ip3 = document.createElement('INPUT');
-    ip3.setAttribute('type', 'number');
-    ip3.setAttribute('name', 'precio'+nu);
-    ip3.setAttribute('step', 'any');
-    ip3.setAttribute('Style', 'width:60Px');
+        var ip3 = document.createElement('INPUT');
+        ip3.setAttribute('type', 'number');
+        ip3.setAttribute('id', 'precio'+nu);
+        ip3.setAttribute('name', 'precio'+nu);
+        ip3.setAttribute('step', 'any');
+        ip3.setAttribute('Style', 'width:60Px');
 
-    var ie = document.createTextNode("€");
-    //var hr = document.createElement('HR');
-    
+        var ie = document.createTextNode("€");
+        //var hr = document.createElement('HR');
+        
 
-    /*var wrapper = document.getElementById("divWrapper");
-    wrapper.appendChild(hr);
-    wrapper.appendChild(ic);
-    wrapper.appendChild(ic1);
-    wrapper.appendChild(io);
-    wrapper.appendChild(io3);
-    wrapper.appendChild(io2);
-    wrapper.appendChild(ip);
-    wrapper.appendChild(ip3);
-    wrapper.appendChild(ie);*/
+        /*var wrapper = document.getElementById("divWrapper");
+        wrapper.appendChild(hr);
+        wrapper.appendChild(ic);
+        wrapper.appendChild(ic1);
+        wrapper.appendChild(io);
+        wrapper.appendChild(io3);
+        wrapper.appendChild(io2);
+        wrapper.appendChild(ip);
+        wrapper.appendChild(ip3);
+        wrapper.appendChild(ie);*/
 
-    var tr = document.createElement('TR');
-    var td1 = document.createElement('TD');
-    var td2 = document.createElement('TD');
-    var td3 = document.createElement('TD');
-    td1.appendChild(ic);
-    td1.appendChild(ic1);
-    td2.appendChild(io);
-    td2.appendChild(io3);
-    td2.appendChild(io2);
-    td3.appendChild(ip);
-    td3.appendChild(ip3);
-    td3.appendChild(ie);
-    tr.appendChild(td1);
-    tr.appendChild(td2);
-    tr.appendChild(td3);
-    var wrapper = document.getElementById("myTable");
-    wrapper.appendChild(tr);
+        var tr = document.createElement('TR');
+        var td1 = document.createElement('TD');
+        var td2 = document.createElement('TD');
+        var td3 = document.createElement('TD');
+        td1.appendChild(ic);
+        td1.appendChild(ic1);
+        td2.appendChild(io);
+        td2.appendChild(io3);
+        td2.appendChild(io2);
+        td3.appendChild(ip);
+        td3.appendChild(ip3);
+        td3.appendChild(ie);
+        tr.appendChild(td1);
+        tr.appendChild(td2);
+        tr.appendChild(td3);
+        var wrapper = document.getElementById("myTable");
+        wrapper.appendChild(tr);
 
-    nu = nu+1;
-
-
-    
-}
-
-function change(obj,nue) {
-    var selectBox = obj;
-    var nue = nue;
-    var selected = selectBox.options[selectBox.selectedIndex].value;
-    var textarea = document.getElementById("text_area"+nue);
-
-    if(selected === "1"){
-        textarea.style.display = "block";
+        nu = nu+1;    
     }
-    else{
-        textarea.style.display = "none";
-    }
-}
+
+
     </script>
+    <?php
+    echo "
+    <script type=\"text/javascript\">function change(obj,nue) {
+        var selectBox = obj;
+        var nue = nue;
+        var selected = selectBox.options[selectBox.selectedIndex].value;
+        var textarea = document.getElementById(\"text_area\"+nue);
+        //document.cookie = 'cookieN='+selected';';
+
+        if(selected === \"1\"){
+            textarea.style.display = \"block\";
+        }
+        else{
+            textarea.style.display = \"none\";
+        }";
+        //if(isset($_COOKIE['cookieN'])) $selecte = $_COOKIE['cookieN'];
+        //$sql2 = 'SELECT precio FROM conceptos WHERE concepto="'.$selecte.'"';
+        $sql2 = 'SELECT precio FROM conceptos WHERE concepto="aa"';
+        $cons2 = mysql_query($sql2);
+        while ($data = mysql_fetch_array($cons2)) {
+            $precio[] = $data['precio'];
+        };
+        //echo "var precio = '$selecte';
+        echo "var precio = '$precio[0]';
+        
+        document.getElementById(\"precio\"+nue).value = precio;
+    }</script>";
+
+    ?>
 
     <style type="text/css">
         table { border: 1px solid black; border-collapse: collapse }
@@ -143,10 +162,17 @@ function change(obj,nue) {
                 <td><label>Cantidad:</label> <input type="number" name="cant1" value="1" Style="width:40Px"/> </td>
                 <td><label>Concepto:</label> 
                 <select name="conce1" onchange="change(this,1)">
-                    <option value="1">Yes</option>
-                    <option value="No" selected="selected">No</option>
+                    <option selected="selected"></option>
+                    <option value="1">Otro</option>
+                    <?php
+                    $sql = "SELECT * FROM conceptos";
+                    $cons = mysql_query($sql);
+                    while ($row = mysql_fetch_assoc($cons)) {
+                        print("<option value='".$row[concepto]."'>$row[concepto]</option>");
+                    }
+                    ?>
                 </select><textarea id="text_area1" name="concepto1" rows="1" cols="50" style="display: none"></textarea></td>
-                <td><label>Precio:</label> <input type="number" name="precio1" step="any" Style="width:60Px"/>€</td>
+                <td><label>Precio:</label> <input id="precio1" type="text" name="precio1" step="any" Style="width:60Px" value=""/>€</td>
             </tr>
             <!--<br>Cantidad: <input type="number" name="cant1" value="1" Style="width:40Px"/> Concepto: <textarea name="concepto1" rows="1" cols="50"></textarea> Precio: <input type="number" name="precio1" step="any" Style="width:60Px"/>€<br>-->
             <!--<br>Cantidad: <input type="number" name="cant1" Style="width:40Px"/> Concepto: <input type="text" name="concepto1" size="50"/> Precio: <input type="number" name="precio1" step="any" Style="width:60Px"/>€<br>-->
@@ -513,6 +539,8 @@ echo "La factura ".$numero.".xlsx se ha creado correctamente.";
 //echo date('H:i:s') , " File written to " , str_replace('.php', '.xlsx', pathinfo(__FILE__, PATHINFO_BASENAME)) , EOL;
 
 }
+
+mysql_close($dp);
 ?>
 </body>
 </html>
