@@ -114,7 +114,7 @@
         var nue = nue;
         var selected = selectBox.options[selectBox.selectedIndex].value;
         var textarea = document.getElementById(\"text_area\"+nue);
-        //document.cookie = 'cookieN='+selected';';
+        document.cookie = 'cookieN='+selected+';';
 
         if(selected === \"1\"){
             textarea.style.display = \"block\";
@@ -122,9 +122,9 @@
         else{
             textarea.style.display = \"none\";
         }";
-        //if(isset($_COOKIE['cookieN'])) $selecte = $_COOKIE['cookieN'];
-        //$sql2 = 'SELECT precio FROM conceptos WHERE concepto="'.$selecte.'"';
-        $sql2 = 'SELECT precio FROM conceptos WHERE concepto="aa"';
+        if(isset($_COOKIE['cookieN'])) $selecte = $_COOKIE['cookieN'];
+        $sql2 = 'SELECT precio FROM conceptos WHERE concepto="'.$selecte.'"';
+        //$sql2 = 'SELECT precio FROM conceptos WHERE concepto="aa"';
         $cons2 = mysql_query($sql2);
         while ($data = mysql_fetch_array($cons2)) {
             $precio[] = $data['precio'];
@@ -133,6 +133,7 @@
         echo "var precio = '$precio[0]';
         
         document.getElementById(\"precio\"+nue).value = precio;
+        createCookie('cookieN',\"\",-1);
     }</script>";
 
     ?>
