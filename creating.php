@@ -477,6 +477,8 @@ $objPHPExcel->setActiveSheetIndex(0)
                         $conc = explode('|', $_POST['conce'.$a]);
                         $concepto = $conc[0];
                     }
+                    $concepto = trim(preg_replace('/\s\s+/', ' ', $concepto));
+                    //$concepto = str_replace("\n"," ",$concepto);
                     $letras = strlen($concepto); //47
 
 

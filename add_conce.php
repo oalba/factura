@@ -35,7 +35,8 @@ Añadir concepto: <br/><br/>
 if(isset($_POST['guardar'])){
     $conce = $_POST['concepto'];
     $precio = $_POST['precio'];
-    
+    $conce = trim(preg_replace('/\s\s+/', ' ', $conce));
+
     $dp = mysql_connect("localhost", "root", "" );
 	mysql_select_db("facturas", $dp);
 

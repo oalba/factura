@@ -37,6 +37,7 @@ if(isset($_POST['guardar'])){
 //$tlf = $_POST['telephone'];
 $concepto = $_POST['concepto'];
 $precio = $_POST['precio'];
+$concepto = trim(preg_replace('/\s\s+/', ' ', $concepto));
 
 $aldatu="UPDATE conceptos SET concepto='$concepto',precio='$precio' WHERE cod_con=$data";
 mysql_query($aldatu);
