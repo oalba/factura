@@ -59,8 +59,8 @@ if(isset($_POST['guardar'])){
             echo ">";
             echo "<td>$row[concepto]</td>";
             echo "<td>$row[precio]€</td>";
-            echo "<td><a href=\"edit_conce.php?concepto=$row[concepto]\"><input type=\"button\" value=\"Edit\"></a></td>";
-            echo "<td><button onclick=\"seguro($row[concepto]);\">Delete</button></td>";
+            echo "<td><a href=\"edit_conce.php?concepto=$row[cod_con]\"><input type=\"button\" value=\"Editar\"></a></td>";
+            //echo "<td><button onclick=\"seguro($row[cod_con]);\">Delete</button></td>";
             echo "</tr>";
             $num_fila++;
         }

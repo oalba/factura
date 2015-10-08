@@ -245,7 +245,7 @@
     <form enctype="multipart/form-data" action="" method="post">
         Fecha: <input type="date" name="fecha" value="<?php echo date('Y-m-d'); ?>"/><br><br>
 
-        Nº de factura: <input type="number" name="num"/><br><br>
+        Nº de factura: <input type="number" name="num" required/><br><br>
 
         <!--Método de pago: <input type="text" name="pago"/><br><br>-->
         <!--Método de pago: 

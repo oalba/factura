@@ -16,11 +16,12 @@ email varchar(100),
 datos varchar(100));
 
 CREATE TABLE conceptos
-(concepto varchar(500) primary key,
+(cod_con integer unsigned AUTO_INCREMENT primary key,
+concepto varchar(5000),
 precio decimal(4,2));
 
 CREATE TABLE tener_f_c
-(concepto varchar(500),
+(concepto varchar(5000),
 cod_fac integer unsigned,
 cantidad integer,
 precio_u integer,

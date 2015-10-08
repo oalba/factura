@@ -1,0 +1,111 @@
+<?php
+        $selected = "<script> document.write(selected) </script>";
+        $sql = "SELECT * FROM conceptos WHERE concepto='$selected'";
+        $cons = mysql_query($sql);
+        while ($row = mysql_fetch_assoc($cons)) {
+            $precio = $row[precio];
+        }
+        ?>
+
+        var precio = "<?php
+        $selected = 'aa';
+        $sql = 'SELECT * FROM conceptos WHERE concepto=\'$selected\'';
+        $cons = mysql_query($sql);
+        while ($row = mysql_fetch_assoc($cons)) {
+            $precio = $row[precio];
+        }
+        echo $precio;
+        ?>" ;
+
+
+                $sql2 = 'SELECT precio FROM conceptos WHERE concepto=\'$selecte\'';
+        $cons2 = mysql_query($sql2);
+        while ($row2 = mysql_fetch_assoc($cons2)) {
+            $precio = $row2[precio];
+        }
+
+
+        var precio = "<?php
+        $precio = '3';
+        echo $precio;
+        ?>" ;
+        document.getElementById("precio"+nue).value = precio;
+
+
+        var precio = "<?php
+        $selecte = 'aa';
+        //$a = array();
+        //$sql2 = 'SELECT * FROM conceptos WHERE concepto=\'$selecte\'';
+        $cons2 = mysql_query('SELECT * FROM conceptos WHERE concepto=\'$selecte\'');
+        //while ($data = mysql_fetch_array($cons2)) {
+            //echo $data[0];
+        //}
+        //echo json_encode($a);
+        //$precio = '2';
+        //echo $precio;
+        ?>";
+
+
+        //document.cookie = 'cookieN='+selected+';';
+        //if (isset($_COOKIE['cookieN'])) $selecte = $_COOKIE['cookieN'];
+        //if (isset($_COOKIE['cookieN'])) {
+        //unset($_COOKIE['cookieN']);
+        //setcookie('cookieN', null, -1);}
+
+
+
+
+        <?php
+    echo "
+    <script type=\"text/javascript\">function change(obj,nue) {
+        var selectBox = obj;
+        var nue = nue;
+        var selected = selectBox.options[selectBox.selectedIndex].value;
+        var textarea = document.getElementById(\"text_area\"+nue);
+        document.cookie = 'cookieN='+selected+';';
+        //var precioin = document.getElementById(\"precio\"+nue);
+
+        if(selected === \"1\"){
+            textarea.style.display = \"block\";
+        }
+        else{
+            textarea.style.display = \"none\";
+        }";
+        $selecte = $_COOKIE['cookieN'];
+        //$sql2 = 'SELECT precio FROM conceptos WHERE concepto="'.$selecte.'"';
+        $sql2 = 'SELECT precio FROM conceptos WHERE concepto="aa"';
+        $cons2 = mysql_query($sql2);
+        while ($data = mysql_fetch_array($cons2)) {
+            $precio[] = $data['precio'];
+        };
+        //echo "var precio = '$selecte';
+        echo "var precio = '$precio[0]';
+        
+        document.getElementById(\"precio\"+nue).value = precio;
+    }</script>";
+
+    ?>
+
+
+
+
+
+
+        <?php
+        $selecte = 'aa';
+        $a = array();
+        $sql2 = 'SELECT * FROM conceptos WHERE concepto="$selecte"';
+        $cons2 = mysql_query($sql2);
+        while ($data = mysql_fetch_assoc($cons2)) {
+            ?>
+                var precio='<?php echo json_encode($data["precio"]);?>';
+            <?php
+            //echo $data[0];
+        }
+        //echo json_encode($a);
+        //$precio = '2';
+        //echo $precio;
+        ?>
+        
+        
+        document.getElementById("precio"+nue).value = precio;
