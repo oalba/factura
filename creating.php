@@ -396,6 +396,8 @@ $worksheet->getColumnDimension('E')->setWidth(13);
 $worksheet->getColumnDimension('G')->setWidth(11);
 
 $worksheet->getRowDimension(46)->setRowHeight(45);
+//$worksheet->getRowDimension(46)->setRowHeight(-1);
+//$excel->getActiveSheet()->getRowDimension($_row_number)->setRowHeight(-1);
 
 //Centrando texto - Text alignement
 $worksheet->getStyle('A1:A7')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
@@ -409,7 +411,9 @@ $worksheet->getStyle('A10')->getAlignment()->setHorizontal(PHPExcel_Style_Alignm
 $worksheet->getStyle('F10')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
 $worksheet->getStyle('E10')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
 $worksheet->getStyle('E44')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+$worksheet->getStyle('E2:G6')->getAlignment()->setWrapText(true);
 $worksheet->getStyle('A46')->getAlignment()->setWrapText(true);
+$worksheet->getStyle('A13:G41')->getAlignment()->setWrapText(true);
 
 //Cambiando tipo de letra, tamaño, ... - Changing letter type, size, ...
 $worksheet->getStyle('A1')->getFont()->setName('Britannic Bold')->setSize(13)->setBold(true);
@@ -474,17 +478,39 @@ $objPHPExcel->setActiveSheetIndex(0)
                         $concepto = $conc[0];
                     }
                     $letras = strlen($concepto); //47
+
+
+                    
+    
+
+
 if ($letras > 47){
     /*$z = $letras / 47;
     $r = $letras % 47;
     if ($z > 1 && $r != 0) {
         $z++;
     }*/
+
+
+
     for ($t=1; $t<=30; $t++){
         if ($letras > (47*$t)){
             $s = $i + $t;
         }
     }
+
+    /*$rc = 0;
+    $line = explode(PHP_EOL, $concepto);
+    foreach($line as $source) {
+        for ($t=1; $t<=30; $t++){
+            if ($source > (47*$t)){
+                $s = $i + $t;
+            }
+        }
+        $rc++;
+    }
+    $s = $i + $rc;*/
+
     /*if ($letras > 47){
         $s = $i + 1;
         if ($letras > (47*2)){
@@ -577,7 +603,7 @@ if ($letras > 47){
     }*/
     $objPHPExcel->setActiveSheetIndex(0)->mergeCells('A'.$i.':A'.$s);
     $objPHPExcel->setActiveSheetIndex(0)->mergeCells('B'.$i.':E'.$s);
-    $worksheet->getStyle('B'.$i)->getAlignment()->setWrapText(true);
+    //$worksheet->getStyle('B'.$i)->getAlignment()->setWrapText(true);
     $objPHPExcel->setActiveSheetIndex(0)->mergeCells('F'.$i.':F'.$s);
     $objPHPExcel->setActiveSheetIndex(0)->mergeCells('G'.$i.':G'.$s);
 
@@ -587,7 +613,7 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('F'.$i, $_POST['precio'.$a]);
 
             $i++;
-            }elseif ($letras != 0) {
+            } elseif ($letras != 0) {
 $objPHPExcel->setActiveSheetIndex(0)->mergeCells('B'.$i.':E'.$i);
 $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('A'.$i, $_POST['cant'.$a])
