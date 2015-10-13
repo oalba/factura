@@ -5,15 +5,12 @@ CREATE TABLE facturas
 (cod_fac integer unsigned primary key,
 fecha date,
 IVA integer unsigned,
-cod_cli integer unsigned);
+cif varchar(50));
 
 CREATE TABLE clientes
-(cod_cli integer unsigned primary key AUTO_INCREMENT,
+(cif varchar(50) primary key,
 nombre varchar(100),
-direccion varchar(100),
-telefono integer,
-email varchar(100),
-datos varchar(100));
+cuenta integer);
 
 CREATE TABLE conceptos
 (cod_con integer unsigned AUTO_INCREMENT primary key,
@@ -21,7 +18,7 @@ concepto varchar(5000),
 precio decimal(4,2));
 
 CREATE TABLE tener_f_c
-(concepto varchar(5000),
+(concepto varchar(600),
 cod_fac integer unsigned,
 cantidad integer,
 precio_u integer,
