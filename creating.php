@@ -221,7 +221,8 @@
 
     </script>-->
 
-    <script type="text/javascript">function change(obj,nue) {
+    <script type="text/javascript">
+    function change(obj,nue) {
         var selectBox = obj;
         var nue = nue;
         var selected = selectBox.options[selectBox.selectedIndex].value;
@@ -235,7 +236,24 @@
             textarea.style.display = "none";
         }
         document.getElementById("precio"+nue).value = sele[1];
-    }</script>
+    }
+
+    function changeCli(obj) {
+        var selectBox = obj;
+        var nue = nue;
+        var selected = selectBox.options[selectBox.selectedIndex].value;
+        var sele = selected.split("|");
+        var textarea = document.getElementById("cliente1");
+
+        if(sele[0] === "1"){
+            textarea.style.display = "block";
+        }
+        else{
+            textarea.style.display = "none";
+        }
+        //document.getElementById("precio"+nue).value = sele[1];
+    }
+    </script>
 
     <style type="text/css">
         table { border: 1px solid black; border-collapse: collapse }
@@ -254,7 +272,17 @@
         </select>
         <br><br>-->
         <!--Cliente: <br><input type="text" name="cli1"/><br><input type="text" name="cli2"/><br><input type="text" name="cli3"/><br><input type="text" name="cli4"/><br><input type="text" name="cli5"/><br><br>-->
-        Cliente: <br><textarea name="cli1" rows="5"></textarea><br><br>
+        <label>Cliente:</label> 
+        <select name="cli1" onchange="changeCli(this)">
+            <option selected="selected"></option>
+            <option value="1">Otro</option>
+            <?php
+            $sql = "SELECT * FROM clientes";
+            $clis = mysql_query($sql);
+            while ($row = mysql_fetch_assoc($clis)) {
+                print("<option value='".$row[nombre]."|".$row[cif]."'>$row[nombre]</option>");
+            }
+        ?><br><textarea id="cliente1" name="cliente1" rows="5" style="display: none"></textarea><br><br>
 
         Conceptos: 
         <table id="myTable">
@@ -442,9 +470,17 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('A4', 'Telf: *** *** ***  - *** *** ***')
             ->setCellValue('A5', '******* *****, ** ***** *******')
             ->setCellValue('A6', 'D.N.I **.***.***-*')
-            ->setCellValue('A7', 'E-mail: *****.****@hotmail.com')
+            ->setCellValue('A7', 'E-mail: *****.****@hotmail.com');
 
-            ->setCellValue('E2', $cli1)
+            if ($_POST['cli1'] == 1) {
+                $cliente = $_POST['cliente1'];
+            }else{
+                $cli = explode('|', $_POST['cli1']);
+                $cliente = $cli[0];
+            }
+
+$objPHPExcel->setActiveSheetIndex(0)
+            ->setCellValue('E2', $cliente)
             //->setCellValue('E3', $cli2)
             //->setCellValue('E4', $cli3)
             //->setCellValue('E5', $cli4)
