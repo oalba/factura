@@ -316,6 +316,7 @@
 <?php
 if(isset($_POST['crear'])){
     $fecha = date_format(date_create_from_format('Y-m-d', $_POST['fecha']), 'd/m/Y');
+    $insfecha = date("Y-m-d",strtotime($_POST['fecha']));
     $numero = $_POST['num'];
     //$pago = $_POST['pago'];
     $cli1 = $_POST['cli1'];
@@ -478,9 +479,13 @@ $objPHPExcel->setActiveSheetIndex(0)
 
             if ($_POST['cli1'] == 1) {
                 $cliente = $_POST['cliente1'];
+                $inscli = $_POST['cliente1'];
+                $existe = "FALSE";
             }else{
                 $cli = explode('|', $_POST['cli1']);
                 $cliente = $cli[0]."\n".$cli[1];
+                $inscli = $cli[1];
+                $existe = "TRUE";
             }
 
 $objPHPExcel->setActiveSheetIndex(0)
@@ -505,8 +510,6 @@ $objPHPExcel->setActiveSheetIndex(0)
             $a = 1;
             for ($i=13; $i<=41; $i++){
 
-    
-
                 if (isset($_POST['cant'.$a])){
                     //${"cant".$a} = $_POST['cant'.$a];
                     //${"conc".$a} = $_POST['concepto'.$a];
@@ -521,98 +524,98 @@ $objPHPExcel->setActiveSheetIndex(0)
                     //$concepto = str_replace("\n"," ",$concepto);
                     $letras = strlen($concepto); //47
 
-
-                    
-    
-
-
-if ($letras > 47){
-    /*$z = $letras / 47;
-    $r = $letras % 47;
-    if ($z > 1 && $r != 0) {
-        $z++;
-    }*/
+                    if ($letras > 47){
+                        /*$z = $letras / 47;
+                        $r = $letras % 47;
+                        if ($z > 1 && $r != 0) {
+                            $z++;
+                        }*/
 
 
 
-    for ($t=1; $t<=30; $t++){
-        if ($letras > (47*$t)){
-            $s = $i + $t;
-        }
-    }
+                        for ($t=1; $t<=30; $t++){
+                            if ($letras > (47*$t)){
+                                $s = $i + $t;
+                            }
+                        }
 
-    /*$rc = 0;
-    $line = explode(PHP_EOL, $concepto);
-    foreach($line as $source) {
-        for ($t=1; $t<=30; $t++){
-            if ($source > (47*$t)){
-                $s = $i + $t;
-            }
-        }
-        $rc++;
-    }
-    $s = $i + $rc;*/
+                        /*$rc = 0;
+                        $line = explode(PHP_EOL, $concepto);
+                        foreach($line as $source) {
+                            for ($t=1; $t<=30; $t++){
+                                if ($source > (47*$t)){
+                                    $s = $i + $t;
+                                }
+                            }
+                            $rc++;
+                        }
+                        $s = $i + $rc;*/
 
-    /*if ($letras > 47){
-        $s = $i + 1;
-        if ($letras > (47*2)){
-            $s++;
-            if ($letras > (47*3)){
-                $s++;
-                if ($letras > (47*4)){
-                    $s++;
-                    if ($letras > (47*5)){
-                        $s++;
-                        if ($letras > (47*6)){
-                            $s++;
-                            if ($letras > (47*7)){
+                        /*if ($letras > 47){
+                            $s = $i + 1;
+                            if ($letras > (47*2)){
                                 $s++;
-                                if ($letras > (47*8)){
+                                if ($letras > (47*3)){
                                     $s++;
-                                    if ($letras > (47*9)){
+                                    if ($letras > (47*4)){
                                         $s++;
-                                        if ($letras > (47*10)){
+                                        if ($letras > (47*5)){
                                             $s++;
-                                            if ($letras > (47*11)){
+                                            if ($letras > (47*6)){
                                                 $s++;
-                                                if ($letras > (47*12)){
+                                                if ($letras > (47*7)){
                                                     $s++;
-                                                    if ($letras > (47*13)){
+                                                    if ($letras > (47*8)){
                                                         $s++;
-                                                        if ($letras > (47*14)){
+                                                        if ($letras > (47*9)){
                                                             $s++;
-                                                            if ($letras > (47*15)){
+                                                            if ($letras > (47*10)){
                                                                 $s++;
-                                                                if ($letras > (47*16)){
+                                                                if ($letras > (47*11)){
                                                                     $s++;
-                                                                    if ($letras > (47*17)){
+                                                                    if ($letras > (47*12)){
                                                                         $s++;
-                                                                        if ($letras > (47*18)){
+                                                                        if ($letras > (47*13)){
                                                                             $s++;
-                                                                            if ($letras > (47*19)){
+                                                                            if ($letras > (47*14)){
                                                                                 $s++;
-                                                                                if ($letras > (47*20)){
+                                                                                if ($letras > (47*15)){
                                                                                     $s++;
-                                                                                    if ($letras > (47*21)){
+                                                                                    if ($letras > (47*16)){
                                                                                         $s++;
-                                                                                        if ($letras > (47*22)){
+                                                                                        if ($letras > (47*17)){
                                                                                             $s++;
-                                                                                            if ($letras > (47*23)){
+                                                                                            if ($letras > (47*18)){
                                                                                                 $s++;
-                                                                                                if ($letras > (47*24)){
+                                                                                                if ($letras > (47*19)){
                                                                                                     $s++;
-                                                                                                    if ($letras > (47*25)){
+                                                                                                    if ($letras > (47*20)){
                                                                                                         $s++;
-                                                                                                        if ($letras > (47*26)){
+                                                                                                        if ($letras > (47*21)){
                                                                                                             $s++;
-                                                                                                            if ($letras > (47*27)){
+                                                                                                            if ($letras > (47*22)){
                                                                                                                 $s++;
-                                                                                                                if ($letras > (47*28)){
+                                                                                                                if ($letras > (47*23)){
                                                                                                                     $s++;
-                                                                                                                    if ($letras > (47*29)){
+                                                                                                                    if ($letras > (47*24)){
                                                                                                                         $s++;
-                                                                                                                        if ($letras > (47*30)){
+                                                                                                                        if ($letras > (47*25)){
                                                                                                                             $s++;
+                                                                                                                            if ($letras > (47*26)){
+                                                                                                                                $s++;
+                                                                                                                                if ($letras > (47*27)){
+                                                                                                                                    $s++;
+                                                                                                                                    if ($letras > (47*28)){
+                                                                                                                                        $s++;
+                                                                                                                                        if ($letras > (47*29)){
+                                                                                                                                            $s++;
+                                                                                                                                            if ($letras > (47*30)){
+                                                                                                                                                $s++;
+                                                                                                                                            }
+                                                                                                                                        }
+                                                                                                                                    }
+                                                                                                                                }
+                                                                                                                            }
                                                                                                                         }
                                                                                                                     }
                                                                                                                 }
@@ -627,41 +630,47 @@ if ($letras > 47){
                                                                             }
                                                                         }
                                                                     }
-                                                                }
+                                                                }                                                            
                                                             }
                                                         }
                                                     }
                                                 }
-                                            }                                                            
+                                            }
                                         }
                                     }
                                 }
                             }
-                        }
+                        }*/
+                        $objPHPExcel->setActiveSheetIndex(0)->mergeCells('A'.$i.':A'.$s);
+                        $objPHPExcel->setActiveSheetIndex(0)->mergeCells('B'.$i.':E'.$s);
+                        //$worksheet->getStyle('B'.$i)->getAlignment()->setWrapText(true);
+                        $objPHPExcel->setActiveSheetIndex(0)->mergeCells('F'.$i.':F'.$s);
+                        $objPHPExcel->setActiveSheetIndex(0)->mergeCells('G'.$i.':G'.$s);
+
+                        $canti = $_POST['cant'.$a];
+                        $preci = $_POST['precio'.$a];
+
+                        $objPHPExcel->setActiveSheetIndex(0)
+                                    ->setCellValue('A'.$i, $_POST['cant'.$a])
+                                    ->setCellValue('B'.$i, '    '.$concepto)
+                                    ->setCellValue('F'.$i, $_POST['precio'.$a]);
+                        $insertcon = "INSERT INTO tener_f_c (concepto,cod_fac,cantidad,precio_u) VALUES ('$concepto',$numero,$canti,$preci)";
+                        mysql_query($insertcon);
+
+                        $i++;
+                    } elseif ($letras != 0) {
+                        $objPHPExcel->setActiveSheetIndex(0)->mergeCells('B'.$i.':E'.$i);
+
+                        $canti = $_POST['cant'.$a];
+                        $preci = $_POST['precio'.$a];
+
+                        $objPHPExcel->setActiveSheetIndex(0)
+                            ->setCellValue('A'.$i, $_POST['cant'.$a])
+                            ->setCellValue('B'.$i, '    '.$concepto)
+                            ->setCellValue('F'.$i, $_POST['precio'.$a]);
+                        $insertcon = "INSERT INTO tener_f_c (concepto,cod_fac,cantidad,precio_u) VALUES ('$concepto',$numero,$canti,$preci)";
+                        mysql_query($insertcon);
                     }
-                }
-            }
-        }
-    }*/
-    $objPHPExcel->setActiveSheetIndex(0)->mergeCells('A'.$i.':A'.$s);
-    $objPHPExcel->setActiveSheetIndex(0)->mergeCells('B'.$i.':E'.$s);
-    //$worksheet->getStyle('B'.$i)->getAlignment()->setWrapText(true);
-    $objPHPExcel->setActiveSheetIndex(0)->mergeCells('F'.$i.':F'.$s);
-    $objPHPExcel->setActiveSheetIndex(0)->mergeCells('G'.$i.':G'.$s);
-
-$objPHPExcel->setActiveSheetIndex(0)
-            ->setCellValue('A'.$i, $_POST['cant'.$a])
-            ->setCellValue('B'.$i, '    '.$concepto)
-            ->setCellValue('F'.$i, $_POST['precio'.$a]);
-
-            $i++;
-            } elseif ($letras != 0) {
-$objPHPExcel->setActiveSheetIndex(0)->mergeCells('B'.$i.':E'.$i);
-$objPHPExcel->setActiveSheetIndex(0)
-            ->setCellValue('A'.$i, $_POST['cant'.$a])
-            ->setCellValue('B'.$i, '    '.$concepto)
-            ->setCellValue('F'.$i, $_POST['precio'.$a]);
-            }
                 }
                 $a++;
             }            
@@ -707,7 +716,12 @@ echo "La factura ".$numero.".xlsx se ha creado correctamente.";
 
 //echo date('H:i:s') , " File written to " , str_replace('.php', '.xlsx', pathinfo(__FILE__, PATHINFO_BASENAME)) , EOL;
 
+$insertfac = "INSERT INTO facturas (cod_fac,fecha,IVA,existe_cli,cliente) VALUES ($numero,'$insfecha',$iva,$existe,'$inscli')";
+mysql_query($insertfac);
 }
+
+
+
 
 mysql_close($dp);
 ?>

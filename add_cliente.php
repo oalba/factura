@@ -5,8 +5,8 @@
 <body>
 Añadir cliente: <br/><br/>
 <form enctype='multipart/form-data' action='' method='post'>
-Dirección: <input type="text" name="direccion"/><br/><br/>
-CIF: <input type="text" name="cif"/><br/><br/>
+Dirección: <br/><textarea name="direccion" rows="5"></textarea><br/><br/>
+CIF: <input type="text" name="cif" required/><br/><br/>
 Cuenta: <input type="number" name="cuenta"/><br/><br/>
 <input type='submit' name='guardar' value='Guardar'/><br/>
 </form>

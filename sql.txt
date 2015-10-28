@@ -22,7 +22,7 @@ CREATE TABLE tener_f_c
 (concepto varchar(600),
 cod_fac integer unsigned,
 cantidad integer,
-precio_u integer,
+precio_u decimal(4,2),
 primary key(concepto, cod_fac));
 
 
