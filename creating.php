@@ -325,6 +325,12 @@ if(isset($_POST['crear'])){
     //$cli4 = $_POST['cli4'];
     //$cli5 = $_POST['cli5'];
     $iva = $_POST['iva'];
+
+    $comprobar = "SELECT * FROM facturas WHERE cod_fac=$numero";
+    $compro = mysql_query($comprobar);
+    if (mysql_num_rows($compro) != 0){
+        echo "¡ERROR! La factura con este código ya existe.";
+    }else{
     
 
 
@@ -654,7 +660,7 @@ $objPHPExcel->setActiveSheetIndex(0)
                                     ->setCellValue('A'.$i, $_POST['cant'.$a])
                                     ->setCellValue('B'.$i, '    '.$concepto)
                                     ->setCellValue('F'.$i, $_POST['precio'.$a]);
-                        $insertcon = "INSERT INTO tener_f_c (concepto,cod_fac,cantidad,precio_u) VALUES ('$concepto',$numero,$canti,$preci)";
+                        $insertcon = "INSERT INTO tener_f_c (concepto,cod_fac,cantidad,precio_u) VALUES ('$concepto',$numero,$canti,'$preci')";
                         mysql_query($insertcon);
 
                         $i++;
@@ -668,7 +674,7 @@ $objPHPExcel->setActiveSheetIndex(0)
                             ->setCellValue('A'.$i, $_POST['cant'.$a])
                             ->setCellValue('B'.$i, '    '.$concepto)
                             ->setCellValue('F'.$i, $_POST['precio'.$a]);
-                        $insertcon = "INSERT INTO tener_f_c (concepto,cod_fac,cantidad,precio_u) VALUES ('$concepto',$numero,$canti,$preci)";
+                        $insertcon = "INSERT INTO tener_f_c (concepto,cod_fac,cantidad,precio_u) VALUES ('$concepto',$numero,$canti,'$preci')";
                         mysql_query($insertcon);
                     }
                 }
@@ -718,6 +724,8 @@ echo "La factura ".$numero.".xlsx se ha creado correctamente.";
 
 $insertfac = "INSERT INTO facturas (cod_fac,fecha,IVA,existe_cli,cliente) VALUES ($numero,'$insfecha',$iva,$existe,'$inscli')";
 mysql_query($insertfac);
+}
+
 }
 
 
