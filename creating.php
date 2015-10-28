@@ -240,18 +240,22 @@
 
     function changeCli(obj) {
         var selectBox = obj;
-        var nue = nue;
         var selected = selectBox.options[selectBox.selectedIndex].value;
         var sele = selected.split("|");
         var textarea = document.getElementById("cliente1");
+        var text = document.getElementById("cif1");
 
         if(sele[0] === "1"){
             textarea.style.display = "block";
-        }
-        else{
+            text.style.display = "none";
+        }else if (sele[0] === ""){
             textarea.style.display = "none";
+            text.style.display = "none";
+        }else{
+            textarea.style.display = "none";
+            text.style.display = "block";
         }
-        //document.getElementById("precio"+nue).value = sele[1];
+        document.getElementById("cif1").value = sele[1];
     }
     </script>
 
@@ -280,9 +284,9 @@
             $sql = "SELECT * FROM clientes";
             $clis = mysql_query($sql);
             while ($row = mysql_fetch_assoc($clis)) {
-                print("<option value='".$row[nombre]."|".$row[cif]."'>$row[nombre]</option>");
+                print("<option value='".$row[direccion]."|".$row[cif]."'>$row[direccion]</option>");
             }
-        ?><br><textarea id="cliente1" name="cliente1" rows="5" style="display: none"></textarea><br><br>
+        ?><input id="cif1" type="text" name="cif1" value="" style="display: none" disabled/><textarea id="cliente1" name="cliente1" rows="5" style="display: none"></textarea><br><br>
 
         Conceptos: 
         <table id="myTable">
@@ -476,7 +480,7 @@ $objPHPExcel->setActiveSheetIndex(0)
                 $cliente = $_POST['cliente1'];
             }else{
                 $cli = explode('|', $_POST['cli1']);
-                $cliente = $cli[0];
+                $cliente = $cli[0]."\n".$cli[1];
             }
 
 $objPHPExcel->setActiveSheetIndex(0)

@@ -5,11 +5,12 @@ CREATE TABLE facturas
 (cod_fac integer unsigned primary key,
 fecha date,
 IVA integer unsigned,
-cif varchar(50));
+existe_cli boolean,
+cliente varchar(100));
 
 CREATE TABLE clientes
 (cif varchar(50) primary key,
-nombre varchar(100),
+direccion varchar(100),
 cuenta integer);
 
 CREATE TABLE conceptos
