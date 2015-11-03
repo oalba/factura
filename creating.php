@@ -286,7 +286,7 @@
             while ($row = mysql_fetch_assoc($clis)) {
                 print("<option value='".$row[direccion]."|".$row[cif]."'>$row[direccion]</option>");
             }
-        ?><input id="cif1" type="text" name="cif1" value="" style="display: none" disabled/><textarea id="cliente1" name="cliente1" rows="5" style="display: none"></textarea><br><br>
+        ?></select><input id="cif1" type="text" name="cif1" value="" style="display: none" disabled/><textarea id="cliente1" name="cliente1" rows="5" style="display: none"></textarea><br><br>
 
         Conceptos: 
         <table id="myTable">
