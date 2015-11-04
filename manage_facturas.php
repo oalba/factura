@@ -41,10 +41,10 @@
     }
     </script>
 
-    <style type="text/css">
+    <!--<style type="text/css">
         table { border: 1px solid black; border-collapse: collapse }
         td { border: 1px solid black }
-    </style>
+    </style>-->
 
     <form enctype="multipart/form-data" action="" method="post">
         <input type="checkbox" name="buscar[]" value="fecha">Fecha: <input type="date" name="fecha" value="<?php echo date('Y-m-d'); ?>"/><br><br>
@@ -102,7 +102,7 @@
         if (IsChecked('buscar','fecha')){
             $fecha = $_POST['fecha'];
             if($sele == ""){
-                $sele = "SELECT facturas.cod_fac as cod_fac,facturas.fecha as fecha, facturas.cliente as cliente, facturas.iva as iva, tener_f_c.concepto as concepto, tener_f_c.cantidad as cantidad, tener_f_c.precio_u as precio FROM facturas, tener_f_c WHERE facturas.cod_fac=tener_f_c.cod_fac AND facturas.fecha='$fecha'";
+                $sele = "SELECT facturas.cod_fac as cod_fac,facturas.fecha as fecha, facturas.cliente as cliente, facturas.existe_cli as existe, facturas.iva as iva, tener_f_c.concepto as concepto, tener_f_c.cantidad as cantidad, tener_f_c.precio_u as precio FROM facturas, tener_f_c WHERE facturas.cod_fac=tener_f_c.cod_fac AND facturas.fecha='$fecha'";
             } else {
                 $sele = $sele." AND facturas.fecha='$fecha'";
             }
@@ -111,7 +111,7 @@
         if (IsChecked('buscar','numero')){
             $numero = $_POST['num'];
             if($sele == ""){
-                $sele = "SELECT facturas.cod_fac as cod_fac,facturas.fecha as fecha, facturas.cliente as cliente, facturas.iva as iva, tener_f_c.concepto as concepto, tener_f_c.cantidad as cantidad, tener_f_c.precio_u as precio FROM facturas, tener_f_c WHERE facturas.cod_fac=tener_f_c.cod_fac AND facturas.cod_fac=$numero";
+                $sele = "SELECT facturas.cod_fac as cod_fac,facturas.fecha as fecha, facturas.cliente as cliente, facturas.existe_cli as existe, facturas.iva as iva, tener_f_c.concepto as concepto, tener_f_c.cantidad as cantidad, tener_f_c.precio_u as precio FROM facturas, tener_f_c WHERE facturas.cod_fac=tener_f_c.cod_fac AND facturas.cod_fac=$numero";
             } else {
                 $sele = $sele." AND facturas.cod_fac=$numero";
             }
@@ -121,12 +121,12 @@
             if($sele == ""){
                 if ($_POST['cli1'] == 1) {
                     $cli1 = $_POST['cli1'];
-                    $sele = "SELECT facturas.cod_fac as cod_fac,facturas.fecha as fecha, facturas.cliente as cliente, facturas.iva as iva, tener_f_c.concepto as concepto, tener_f_c.cantidad as cantidad, tener_f_c.precio_u as precio FROM facturas, tener_f_c WHERE facturas.cod_fac=tener_f_c.cod_fac AND facturas.cliente LIKE '%$cli1%'";
+                    $sele = "SELECT facturas.cod_fac as cod_fac,facturas.fecha as fecha, facturas.cliente as cliente, facturas.existe_cli as existe, facturas.iva as iva, tener_f_c.concepto as concepto, tener_f_c.cantidad as cantidad, tener_f_c.precio_u as precio FROM facturas, tener_f_c WHERE facturas.cod_fac=tener_f_c.cod_fac AND facturas.cliente LIKE '%$cli1%'";
                 } else {
                     $cli = explode('|', $_POST['cli1']);
                     $cliente = $cli[0]."\n".$cli[1];
                     $inscli = $cli[1];
-                    $sele = "SELECT facturas.cod_fac as cod_fac,facturas.fecha as fecha, facturas.cliente as cliente, facturas.iva as iva, tener_f_c.concepto as concepto, tener_f_c.cantidad as cantidad, tener_f_c.precio_u as precio FROM facturas, tener_f_c WHERE facturas.cod_fac=tener_f_c.cod_fac AND facturas.cliente='$inscli'";
+                    $sele = "SELECT facturas.cod_fac as cod_fac,facturas.fecha as fecha, facturas.cliente as cliente, facturas.existe_cli as existe, facturas.iva as iva, tener_f_c.concepto as concepto, tener_f_c.cantidad as cantidad, tener_f_c.precio_u as precio FROM facturas, tener_f_c WHERE facturas.cod_fac=tener_f_c.cod_fac AND facturas.cliente='$inscli'";
                 }
             } else {
                 if ($_POST['cli1'] == 1) {
@@ -149,25 +149,23 @@
                 $concepto = $concep;
             }
             if($sele == ""){
-                $sele = "SELECT facturas.cod_fac as cod_fac,facturas.fecha as fecha, facturas.cliente as cliente, facturas.iva as iva, tener_f_c.concepto as concepto, tener_f_c.cantidad as cantidad, tener_f_c.precio_u as precio FROM facturas, tener_f_c WHERE tener_f_c.cod_fac=facturas.cod_fac AND tener_f_c.concepto LIKE '%$concepto%'";
+                $sele = "SELECT facturas.cod_fac as cod_fac,facturas.fecha as fecha, facturas.cliente as cliente, facturas.existe_cli as existe, facturas.iva as iva, tener_f_c.concepto as concepto, tener_f_c.cantidad as cantidad, tener_f_c.precio_u as precio FROM facturas, tener_f_c WHERE tener_f_c.cod_fac=facturas.cod_fac AND tener_f_c.concepto LIKE '%$concepto%'";
             } else {
                 $sele = $sele." AND tener_f_c.cod_fac=facturas.cod_fac AND tener_f_c.concepto LIKE '%$concepto%'";
             }
         }
 
-         //"SELECT facturas.cod_fac as cod_fac,facturas.fecha as fecha, facturas.cliente as cliente, facturas.iva as iva, tener_f_c.concepto as concepto, tener_f_c.cantidad as cantidad, tener_f_c.precio_u as precio FROM facturas, tener_f_c WHERE tener_f_c.cod_fac=facturas.cod_fac and tener_f_c.concepto LIKE '%ccc%'"
-
         if (IsChecked('buscar','iva')){
             $iva = $_POST['iva'];
             if($sele == ""){
-                $sele = "SELECT facturas.cod_fac as cod_fac,facturas.fecha as fecha, facturas.cliente as cliente, facturas.iva as iva, tener_f_c.concepto as concepto, tener_f_c.cantidad as cantidad, tener_f_c.precio_u as precio FROM facturas, tener_f_c WHERE facturas.cod_fac=tener_f_c.cod_fac AND facturas.IVA=$iva";
+                $sele = "SELECT facturas.cod_fac as cod_fac,facturas.fecha as fecha, facturas.cliente as cliente, facturas.existe_cli as existe, facturas.iva as iva, tener_f_c.concepto as concepto, tener_f_c.cantidad as cantidad, tener_f_c.precio_u as precio FROM facturas, tener_f_c WHERE facturas.cod_fac=tener_f_c.cod_fac AND facturas.IVA=$iva";
             } else {
                 $sele = $sele." AND facturas.IVA=$iva";
             }
         }
 
         if (!IsChecked('buscar','fecha') && !IsChecked('buscar','numero') && !IsChecked('buscar','cliente') && !IsChecked('buscar','concepto') && !IsChecked('buscar','iva')) {
-            $sele = $sele = "SELECT facturas.cod_fac as cod_fac,facturas.fecha as fecha, facturas.cliente as cliente, facturas.iva as iva, tener_f_c.concepto as concepto, tener_f_c.cantidad as cantidad, tener_f_c.precio_u as precio FROM facturas, tener_f_c WHERE facturas.cod_fac=tener_f_c.cod_fac";
+            $sele = $sele = "SELECT facturas.cod_fac as cod_fac,facturas.fecha as fecha, facturas.cliente as cliente, facturas.existe_cli as existe, facturas.iva as iva, tener_f_c.concepto as concepto, tener_f_c.cantidad as cantidad, tener_f_c.precio_u as precio FROM facturas, tener_f_c WHERE facturas.cod_fac=tener_f_c.cod_fac";
             echo "¡ATENCIÓN! ¡Puede que te hayas olvidado de seleccionar los CheckBox!<br/><br/>";
         }
         $sele = $sele." GROUP BY facturas.cod_fac ORDER BY facturas.cod_fac";
@@ -178,19 +176,28 @@
         }else{
             $num_fila = 0; 
             echo "<table border=1>";
-            echo "<tr bgcolor=\"bbbbbb\" align=center><th>Codigo</th><th>Fecha</th><th>Cliente</th><th>IVA</th><th>Concepto</th><th>Cantidad</th><th>Precio</th></tr>";
+            echo "<tr bgcolor=\"bbbbbb\" align=center><th>Codigo</th><th>Fecha</th><th>Cliente</th><th>CIF</th><th>IVA</th><th>Concepto</th><th>Cantidad</th><th>Precio</th></tr>";
             while ($row = mysql_fetch_assoc($selec)) {
                 echo "<tr "; 
                 if ($num_fila%2==0) 
                     echo "bgcolor=#dddddd"; //si el resto de la división es 0 pongo un color 
                 else 
                     echo "bgcolor=#ddddff"; //si el resto de la división NO es 0 pongo otro color 
-                //,facturas.fecha as fecha, facturas.cliente as cliente, facturas.iva as iva, tener_f_c.concepto as concepto, tener_f_c.cantidad as cantidad, tener_f_c.precio as precio
+                //,facturas.fecha as fecha, facturas.cliente as cliente, facturas.existe_cli as existe, facturas.iva as iva, tener_f_c.concepto as concepto, tener_f_c.cantidad as cantidad, tener_f_c.precio as precio
                 echo ">";
                 echo "<td>$row[cod_fac]</td>";
                 echo "<td>$row[fecha]</td>";
-                echo "<td>$row[cliente]</td>";
-                echo "<td>$row[iva]</td><td></td><td></td><td></td></tr>";
+                $exis = "$row[existe]";
+                if ($exis==0) {
+                    echo "<td>$row[cliente]</td><td></td>";
+                }else{
+                    $selec3 = mysql_query("SELECT * FROM clientes WHERE cif='$row[cliente]'");
+                    while ($row3 = mysql_fetch_assoc($selec3)) {
+                        echo "<td>$row3[direccion]</td>";
+                        echo "<td>$row3[cif]</td>";
+                    }
+                }
+                echo "<td>$row[iva]</td><th>Concepto</th><th>Cantidad</th><th>Precio</th><td><a href=\"edit_factura.php?cod_fac=$row[cod_fac]\"><input type=\"button\" value=\"Editar\"></a></td></tr>";
                 $selec2 = mysql_query("SELECT concepto, cantidad, precio_u as precio FROM tener_f_c WHERE cod_fac='$row[cod_fac]'");
                 while ($row2 = mysql_fetch_assoc($selec2)) {
                     echo "<tr "; 
@@ -199,7 +206,7 @@
                     else 
                         echo "bgcolor=#ddddff"; //si el resto de la división NO es 0 pongo otro color 
                     echo ">";
-                    echo "<td colspan=4>";
+                    echo "<td colspan=5>";
                     echo "<td>$row2[concepto]</td>";
                     echo "<td>$row2[cantidad]</td>";
                     echo "<td>$row2[precio]€</td>";
