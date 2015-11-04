@@ -120,7 +120,7 @@
         if (IsChecked('buscar','cliente')){
             if($sele == ""){
                 if ($_POST['cli1'] == 1) {
-                    $cli1 = $_POST['cli1'];
+                    $cli1 = $_POST['cliente1'];
                     $sele = "SELECT facturas.cod_fac as cod_fac,facturas.fecha as fecha, facturas.cliente as cliente, facturas.existe_cli as existe, facturas.iva as iva, tener_f_c.concepto as concepto, tener_f_c.cantidad as cantidad, tener_f_c.precio_u as precio FROM facturas, tener_f_c WHERE facturas.cod_fac=tener_f_c.cod_fac AND facturas.cliente LIKE '%$cli1%'";
                 } else {
                     $cli = explode('|', $_POST['cli1']);
@@ -191,11 +191,16 @@
                 if ($exis==0) {
                     echo "<td>$row[cliente]</td><td></td>";
                 }else{
-                    $selec3 = mysql_query("SELECT * FROM clientes WHERE cif='$row[cliente]'");
-                    while ($row3 = mysql_fetch_assoc($selec3)) {
-                        echo "<td>$row3[direccion]</td>";
-                        echo "<td>$row3[cif]</td>";
-                    }
+
+                    $selec3 = mysql_query("SELECT direccion,cif FROM clientes WHERE cif='$row[cliente]'");
+                    $direccion = mysql_result($selec3,0,0);
+                    $cif = mysql_result($selec3,0,1);
+                    echo "<td>$direccion</td>";
+                    echo "<td>$cif</td>";
+                    //while ($row3 = mysql_fetch_assoc($selec3)) {
+                        //echo "<td>$row3[direccion]</td>";
+                        //echo "<td>$row3[cif]</td>";
+                    //}
                 }
                 echo "<td>$row[iva]</td><th>Concepto</th><th>Cantidad</th><th>Precio</th><td><a href=\"edit_factura.php?cod_fac=$row[cod_fac]\"><input type=\"button\" value=\"Editar\"></a></td></tr>";
                 $selec2 = mysql_query("SELECT concepto, cantidad, precio_u as precio FROM tener_f_c WHERE cod_fac='$row[cod_fac]'");
@@ -221,6 +226,7 @@
             echo "</table><br/> Se han encontrado $num_fila facturas que cumplen esas condiciones.";
         }
     }
+    mysql_close($dp);
     ?>
 </body>
 </html>
