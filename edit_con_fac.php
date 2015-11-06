@@ -126,7 +126,7 @@ $num_fila = 0;
                         echo "<td colspan=5></td>";
                         echo "<td><textarea rows='3' cols='40' disabled>$row2[concepto]</textarea></td>";
                         echo "<td><input type='number' value='$row2[cantidad]' Style='width:40Px' disabled/></td>";
-                        echo "<td><input type='number' step='any' Style='width:60Px' value='".$row2['precio']."' disabled/>€</td>";
+                        echo "<td><input type='number' step='any' Style='width:60Px' value='$row2[precio]' disabled/>€</td>";
                         echo "<td><a href=\"edit_con_fac.php?cod_fac=$data&concepto=$row2[concepto]\"><input type=\"button\" value=\"Editar\"></a></td>";
                         echo "</tr>";
                         //echo "</form>";
@@ -145,7 +145,7 @@ $num_fila = 0;
                 $sql3 = "SELECT * FROM conceptos";
                 $adcons = mysql_query($sql3);
                 while ($row5 = mysql_fetch_assoc($adcons)) {
-                    print("<option value='".$row5['concepto']."|".$row5['precio']."'>$row5[concepto]</option>");
+                    print("<option value='".$row5['concepto']."|".$row5[precio]."'>$row5[concepto]</option>");
                 }
                         
                 echo "</select><br/>";
