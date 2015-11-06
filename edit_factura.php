@@ -23,6 +23,24 @@
         }
         document.getElementById("cif1").value = sele[1];
     }
+
+    function change(obj,num,pan) {
+        var selectBox = obj;
+        var num = num;
+        var pan = pan;
+        var selected = selectBox.options[selectBox.selectedIndex].value;
+        var sele = selected.split("|");
+        var textarea = document.getElementById("text_area"+num);
+
+        if(sele[0] === "1"){
+            textarea.style.display = "block";
+            document.getElementById("precio"+num).value = pan;
+        }
+        else{
+            textarea.style.display = "none";
+            document.getElementById("precio"+num).value = sele[1];
+        }
+    }
     </script>
 <?php
 $data = $_GET['cod_fac'];
@@ -144,7 +162,24 @@ $num_fila = 0;
                 //echo "<td>$row[precio]€</td>";
                 //echo "<td><a href=\"edit_conce.php?concepto=$row[cod_con]\"><input type=\"button\" value=\"Editar\"></a></td>";
                 //echo "<td><button onclick=\"seguro($row[cod_con]);\">Delete</button></td>";
-                echo "</tr>";
+                //echo "</tr>";
+                echo "<form enctype='multipart/form-data' action='' method='post'><tr><td colspan=5/>";
+                /*echo "<td><select name='concepto10' onchange='change(this,10,0)'>";
+                echo "<option selected='selected'></option>";
+                echo "<option value='1'>Otro</option>";
+                $sql3 = "SELECT * FROM conceptos";
+                $adcons = mysql_query($sql3);
+                while ($row5 = mysql_fetch_assoc($adcons)) {
+                    print("<option value='".$row5['concepto']."|".$row5['precio']."'>$row5[concepto]</option>");
+                }
+                        
+                echo "</select><br/>";*/
+                echo "<textarea id='text_area10' name='concepto11' rows='3' cols='40' style='display: none'></textarea>";
+                echo "</td>";
+                echo "<td><input type='number' name='cant10' value='1' Style='width:40Px'/></td>";
+                echo "<td><input id='precio10' type='number' name='precio10' step='any' Style='width:60Px' value=''/>€</td>";
+                echo "<td><input type='submit' name='addc' value='Añadir'/></td>";
+                echo "</tr></form>";
                 $num_fila++;
             }
             echo "</table>";
@@ -169,26 +204,20 @@ mysql_query($aldatu);
 header("Refresh:0");
 }
 
-/*if(isset($_POST['guardarc'])){
-	for ($i=$nu; $i = 0 ; $i--) { 
-		# code...
-	
-	if ($_POST['concepto'] == 1) {
-		$concepto = $_POST['concepto'.$i];
-	} else {
-		$conce = explode('|', $_POST['concepto']);
-		$concepto =  $conce[0];
-	}
-
-	$concepto2 = $_POST['concepto2'];
-	$cantidad = $_POST['cant'.$i];
-	$precio = $_POST['precio'.$i];
-	$aldatu="UPDATE tener_f_c SET concepto='$concepto',cantidad=$cantidad,precio_u='$precio' WHERE cod_fac=$data AND concepto='$concepto2'";
-	mysql_query($aldatu);
-	}
+if(isset($_POST['addc'])){
+	$cantidad = $_POST['cant10'];
+	$precio = $_POST['precio10'];
+	if ($_POST['concepto10'] == 1) {
+        $concepto = $_POST['concepto11'];
+    }else{
+        $conc = explode('|', $_POST['concepto10']);
+        $concepto = $conc[0];
+    }
+    $concepto = trim(preg_replace('/\s\s+/', ' ', $concepto));
+    $gehitu="INSERT INTO tener_f_c (concepto,cod_fac,cantidad,precio_u) VALUES ('$concepto',$data,$cantidad,'$precio')";
+	mysql_query($gehitu);
 	header("Refresh:0");
-}*/
-
+}
 
 mysql_close($dp);
 ?>

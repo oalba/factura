@@ -4,20 +4,21 @@
 </head>
 <body>
 	<script type="text/javascript">
-    function change(obj,pan) {
+    function change(obj,num,pan) {
         var selectBox = obj;
+        var num = num;
         var pan = pan;
         var selected = selectBox.options[selectBox.selectedIndex].value;
         var sele = selected.split("|");
-        var textarea = document.getElementById("text_area1");
+        var textarea = document.getElementById("text_area"+num);
 
         if(sele[0] === "1"){
             textarea.style.display = "block";
-            document.getElementById("precio1").value = pan;
+            document.getElementById("precio"+num).value = pan;
         }
         else{
             textarea.style.display = "none";
-            document.getElementById("precio1").value = sele[1];
+            document.getElementById("precio"+num).value = sele[1];
         }
     }
     </script>
@@ -96,7 +97,7 @@ $num_fila = 0;
 
                         echo "<td colspan=5/>";
                         //echo "<td>";
-                        echo "<td><select name='concepto3' onchange='change(this,$row2[precio])'>";
+                        echo "<td><select name='concepto3' onchange='change(this,1,$row2[precio])'>";
                         echo "<option value='1' selected='selected'>Otro</option>";
                         $sql2 = "SELECT * FROM conceptos";
                         $cons = mysql_query($sql2);
@@ -125,7 +126,7 @@ $num_fila = 0;
                         echo "<td colspan=5></td>";
                         echo "<td><textarea rows='3' cols='40' disabled>$row2[concepto]</textarea></td>";
                         echo "<td><input type='number' value='$row2[cantidad]' Style='width:40Px' disabled/></td>";
-                        echo "<td><input type='number' step='any' Style='width:60Px' value='$row2[precio]' disabled/>€</td>";
+                        echo "<td><input type='number' step='any' Style='width:60Px' value='".$row2['precio']."' disabled/>€</td>";
                         echo "<td><a href=\"edit_con_fac.php?cod_fac=$data&concepto=$row2[concepto]\"><input type=\"button\" value=\"Editar\"></a></td>";
                         echo "</tr>";
                         //echo "</form>";
@@ -137,9 +138,42 @@ $num_fila = 0;
                 //echo "<td><button onclick=\"seguro($row[cod_con]);\">Delete</button></td>";
                 //echo "</tr>";
 
+                echo "<form enctype='multipart/form-data' action='' method='post'><tr><td colspan=5/>";
+                echo "<td><select name='concepto3' onchange='change(this,2,0)'>";
+                echo "<option selected='selected'></option>";
+                echo "<option value='1'>Otro</option>";
+                $sql3 = "SELECT * FROM conceptos";
+                $adcons = mysql_query($sql3);
+                while ($row5 = mysql_fetch_assoc($adcons)) {
+                    print("<option value='".$row5['concepto']."|".$row5['precio']."'>$row5[concepto]</option>");
+                }
+                        
+                echo "</select><br/>";
+                echo "<textarea id='text_area2' name='concepto2' rows='3' cols='40' style='display: none'></textarea>";
+                echo "</td>";
+                echo "<td><input type='number' name='cant2' value='1' Style='width:40Px'/></td>";
+                echo "<td><input id='precio2' type='number' name='precio2' step='any' Style='width:60Px' value=''/>€</td>";
+                echo "<td><input type='submit' name='addc' value='Añadir'/></td>";
+                echo "</tr></form>";
+
                 $num_fila++;
             }
             echo "</table>";
+
+if(isset($_POST['addc'])){
+    $cantidad = $_POST['cant2'];
+    $precio = $_POST['precio2'];
+    if ($_POST['concepto3'] == 1) {
+        $concepto = $_POST['concepto2'];
+    }else{
+        $conc = explode('|', $_POST['concepto3']);
+        $concepto = $conc[0];
+    }
+    $concepto = trim(preg_replace('/\s\s+/', ' ', $concepto));
+    $gehitu="INSERT INTO tener_f_c (concepto,cod_fac,cantidad,precio_u) VALUES ('$concepto',$data,$cantidad,'$precio')";
+    mysql_query($gehitu);
+    header("Location: edit_factura.php?cod_fac=$data");
+}
 
 if(isset($_POST['guardarc'])){
     $concepto2 = $_POST['concepto2'];
