@@ -176,8 +176,9 @@
         }else{
             $num_fila = 0; 
             echo "<table border=1>";
-            echo "<tr bgcolor=\"bbbbbb\" align=center><th>Codigo</th><th>Fecha</th><th>Cliente</th><th>CIF</th><th>IVA</th><th>Concepto</th><th>Cantidad</th><th>Precio</th></tr>";
+            echo "<tr bgcolor=\"bbbbbb\" align=center><th>Codigo</th><th>Fecha</th><th>Cliente</th><th>CIF</th><th>IVA %</th><th>Concepto</th><th>Cantidad</th><th>Precio</th><th>Subtotal</th><th>IVA €</th><th>TOTAL</th></tr>";
             while ($row = mysql_fetch_assoc($selec)) {
+                $precio = 0;
                 echo "<tr "; 
                 if ($num_fila%2==0) 
                     echo "bgcolor=#dddddd"; //si el resto de la división es 0 pongo un color 
@@ -202,7 +203,7 @@
                         //echo "<td>$row3[cif]</td>";
                     //}
                 }
-                echo "<td>$row[iva]</td><th>Concepto</th><th>Cantidad</th><th>Precio</th><td><a href=\"edit_factura.php?cod_fac=$row[cod_fac]\"><input type=\"button\" value=\"Editar\"></a></td></tr>";
+                echo "<td>$row[iva]%</td><th>Concepto</th><th>Cantidad</th><th>Precio</th><th>Subtotal</th><th>IVA €</th><th>TOTAL</th><td><a href=\"edit_factura.php?cod_fac=$row[cod_fac]\"><input type=\"button\" value=\"Editar\"></a></td></tr>";
                 $selec2 = mysql_query("SELECT concepto, cantidad, precio_u as precio FROM tener_f_c WHERE cod_fac='$row[cod_fac]'");
                 while ($row2 = mysql_fetch_assoc($selec2)) {
                     echo "<tr "; 
@@ -215,8 +216,23 @@
                     echo "<td>$row2[concepto]</td>";
                     echo "<td>$row2[cantidad]</td>";
                     echo "<td>$row2[precio]€</td>";
+                    echo "<td colspan=3>";
                     echo "</tr>";
+                    $precio = $precio + ($row2['precio'] * $row2['cantidad']);
                 }
+                echo "<tr "; 
+                if ($num_fila%2==0) 
+                    echo "bgcolor=#dddddd"; //si el resto de la división es 0 pongo un color 
+                else 
+                    echo "bgcolor=#ddddff"; //si el resto de la división NO es 0 pongo otro color 
+                echo ">";
+                echo "<td colspan=8>";
+                echo "<td>$precio €</td>";
+                $ivatot = $precio * $row['iva'] / 100;
+                echo "<td>$ivatot €</td>";
+                $total = $ivatot + $precio;
+                echo "<th style='color:red'>$total €</th>";
+                echo "</tr>";
                 //echo "<td>$row[precio]€</td>";
                 //echo "<td><a href=\"edit_conce.php?concepto=$row[cod_con]\"><input type=\"button\" value=\"Editar\"></a></td>";
                 //echo "<td><button onclick=\"seguro($row[cod_con]);\">Delete</button></td>";
