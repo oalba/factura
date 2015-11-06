@@ -187,7 +187,8 @@
                 //,facturas.fecha as fecha, facturas.cliente as cliente, facturas.existe_cli as existe, facturas.iva as iva, tener_f_c.concepto as concepto, tener_f_c.cantidad as cantidad, tener_f_c.precio as precio
                 echo ">";
                 echo "<td>$row[cod_fac]</td>";
-                echo "<td>$row[fecha]</td>";
+                $fecha = date_format(date_create_from_format('Y-m-d', $row['fecha']), 'd/m/Y');
+                echo "<td>$fecha</td>";
                 $exis = "$row[existe]";
                 if ($exis==0) {
                     echo "<td>$row[cliente]</td><td></td>";
