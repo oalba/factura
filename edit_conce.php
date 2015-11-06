@@ -41,6 +41,7 @@ $concepto = trim(preg_replace('/\s\s+/', ' ', $concepto));
 
 $aldatu="UPDATE conceptos SET concepto='$concepto',precio='$precio' WHERE cod_con=$data";
 mysql_query($aldatu);
+header("Refresh:0");
 }
 mysql_close($dp);
 ?>

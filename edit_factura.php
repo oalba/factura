@@ -4,7 +4,7 @@
 </head>
 <body>
 	<script type="text/javascript">
-    function changeCli(obj) {
+	function changeCli(obj) {
         var selectBox = obj;
         var selected = selectBox.options[selectBox.selectedIndex].value;
         var sele = selected.split("|");
@@ -43,7 +43,7 @@ $num_fila = 0;
             echo "<table border=1>";
             echo "<tr bgcolor=\"bbbbbb\" align=center><th>Codigo</th><th>Fecha</th><th>Cliente</th><th>CIF</th><th>IVA %</th><th>Concepto</th><th>Cantidad</th><th>Precio</th></tr>";
             while ($row = mysql_fetch_assoc($facs)) {
-                $precio = 0;
+                echo "<form enctype='multipart/form-data' action='' method='post'>";
                 echo "<tr "; 
                 if ($num_fila%2==0) 
                     echo "bgcolor=#dddddd"; //si el resto de la división es 0 pongo un color 
@@ -93,9 +93,14 @@ $num_fila = 0;
         			echo "</select><br/><textarea id='cliente1' name='cliente1' rows='5' style='display: none'></textarea></td><td><input id='cif1' type='text' name='cif1' value='$cif' disabled/></td>";
 
                 }
-                echo "<td><input type='number' name='iva' value='$row[IVA]' Style='width:40Px'/>%</td><th>Concepto</th><th>Cantidad</th><th>Precio</th><td><a href=\"edit_factura.php?cod_fac=$row[cod_fac]\"><input type=\"button\" value=\"Editar\"></a></td></tr>";
+                echo "<td><input type='number' name='iva' value='$row[IVA]' Style='width:40Px'/>%</td><th>Concepto</th><th>Cantidad</th><th>Precio</th>";
+                echo "<td><input type='submit' name='guardarf' value='Guardar'/></td>";
+				echo "</tr>";
+				echo "</form>";
                 $selec2 = mysql_query("SELECT concepto, cantidad, precio_u as precio FROM tener_f_c WHERE cod_fac='$row[cod_fac]'");
+                //$nu = 1;
                 while ($row2 = mysql_fetch_assoc($selec2)) {
+                	//echo "<form enctype='multipart/form-data' action='edit_con_fac.php' method='post'>";
                     echo "<tr "; 
                     if ($num_fila%2==0) 
                         echo "bgcolor=#dddddd"; //si el resto de la división es 0 pongo un color 
@@ -103,23 +108,38 @@ $num_fila = 0;
                         echo "bgcolor=#ddddff"; //si el resto de la división NO es 0 pongo otro color 
                     echo ">";
                     echo "<td colspan=5>";
-                    echo "<td><textarea name='concepto' rows='3' cols='40'>$row2[concepto]</textarea></td>";
+                    /*echo "<select name='concepto' onchange='change(this,1,$row2[precio])'>";
+                    echo "<option value='1' selected='selected'>Otro</option>";
+                    $sql = "SELECT * FROM conceptos";
+                    $cons = mysql_query($sql);
+                    while ($row4 = mysql_fetch_assoc($cons)) {
+                        print("<option value='".$row4[concepto]."|".$row4[precio]."'>$row4[concepto]</option>");
+                    }
+                    
+                	echo "</select><br/>";*/
+                	//echo "<td>$row2[concepto]</td>";
+                    echo "<td><textarea rows='3' cols='40' disabled>$row2[concepto]</textarea></td>";
+                    
+                    //echo "<textarea name='concepto2' style='display: none'>$row2[concepto]</textarea>";
 
-                    /*<select name="conce1" onchange="change(this,1)">
-                    <option selected="selected"></option>
-                    <option value="1">Otro</option>
-                    <?php
+                    /*echo "<select name='concepto' onchange='change(this,1)'>";
+                    echo "<option value='1' selected='selected'>Otro</option>";
                     $sql = "SELECT * FROM conceptos";
                     $cons = mysql_query($sql);
                     while ($row = mysql_fetch_assoc($cons)) {
                         print("<option value='".$row[concepto]."|".$row[precio]."'>$row[concepto]</option>");
                     }
-                    ?>
-                </select><textarea id="text_area1" name="concepto1" rows="1" cols="50" style="display: none"></textarea>*/
+                    
+                echo "</select><textarea id='text_area1' name='concepto1' rows='1' cols='40'></textarea>";*/
 
-                    echo "<td><input type='number' name='cant1' value='$row2[cantidad]' Style='width:40Px'/></td>";
-                    echo "<td><input id='precio1' type='number' name='precio1' step='any' Style='width:60Px' value='$row2[precio]'/>€</td>";
-                    echo "</tr>";
+                    echo "<td><input type='number' value='$row2[cantidad]' Style='width:40Px' disabled/></td>";
+                    //echo "<td>$row2[cantidad]</td>";
+                    echo "<td><input type='number' step='any' Style='width:60Px' value='$row2[precio]' disabled/>€</td>";
+                    //echo "<td><input type='submit' name='guardarc' value='Editar'/></td>";
+                    echo "<td><a href=\"edit_con_fac.php?cod_fac=$data&concepto=".$row2['concepto']."\"><input type=\"button\" value=\"Editar\"></a></td>";
+					echo "</tr>";
+					//echo "</form>";
+					//$nu++;
                 }
                 //echo "<td>$row[precio]€</td>";
                 //echo "<td><a href=\"edit_conce.php?concepto=$row[cod_con]\"><input type=\"button\" value=\"Editar\"></a></td>";
@@ -129,45 +149,47 @@ $num_fila = 0;
             }
             echo "</table>";
 
-
-
-
-
-
-
-
-
-
-/*$num_fila = 0; 
-echo "<table border=1>";
-echo "<tr bgcolor=\"bbbbbb\" align=center><th>Dirección</th><th>Cuenta</th></tr>";
-while ($row = mysql_fetch_assoc($facs)) {
-	//echo "<form enctype='multipart/form-data' action='t_edit.php?telephone=$row[Telephone]' method='post'>";
-	echo "<form enctype='multipart/form-data' action='' method='post'>";
-	echo "<tr "; 
-   	if ($num_fila%2==0) 
-      	echo "bgcolor=#dddddd"; //si el resto de la división es 0 pongo un color 
-   	else 
-      	echo "bgcolor=#ddddff"; //si el resto de la división NO es 0 pongo otro color 
-   	echo ">";
-    echo "<td><textarea name='direccion' rows='3' cols='50'>$row[direccion]</textarea></td>";
-    echo "<td><input type='number' name='cuenta' step='any' value='$row[cuenta]'></td>";
-	echo "<td><input type='submit' name='guardar' value='Guardar'/></td>";
-	echo "</tr>";
-	echo "</form>";
-	$num_fila++; 
-};
-echo "</table>";
-
-if(isset($_POST['guardar'])){
+if(isset($_POST['guardarf'])){
 //$tlf = $_POST['telephone'];
-$direccion = $_POST['direccion'];
-$cuenta = $_POST['cuenta'];
+$cli = $_POST['cli1'];
+$iva = $_POST['iva'];
+$insfecha = date("Y-m-d",strtotime($_POST['fecha']));
 //$direccion = trim(preg_replace('/\s\s+/', ' ', $direccion));
+if ($_POST['cli1'] == 1) {
+	$inscli = $_POST['cliente1'];
+	$exi = "FALSE";
+} else {
+	$cli = explode('|', $_POST['cli1']);
+    $inscli = $cli[1];
+	$exi = "TRUE";
+}
 
-$aldatu="UPDATE clientes SET direccion='$direccion',cuenta='$cuenta' WHERE cif='$data'";
+$aldatu="UPDATE facturas SET fecha='$insfecha',IVA=$iva,existe_cli=$exi,cliente='$inscli' WHERE cod_fac=$data";
 mysql_query($aldatu);
+header("Refresh:0");
+}
+
+/*if(isset($_POST['guardarc'])){
+	for ($i=$nu; $i = 0 ; $i--) { 
+		# code...
+	
+	if ($_POST['concepto'] == 1) {
+		$concepto = $_POST['concepto'.$i];
+	} else {
+		$conce = explode('|', $_POST['concepto']);
+		$concepto =  $conce[0];
+	}
+
+	$concepto2 = $_POST['concepto2'];
+	$cantidad = $_POST['cant'.$i];
+	$precio = $_POST['precio'.$i];
+	$aldatu="UPDATE tener_f_c SET concepto='$concepto',cantidad=$cantidad,precio_u='$precio' WHERE cod_fac=$data AND concepto='$concepto2'";
+	mysql_query($aldatu);
+	}
+	header("Refresh:0");
 }*/
+
+
 mysql_close($dp);
 ?>
 <br/>

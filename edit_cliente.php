@@ -41,6 +41,7 @@ $cuenta = $_POST['cuenta'];
 
 $aldatu="UPDATE clientes SET direccion='$direccion',cuenta='$cuenta' WHERE cif='$data'";
 mysql_query($aldatu);
+header("Refresh:0");
 }
 mysql_close($dp);
 ?>
