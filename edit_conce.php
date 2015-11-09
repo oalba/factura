@@ -3,6 +3,7 @@
 <title>Editar concepto</title>
 </head>
 <body>
+	<h1><u><i>Editar concepto</i></u></h1>
 <?php
 $data = $_GET['cod_con'];
 

@@ -3,7 +3,7 @@
 <title>Añadir concepto</title>
 </head>
 <body>
-
+    <h1><u><i>Nuevo concepto</i></u></h1>
     <script type="text/javascript">
 function seguro($con){
 confirmar=confirm("¿Seguro que quiere eliminar el concepto: " + $con + "?"); 

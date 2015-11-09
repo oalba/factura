@@ -3,6 +3,7 @@
 <title>Administrar clientes</title>
 </head>
 <body>
+	<h1><u><i>Administrar clientes</i></u></h1>
 <form enctype="multipart/form-data" action="" method="post">
 	Insertar dato: <br/>
 	<textarea name="data" rows="3" cols="50" placeholder="CIF, Dirección o Cuenta"></textarea><br/><br/>
@@ -46,7 +47,7 @@ while ($row = mysql_fetch_assoc($conce)) {
     echo "<td>$row[direccion]</td>";
     echo "<td>$row[cuenta]</td>";
 	echo "<td><a href=\"edit_cliente.php?cif=$row[cif]\"><input type=\"button\" value=\"Editar\"></a></td>";
-	//echo "<td><button onclick=\"seguro($row[cif]);\">Delete</button></td>";
+	echo "<td><button onclick=\"seguro($row[cif]);\">Delete</button></td>";
 	echo "</tr>";
 	$num_fila++; 
 };
@@ -57,13 +58,13 @@ mysql_close($dp);
 }
 ?>
 <script type="text/javascript">
-function seguro($con){
+function seguro($cif){
 //var con = document.getElementById('cif').value;
-confirmar=confirm("Do you want to delete the registry with the key: " + $con + "?"); 
+confirmar=confirm("Do you want to delete the registry with the key: " + $cif + "?"); 
 	if (confirmar) {
 		// si pulsamos en aceptar
 		alert('The registry will be deleted.');
-		window.location='delete.php?cif='+$con;
+		window.location='delete_cliente.php?cif='+$cif;
 		return true;
 	}else{ 
 		// si pulsamos en cancelar

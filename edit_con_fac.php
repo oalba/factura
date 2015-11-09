@@ -3,6 +3,7 @@
 <title>Editar cliente</title>
 </head>
 <body>
+    <h1><u><i>Editar factura</i></u></h1>
 	<script type="text/javascript">
     function change(obj,num,pan) {
         var selectBox = obj;

@@ -1,6 +1,7 @@
 <html>
 <head><title>Buscar factura</title></head>
 <body>
+    <h1><u><i>Administrar facturas</i></u></h1>
     <?php
     $dp = mysql_connect("localhost", "root", "" );
     mysql_select_db("facturas", $dp);
@@ -38,6 +39,20 @@
             text.style.display = "block";
         }
         document.getElementById("cif1").value = sele[1];
+    }
+
+    function seguro($cod_fac){
+    //var con = document.getElementById('cod_fac').value;
+    confirmar=confirm("Do you want to delete the registry with the key: " + $cod_fac + "?"); 
+        if (confirmar) {
+            // si pulsamos en aceptar
+            alert('The registry will be deleted.');
+            window.location='delete_factura.php?cod_fac='+$cod_fac;
+            return true;
+        }else{ 
+            // si pulsamos en cancelar
+            return false;
+        }           
     }
     </script>
 
@@ -204,7 +219,9 @@
                         //echo "<td>$row3[cif]</td>";
                     //}
                 }
-                echo "<td>$row[iva]%</td><th>Concepto</th><th>Cantidad</th><th>Precio</th><th>Subtotal</th><th>IVA €</th><th>TOTAL</th><td><a href=\"edit_factura.php?cod_fac=$row[cod_fac]\"><input type=\"button\" value=\"Editar\"></a></td></tr>";
+                echo "<td>$row[iva]%</td><th>Concepto</th><th>Cantidad</th><th>Precio</th><th>Subtotal</th><th>IVA €</th><th>TOTAL</th><td><a href=\"edit_factura.php?cod_fac=$row[cod_fac]\"><input type=\"button\" value=\"Editar\"></a></td>";
+                echo "<td><button onclick=\"seguro($row[cod_fac]);\">Delete</button></td>";
+                echo "</tr>";
                 $selec2 = mysql_query("SELECT concepto, cantidad, precio_u as precio FROM tener_f_c WHERE cod_fac='$row[cod_fac]'");
                 while ($row2 = mysql_fetch_assoc($selec2)) {
                     echo "<tr "; 
@@ -233,11 +250,11 @@
                 echo "<td>$ivatot €</td>";
                 $total = $ivatot + $precio;
                 echo "<th style='color:red'>$total €</th>";
-                echo "</tr>";
+                //echo "</tr>";
                 //echo "<td>$row[precio]€</td>";
                 //echo "<td><a href=\"edit_conce.php?concepto=$row[cod_con]\"><input type=\"button\" value=\"Editar\"></a></td>";
                 //echo "<td><button onclick=\"seguro($row[cod_con]);\">Delete</button></td>";
-                echo "</tr>";
+                echo "</tr><tr/>";
                 $num_fila++;
             }
             echo "</table><br/> Se han encontrado $num_fila facturas que cumplen esas condiciones.";

@@ -3,6 +3,7 @@
 <title>Editar cliente</title>
 </head>
 <body>
+	<h1><u><i>Editar cliente</i></u></h1>
 <?php
 $data = $_GET['cif'];
 

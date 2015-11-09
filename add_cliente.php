@@ -3,6 +3,7 @@
 <title>Añadir cliente</title>
 </head>
 <body>
+    <h1><u><i>Nuevo cliente</i></u></h1>
 Añadir cliente: <br/><br/>
 <form enctype='multipart/form-data' action='' method='post'>
 Dirección: <br/><textarea name="direccion" rows="5"></textarea><br/><br/>

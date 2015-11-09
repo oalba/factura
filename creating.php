@@ -1,6 +1,7 @@
 <html>
 <head><title>Añadir factura</title></head>
 <body>
+    <h1><u><i>Nueva factura</i></u></h1>
     <?php
     $dp = mysql_connect("localhost", "root", "" );
     mysql_select_db("facturas", $dp);
@@ -715,7 +716,7 @@ $worksheet->setTitle('Factura');
 $callStartTime = microtime(true);
 
 $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-$objWriter->save($numero.'.xlsx');
+$objWriter->save('C:\facturas/'.$numero.'.xlsx');
 $callEndTime = microtime(true);
 $callTime = $callEndTime - $callStartTime;
 echo "La factura ".$numero.".xlsx se ha creado correctamente.";
