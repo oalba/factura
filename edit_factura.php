@@ -41,6 +41,20 @@
             document.getElementById("precio"+num).value = sele[1];
         }
     }
+
+    function seguro($con,$fac){
+    //var con = document.getElementById('cod_con').value;
+    confirmar=confirm("Do you want to delete the registry with the key: " + $con + "?"); 
+        if (confirmar) {
+            // si pulsamos en aceptar
+            alert('The registry will be deleted.');
+            window.location='delete_con_fac.php?concepto='+$con+'&cod_fac='+$fac;
+            return true;
+        }else{ 
+            // si pulsamos en cancelar
+            return false;
+        }           
+    }
     </script>
 <?php
 $data = $_GET['cod_fac'];
@@ -61,7 +75,7 @@ $num_fila = 0;
             echo "<table border=1>";
             echo "<tr bgcolor=\"bbbbbb\" align=center><th>Codigo</th><th>Fecha</th><th>Cliente</th><th>CIF</th><th>IVA %</th><th>Concepto</th><th>Cantidad</th><th>Precio</th></tr>";
             while ($row = mysql_fetch_assoc($facs)) {
-                echo "<form enctype='multipart/form-data' action='' method='post'>";
+                echo "<form enctype='multipart/form-data' action='edit_fac_act.php?cod_fac=$data' method='post'>";
                 echo "<tr "; 
                 if ($num_fila%2==0) 
                     echo "bgcolor=#dddddd"; //si el resto de la división es 0 pongo un color 
@@ -80,44 +94,50 @@ $num_fila = 0;
             		echo "<option value='1' selected='selected'>Otro</option>";
             		$sqlc = "SELECT * FROM clientes";
             		$clis = mysql_query($sqlc);
-            		while ($row3 = mysql_fetch_assoc($clis)) {
-                		print("<option value='".$row3[direccion]."|".$row3[cif]."'>$row3[direccion]</option>");
+            		while ($row4 = mysql_fetch_assoc($clis)) {
+                		print("<option value='".$row4[direccion]."|".$row4[cif]."'>$row4[direccion]</option>");
             		}
         
         			echo "</select><br/><textarea id='cliente1' name='cliente1' rows='5'>$row[cliente]</textarea></td><td><input id='cif1' type='text' name='cif1' value='' style='display: none' disabled/></td>";
                 }else{
 
                     $selec3 = mysql_query("SELECT direccion,cif FROM clientes WHERE cif='$row[cliente]'");
-                    $direccion = mysql_result($selec3,0,0);
-                    $cif = mysql_result($selec3,0,1);
-                    /*echo "<td>$direccion</td>";
-                    echo "<td>$cif</td>";*/
-                    //while ($row3 = mysql_fetch_assoc($selec3)) {
-                        //echo "<td>$row3[direccion]</td>";
-                        //echo "<td>$row3[cif]</td>";
+                    //while ($row5 = mysql_fetch_assoc($selec3)) {
+                        //$direccion = $row5['direccion'];
+                        //$cif = $row5['cif'];
+                        $direccion = mysql_result($selec3,0,0);
+                        $cif = mysql_result($selec3,0,1);
+                        /*echo "<td>$direccion</td>";
+                        echo "<td>$cif</td>";*/
+                        //while ($row3 = mysql_fetch_assoc($selec3)) {
+                            //echo "<td>$row3[direccion]</td>";
+                            //echo "<td>$row3[cif]</td>";
+                        //}
+                        echo "<td><select name='cli1' onchange='changeCli(this)'>";
+                		echo "<option value='1'>Otro</option>";
+                		$sqld = "SELECT * FROM clientes";
+                		$clis = mysql_query($sqld);
+                		while ($row3 = mysql_fetch_assoc($clis)) {
+                			if ($cif == $row3['cif']) {
+                				print("<option value='".$row3[direccion]."|".$row3[cif]."' selected='selected'>$row3[direccion]</option>");
+                			} else {
+                				print("<option value='".$row3[direccion]."|".$row3[cif]."'>$row3[direccion]</option>");
+                			}
+                		}
+            
+            			echo "</select><br/><textarea id='cliente1' name='cliente1' rows='5' style='display: none'></textarea></td><td><input id='cif1' type='text' name='cif1' value='$cif' disabled/></td>";
                     //}
-                    echo "<td><select name='cli1' onchange='changeCli(this)'>";
-            		echo "<option value='1'>Otro</option>";
-            		$sqlc = "SELECT * FROM clientes";
-            		$clis = mysql_query($sqlc);
-            		while ($row3 = mysql_fetch_assoc($clis)) {
-            			if ($cif == $row3['cif']) {
-            				print("<option value='".$row3[direccion]."|".$row3[cif]."' selected='selected'>$row3[direccion]</option>");
-            			} else {
-            				print("<option value='".$row3[direccion]."|".$row3[cif]."'>$row3[direccion]</option>");
-            			}
-            		}
-        
-        			echo "</select><br/><textarea id='cliente1' name='cliente1' rows='5' style='display: none'></textarea></td><td><input id='cif1' type='text' name='cif1' value='$cif' disabled/></td>";
 
                 }
                 echo "<td><input type='number' name='iva' value='$row[IVA]' Style='width:40Px'/>%</td><th>Concepto</th><th>Cantidad</th><th>Precio</th>";
                 echo "<td><input type='submit' name='guardarf' value='Guardar'/></td>";
 				echo "</tr>";
 				echo "</form>";
-                $selec2 = mysql_query("SELECT concepto, cantidad, precio_u as precio FROM tener_f_c WHERE cod_fac='$row[cod_fac]'");
+                $selec2 = mysql_query("SELECT concepto, cantidad, precio_u FROM tener_f_c WHERE cod_fac=$data");
                 //$nu = 1;
                 while ($row2 = mysql_fetch_assoc($selec2)) {
+                    $concepto = $row2['concepto'];
+                    $precio = $row2['precio_u'];
                 	//echo "<form enctype='multipart/form-data' action='edit_con_fac.php' method='post'>";
                     echo "<tr "; 
                     if ($num_fila%2==0) 
@@ -125,23 +145,33 @@ $num_fila = 0;
                     else 
                         echo "bgcolor=#ddddff"; //si el resto de la división NO es 0 pongo otro color 
                     echo ">";
-                    echo "<td colspan=5></td>";
-                    echo "<td><textarea rows='3' cols='40' disabled>".$row2['concepto']."</textarea></td>";
-                    echo "<td><input type='number' value='$row2[cantidad]' Style='width:40Px' disabled/></td>";
-                    echo "<td><input type='number' step='any' Style='width:60Px' value='$row2[precio]' disabled/>€</td>";
-                    echo "<td><a href='edit_con_fac.php?cod_fac=$data&concepto=".$row2['concepto']."'><input type='button' value='Editar'></a></td>";
+                    echo "<td colspan='5'/>";
+                    echo "<td><textarea rows='3' cols='40' disabled>".$concepto."</textarea></td>";
+                    //echo "<td>".$concepto."</td>";
+                    echo "<td><input type='number' value=".$row2['cantidad']." Style='width:40Px' disabled/></td>";
+                    //echo "<td>$row2[cantidad]</td>";
+                    echo "<td><input type='number' step='any' Style='width:60Px' value='$precio' disabled/>€</td>";
+                    echo "<td><a href='edit_con_fac.php?cod_fac=$data&concepto=$concepto'><input type='button' value='Editar'></a><br/>";
+                    echo "<button onclick=\"seguro('".$row2['concepto']."',".$row['cod_fac'].");\">Delete</button></td>";
 					echo "</tr>";
                 }
                 //echo "<td><button onclick=\"seguro($row[cod_con]);\">Delete</button></td>";
                 //echo "</tr>";
-                echo "<form enctype='multipart/form-data' action='' method='post'><tr><td colspan=5></td>";
+                
+
+                echo "<form enctype='multipart/form-data' action='add_con_fact_act.php?cod_fac=$data' method='post'>"; 
+                echo "<tr><td colspan=5></td>";
                 echo "<td><select name='concepto3' onchange='change(this,2,0)'>";
                 echo "<option selected='selected'></option>";
                 echo "<option value='1'>Otro</option>";
                 $sql3 = "SELECT * FROM conceptos";
                 $adcons = mysql_query($sql3);
-                while ($row5 = mysql_fetch_assoc($adcons)) {
-                    print("<option value='".$row5['concepto']."|".$row5[precio]."'>$row5[concepto]</option>");
+                while ($row6 = mysql_fetch_assoc($adcons)) {
+                    echo "<option value='"
+                        .$row6['concepto'].
+                        "|"
+                        .$row6['precio'].
+                        "'>$row6[concepto]</option>";
                 }
                         
                 echo "</select><br/>";
@@ -150,16 +180,17 @@ $num_fila = 0;
                 echo "<td><input type='number' name='cant2' value='1' Style='width:40Px'/></td>";
                 echo "<td><input id='precio2' type='number' name='precio2' step='any' Style='width:60Px' value=''/>€</td>";
                 echo "<td><input type='submit' name='addc' value='Añadir'/></td>";
-                echo "</tr></form>";
+                echo "</tr>";
+                echo "</form>";
 
                 $num_fila++;
             }
             echo "</table>";
-function f5()
+/*function f5($data)
 {
-    header("Refresh:0");
-}
-if(isset($_POST['addc'])){
+    header("Location: edit_factura.php?cod_fac=$data");
+}*/
+/*if(isset($_POST['addc'])){
     $cantidad = $_POST['cant2'];
     $precio = $_POST['precio2'];
     if ($_POST['concepto3'] == 1) {
@@ -172,9 +203,9 @@ if(isset($_POST['addc'])){
     $gehitu="INSERT INTO tener_f_c (concepto,cod_fac,cantidad,precio_u) VALUES ('$concepto',$data,$cantidad,'$precio')";
     mysql_query($gehitu);
     //header("Refresh:0");
-    f5();
-}
-if(isset($_POST['guardarf'])){
+    f5($data);
+}*/
+/*if(isset($_POST['guardarf'])){
 //$tlf = $_POST['telephone'];
 $cli = $_POST['cli1'];
 $iva = $_POST['iva'];
@@ -191,9 +222,9 @@ if ($_POST['cli1'] == 1) {
 
 $aldatu="UPDATE facturas SET fecha='$insfecha',IVA=$iva,existe_cli=$exi,cliente='$inscli' WHERE cod_fac=$data";
 mysql_query($aldatu);
-f5();
+f5($data);
 //header("Location: edit_factura.php?cod_fac=$data");
-}
+}*/
 
 mysql_close($dp);
 ?>
