@@ -6,41 +6,99 @@
 <body>
 	<style type="text/css">
 td a { display: block; width: 100%; height: 100%; }
+.button{text-decoration:none; text-align:center; 
+ border:solid 1px #004F72; 
+ -webkit-border-radius:9px;
+ -moz-border-radius:9px; 
+ border-radius: 9px; 
+ font:30px Tahoma, Geneva, sans-serif; 
+ font-weight:bold; 
+ color:#ffffff; 
+ background-color:#91e4ff; 
+ background-image: -moz-linear-gradient(top, #91e4ff 0%, #1982A5 100%); 
+ background-image: -webkit-linear-gradient(top, #91e4ff 0%, #1982A5 100%); 
+ background-image: -o-linear-gradient(top, #91e4ff 0%, #1982A5 100%); 
+ background-image: -ms-linear-gradient(top, #91e4ff 0% ,#1982A5 100%); 
+ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1982A5', endColorstr='#1982A5',GradientType=0 ); 
+ background-image: linear-gradient(top, #91e4ff 0% ,#1982A5 100%);   
+ -webkit-box-shadow:0px 0px 2px #bababa, inset 0px 0px 1px #ffffff; 
+ -moz-box-shadow: 0px 0px 2px #bababa,  inset 0px 0px 1px #ffffff;  
+ box-shadow:0px 0px 2px #bababa, inset 0px 0px 1px #ffffff;  
+  
+  }.button:hover{
+ border:solid 1px #004F72; 
+ -webkit-border-radius:9px;
+ -moz-border-radius:9px; 
+ border-radius: 9px; 
+ font:30px Tahoma, Geneva, sans-serif; 
+ font-weight:bold; 
+ color:#ffffff; 
+ background-color:#3ba4c7; 
+ background-image: -moz-linear-gradient(top, #3ba4c7 0%, #1982A5 100%); 
+ background-image: -webkit-linear-gradient(top, #3ba4c7 0%, #1982A5 100%); 
+ background-image: -o-linear-gradient(top, #3ba4c7 0%, #1982A5 100%); 
+ background-image: -ms-linear-gradient(top, #3ba4c7 0% ,#1982A5 100%); 
+ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1982A5', endColorstr='#1982A5',GradientType=0 ); 
+ background-image: linear-gradient(top, #3ba4c7 0% ,#1982A5 100%);   
+ -webkit-box-shadow:0px 0px 2px #bababa, inset 0px 0px 1px #ffffff; 
+ -moz-box-shadow: 0px 0px 2px #bababa,  inset 0px 0px 1px #ffffff;  
+ box-shadow:0px 0px 2px #bababa, inset 0px 0px 1px #ffffff;  
+  
+ }.button:active{
+ border:solid 1px #004F72; 
+ -webkit-border-radius:9px;
+ -moz-border-radius:9px; 
+ border-radius: 9px; 
+ font:30px Tahoma, Geneva, sans-serif; 
+ font-weight:bold; 
+ color:#ffffff; 
+ background-color:#3BA4C7; 
+ background-image: -moz-linear-gradient(top, #3BA4C7 0%, #101d21 100%); 
+ background-image: -webkit-linear-gradient(top, #3BA4C7 0%, #101d21 100%); 
+ background-image: -o-linear-gradient(top, #3BA4C7 0%, #101d21 100%); 
+ background-image: -ms-linear-gradient(top, #3BA4C7 0% ,#101d21 100%); 
+ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#101d21', endColorstr='#101d21',GradientType=0 ); 
+ background-image: linear-gradient(top, #3BA4C7 0% ,#101d21 100%);   
+ -webkit-box-shadow:0px 0px 2px #bababa, inset 0px 0px 1px #ffffff; 
+ -moz-box-shadow: 0px 0px 2px #bababa,  inset 0px 0px 1px #ffffff;  
+ box-shadow:0px 0px 2px #bababa, inset 0px 0px 1px #ffffff;  
+  
+ }
 </style>
-<table  style="width:100%;height:100%"  border=1>
+<table  style="width:100%;height:100%"  border=0>
 	<tr>
-		<td style="vertical-align: middle; text-align: center" width=16%  bgcolor="A9EDFF">
-			<a href="add_factura.php" target="centro" style="color:inherit; text-decoration: none">
+		<td style="vertical-align: middle; text-align: center" width=16%>
+			<a href="add_factura.php" target="centro" class="button">
 				<!--<input type="button" value="Nueva factura">-->
 				Nueva factura
 			</a>
 		</td>
-		<td style="vertical-align: middle; text-align: center" width=16%  bgcolor="A9EDFF">
-			<a href="manage_facturas.php" target="centro" style="color:inherit; text-decoration: none">
+		<td style="vertical-align: middle; text-align: center" width=16%>
+			<a href="manage_facturas.php" target="centro" class="button">
 				<!--<input type="button" value="Administrar facturas">-->
 				Administrar facturas
 			</a>
 		</td>
-		<td style="vertical-align: middle; text-align: center" width=16%  bgcolor="A9EDFF">
-			<a href="add_cliente.php" target="centro" style="color:inherit; text-decoration: none">
+		<td style="vertical-align: middle; text-align: center" width=16%>
+			<a href="add_cliente.php" target="centro" class="button">
 				<!--<input type="button" value="Nuevo cliente">-->
 				Nuevo cliente
 			</a>
 		</td>
-		<td style="vertical-align: middle; text-align: center" width=16%  bgcolor="A9EDFF">
-			<a href="manage_cliente.php" target="centro" style="color:inherit; text-decoration: none">
+		<td style="vertical-align: middle; text-align: center" width=16%>
+			<a href="manage_cliente.php" target="centro" class="button">
 				<!--<input type="button" value="Administrar clienter">-->
 				Administrar clientes
 			</a>
 		</td>
-		<td style="vertical-align: middle; text-align: center" width=16%  bgcolor="A9EDFF">
-			<a href="add_conce.php" target="centro" style="color:inherit; text-decoration: none">
+		<td style="vertical-align: middle; text-align: center" width=16%>
+			<a href="add_conce.php" target="centro" class="button">
 				<!--<input type="button" value="Nuevo concepto">-->
 				Nuevo concepto
 			</a>
 		</td>
-		<td style="vertical-align: middle; text-align: center" width=16%  bgcolor="A9EDFF">
-			<a href="manage_conce.php" target="centro" style="color:inherit; text-decoration: none">
+		<td style="vertical-align: middle; text-align: center" width=16%>
+			<a href="manage_conce.php" target="centro" class="button">
 				<!--<input type="button" value="Administrar conceptos">-->
 				Administrar conceptos
 			</a>

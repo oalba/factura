@@ -220,6 +220,7 @@
                     //}
                 }
                 echo "<td>$row[iva]%</td><th>Concepto</th><th>Cantidad</th><th>Precio</th><th>Subtotal</th><th>IVA €</th><th>TOTAL</th><td><a href=\"edit_factura.php?cod_fac=$row[cod_fac]\"><input type=\"button\" value=\"Editar\"></a></td>";
+                echo "<td><a href=\"crear_excell.php?cod_fac=$row[cod_fac]\"><input type=\"button\" value=\"Crear Excel\"></a></td>";
                 echo "<td><button onclick=\"seguro($row[cod_fac]);\">Delete</button></td>";
                 echo "</tr>";
                 $selec2 = mysql_query("SELECT concepto, cantidad, precio_u as precio FROM tener_f_c WHERE cod_fac='$row[cod_fac]'");
