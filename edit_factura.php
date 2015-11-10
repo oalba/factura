@@ -45,10 +45,10 @@
 
     function seguro($con,$fac){
     //var con = document.getElementById('cod_con').value;
-    confirmar=confirm("Do you want to delete the registry with the key: " + $con + "?"); 
+    confirmar=confirm("¿Seguro que desea eliminar el concepto \"" + $con + "\" de la factura \"" + $fac + "\"?");
         if (confirmar) {
             // si pulsamos en aceptar
-            alert('The registry will be deleted.');
+            alert('El concepto será eliminado.');
             window.location='delete_con_fac.php?concepto='+$con+'&cod_fac='+$fac;
             return true;
         }else{ 
@@ -153,7 +153,7 @@ $num_fila = 0;
                     //echo "<td>$row2[cantidad]</td>";
                     echo "<td><input type='number' step='any' Style='width:60Px' value='$precio' disabled/>€</td>";
                     echo "<td><a href='edit_con_fac.php?cod_fac=$data&concepto=$concepto'><input type='button' value='Editar'></a><br/>";
-                    echo "<button onclick=\"seguro('".$row2['concepto']."',".$row['cod_fac'].");\">Delete</button></td>";
+                    echo "<button onclick=\"seguro('".$row2['concepto']."',".$row['cod_fac'].");\">Eliminar</button></td>";
 					echo "</tr>";
                 }
                 //echo "<td><button onclick=\"seguro($row[cod_con]);\">Delete</button></td>";
