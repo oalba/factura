@@ -97,7 +97,7 @@ $num_fila = 0;
                 echo "</tr>";
 				echo "</form>";
                 
-                $selec2 = mysql_query("SELECT concepto, cantidad, precio_u as precio FROM tener_f_c WHERE cod_fac='$data'");
+                $selec2 = mysql_query("SELECT concepto, cantidad, precio_u as precio FROM tener_f_c WHERE cod_fac='$data' ORDER BY orden");
                 while ($row2 = mysql_fetch_assoc($selec2)) {
                     if ($row2['concepto'] == $data2) {
                         

@@ -16,19 +16,22 @@ cuenta integer);
 CREATE TABLE conceptos
 (cod_con integer unsigned AUTO_INCREMENT primary key,
 concepto varchar(5000),
-precio decimal(4,2));
+precio decimal(10,2));
 
 CREATE TABLE tener_f_c
 (concepto varchar(600),
 cod_fac integer unsigned,
 cantidad integer,
-precio_u decimal(4,2),
+precio_u decimal(10,2),
+orden integer,
 primary key(concepto, cod_fac));
 
 
+alter table tener_f_c
+modify column precio decimal(10,2);
 
-
-
+alter table conceptos
+modify column precio_u decimal(10,2);
 
 
 ALTER TABLE tener_f_c

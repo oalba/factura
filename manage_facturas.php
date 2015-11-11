@@ -227,7 +227,7 @@
                 echo "<td><a href=\"crear_excell.php?cod_fac=$row[cod_fac]\"><input type=\"button\" value=\"Crear Excel\"></a></td>";
                 echo "<td><button onclick=\"seguro($row[cod_fac]);\">Eliminar</button></td>";
                 echo "</tr>";
-                $selec2 = mysql_query("SELECT concepto, cantidad, precio_u as precio FROM tener_f_c WHERE cod_fac='$row[cod_fac]'");
+                $selec2 = mysql_query("SELECT concepto, cantidad, precio_u as precio FROM tener_f_c WHERE cod_fac='$row[cod_fac]' ORDER BY orden");
                 while ($row2 = mysql_fetch_assoc($selec2)) {
                     echo "<tr "; 
                     if ($num_fila%2==0) 

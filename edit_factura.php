@@ -134,7 +134,7 @@ $num_fila = 0;
                 echo "<td><input type='submit' name='guardarf' value='Guardar'/></td>";
 				echo "</tr>";
 				echo "</form>";
-                $selec2 = mysql_query("SELECT concepto, cantidad, precio_u FROM tener_f_c WHERE cod_fac=$data");
+                $selec2 = mysql_query("SELECT concepto, cantidad, precio_u FROM tener_f_c WHERE cod_fac=$data ORDER BY orden");
                 //$nu = 1;
                 while ($row2 = mysql_fetch_assoc($selec2)) {
                     $concepto = $row2['concepto'];

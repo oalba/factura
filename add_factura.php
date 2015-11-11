@@ -245,7 +245,7 @@ if(isset($_POST['crear'])){
                 $canti = $_POST['cant'.$i];
                 $preci = $_POST['precio'.$i];
 
-                $insertcon = "INSERT INTO tener_f_c (concepto,cod_fac,cantidad,precio_u) VALUES ('$concepto',$numero,$canti,'$preci')";
+                $insertcon = "INSERT INTO tener_f_c (orden,concepto,cod_fac,cantidad,precio_u) VALUES ($i,'$concepto',$numero,$canti,'$preci')";
                 mysql_query($insertcon);
             }
             //$a++;

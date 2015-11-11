@@ -147,7 +147,7 @@ $objPHPExcel->setActiveSheetIndex(0)
 
             //$a = 1;
             $i=13;
-            $conce = mysql_query("SELECT * FROM tener_f_c WHERE cod_fac=$numero");
+            $conce = mysql_query("SELECT * FROM tener_f_c WHERE cod_fac=$numero ORDER BY orden");
             while ($row2 = mysql_fetch_assoc($conce)) {
                 $concepto = $row2['concepto'];
                 $cantidad = $row2['cantidad'];
