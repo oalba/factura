@@ -206,13 +206,17 @@
                 echo "<td>$fecha</td>";
                 $exis = "$row[existe]";
                 if ($exis==0) {
-                    echo "<td>$row[cliente]</td><td></td>";
+                    echo "<td>";
+                    echo nl2br($row['cliente']);
+                    echo "</td><td></td>";
                 }else{
 
                     $selec3 = mysql_query("SELECT direccion,cif FROM clientes WHERE cif='$row[cliente]'");
                     $direccion = mysql_result($selec3,0,0);
                     $cif = mysql_result($selec3,0,1);
-                    echo "<td>$direccion</td>";
+                    echo "<td>";
+                    echo nl2br($direccion);
+                    echo "</td>";
                     echo "<td>$cif</td>";
                     //while ($row3 = mysql_fetch_assoc($selec3)) {
                         //echo "<td>$row3[direccion]</td>";

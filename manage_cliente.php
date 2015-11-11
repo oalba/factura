@@ -3,6 +3,9 @@
 <title>Administrar clientes</title>
 </head>
 <body>
+	<style type="text/css">
+	td a { display: block; width: 100%; height: 100%; }
+	</style>
 	<h1><u><i>Administrar clientes</i></u></h1>
 <form enctype="multipart/form-data" action="" method="post">
 	Insertar dato: <br/>
@@ -44,7 +47,7 @@ while ($row = mysql_fetch_assoc($conce)) {
       	echo "bgcolor=#ddddff"; //si el resto de la división NO es 0 pongo otro color 
    	echo ">";
 	echo "<td>$row[cif]</td>";
-    echo "<td>$row[direccion]</td>";
+    echo "<td>".nl2br($row['direccion'])."</td>";
     echo "<td>$row[cuenta]</td>";
 	echo "<td><a href=\"edit_cliente.php?cif=$row[cif]\"><input type=\"button\" value=\"Editar\"></a></td>";
 	echo "<td><button onclick=\"seguro('$row[cif]');\">Eliminar</button></td>";
