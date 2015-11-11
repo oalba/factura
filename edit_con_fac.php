@@ -63,7 +63,7 @@ $num_fila = 0;
                 echo "<td><input type='date' name='fecha' value='$row[fecha]' disabled/></td>";
                 $exis = "$row[existe_cli]";
                 if ($exis==0) {
-                    echo "<td><select name='cli1' onchange='changeCli(this)' disabled>";
+                    echo "<td><select name='cli1' onchange='changeCli(this)' style='white-space:pre-wrap; width: 100px;' disabled>";
             		echo "<option value='1' selected='selected'>Otro</option>";
             		$sqlc = "SELECT * FROM clientes";
             		$clis = mysql_query($sqlc);
@@ -77,7 +77,7 @@ $num_fila = 0;
                     $selec3 = mysql_query("SELECT direccion,cif FROM clientes WHERE cif='$row[cliente]'");
                     $direccion = mysql_result($selec3,0,0);
                     $cif = mysql_result($selec3,0,1);
-                    echo "<td><select name='cli1' onchange='changeCli(this)' disabled>";
+                    echo "<td><select name='cli1' onchange='changeCli(this)' style='white-space:pre-wrap; width: 100px;' disabled>";
             		echo "<option value='1'>Otro</option>";
             		$sqlc = "SELECT * FROM clientes";
             		$clis = mysql_query($sqlc);
@@ -112,7 +112,7 @@ $num_fila = 0;
 
                         echo "<td colspan=5/>";
                         //echo "<td>";
-                        echo "<td><select name='concepto3' onchange='change(this,1,$row2[precio])'>";
+                        echo "<td><select name='concepto3' onchange='change(this,1,$row2[precio])' style='white-space:pre-wrap; width: 250px;'>";
                         echo "<option value='1' selected='selected'>Otro</option>";
                         $sql2 = "SELECT * FROM conceptos";
                         $cons = mysql_query($sql2);
@@ -156,7 +156,7 @@ $num_fila = 0;
 
                 echo "<form enctype='multipart/form-data' action='add_con_fact_act.php?cod_fac=$data' method='post'>"; 
                 echo "<tr><td colspan=5></td>";
-                echo "<td><select name='concepto3' onchange='change(this,2,0)'>";
+                echo "<td><select name='concepto3' onchange='change(this,2,0)' style='white-space:pre-wrap; width: 250px;'>";
                 echo "<option selected='selected'></option>";
                 echo "<option value='1'>Otro</option>";
                 $sql3 = "SELECT * FROM conceptos";

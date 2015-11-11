@@ -92,7 +92,7 @@ $num_fila = 0;
                     //echo "<td>$row[cliente]";
 
                     echo "<td><select name='cli1' onchange='changeCli(this)'>";
-            		echo "<option value='1' selected='selected'>Otro</option>";
+            		echo "<option value='1' selected='selected' style='white-space:pre-wrap; width: 100px;'>Otro</option>";
             		$sqlc = "SELECT * FROM clientes";
             		$clis = mysql_query($sqlc);
             		while ($row4 = mysql_fetch_assoc($clis)) {
@@ -114,7 +114,7 @@ $num_fila = 0;
                             //echo "<td>$row3[direccion]</td>";
                             //echo "<td>$row3[cif]</td>";
                         //}
-                        echo "<td><select name='cli1' onchange='changeCli(this)'>";
+                        echo "<td><select name='cli1' onchange='changeCli(this)' style='white-space:pre-wrap; width: 100px;'>";
                 		echo "<option value='1'>Otro</option>";
                 		$sqld = "SELECT * FROM clientes";
                 		$clis = mysql_query($sqld);
@@ -162,7 +162,7 @@ $num_fila = 0;
 
                 echo "<form enctype='multipart/form-data' action='add_con_fact_act.php?cod_fac=$data' method='post'>"; 
                 echo "<tr><td colspan=5></td>";
-                echo "<td><select name='concepto3' onchange='change(this,2,0)'>";
+                echo "<td><select name='concepto3' onchange='change(this,2,0)' style='white-space:pre-wrap; width: 250px;'>";
                 echo "<option selected='selected'></option>";
                 echo "<option value='1'>Otro</option>";
                 $sql3 = "SELECT * FROM conceptos";

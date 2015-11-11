@@ -67,7 +67,7 @@
         <input type="checkbox" name="buscar[]" value="numero">Nº de factura: <input type="number" name="num"/><br><br>
 
         <input type="checkbox" name="buscar[]" value="cliente"><label>Cliente:</label> 
-        <select name="cli1" onchange="changeCli(this)">
+        <select name="cli1" onchange="changeCli(this)" style="white-space:pre-wrap; width: 100px;" >
             <option selected="selected"></option>
             <option value="1">Otro</option>
             <?php
@@ -83,7 +83,7 @@
 
         <input type="checkbox" name="buscar[]" value="concepto">
         <label>Concepto:</label> 
-        <select name="conce" onchange="change(this)">
+        <select name="conce" onchange="change(this)" style="white-space:pre-wrap; width: 250px;">
             <option selected="selected"></option>
             <option value="1">Otro</option>
             <?php

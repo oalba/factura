@@ -27,6 +27,7 @@
         //io3.id = 'mySelect';
         //io3.setAttribute('id', 'show'+nu);
         io3.setAttribute('name', 'conce'+nu);
+        io3.setAttribute('style', 'white-space:pre-wrap; width: 250px;');
         io3.setAttribute('onchange', 'change(this,'+nu+')');
 
         var no = document.createElement('option');
@@ -169,7 +170,7 @@
         Nº de factura: <input type="number" name="num" required/><br><br>
 
         <label>Cliente:</label> 
-        <select name="cli1" onchange="changeCli(this)">
+        <select name="cli1" onchange="changeCli(this)" style="white-space:pre-wrap; width: 100px;">
             <option selected="selected"></option>
             <option value="1">Otro</option>
             <?php
@@ -185,7 +186,7 @@
             <tr>
                 <td><label>Cantidad:</label> <input type="number" name="cant1" value="1" Style="width:40Px"/> </td>
                 <td><label>Concepto:</label> 
-                <select name="conce1" onchange="change(this,1)">
+                <select name="conce1" onchange="change(this,1)" style="white-space:pre-wrap; width: 250px;">
                     <option selected="selected"></option>
                     <option value="1">Otro</option>
                     <?php
