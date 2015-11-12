@@ -28,10 +28,10 @@ primary key(concepto, cod_fac));
 
 
 alter table tener_f_c
-modify column precio decimal(10,2);
+modify column precio_u decimal(10,2);
 
 alter table conceptos
-modify column precio_u decimal(10,2);
+modify column precio decimal(10,2);
 
 
 ALTER TABLE tener_f_c
