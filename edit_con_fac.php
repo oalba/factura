@@ -98,6 +98,8 @@ $num_fila = 0;
 				echo "</form>";
                 
                 $selec2 = mysql_query("SELECT concepto, cantidad, precio_u as precio, orden FROM tener_f_c WHERE cod_fac='$data' ORDER BY orden");
+                $numResults = mysql_num_rows($selec2);
+                $counter = 0;
                 while ($row2 = mysql_fetch_assoc($selec2)) {
                     $concepto = $row2['concepto'];
                     $orden = $row2['orden'];
@@ -111,8 +113,15 @@ $num_fila = 0;
                             echo "bgcolor=#ddddff"; //si el resto de la división NO es 0 pongo otro color 
                         echo ">";
 
-                        echo "<td colspan=5>$orden</td><td><a href='edit_con_fac_ord.php?cod_fac=$data&concepto=$concepto&accion=subir&orden=$orden'><input type='button' value='Subir'></a><br/>";
-                        echo "<a href='edit_con_fac_ord.php?cod_fac=$data&concepto=$concepto&accion=bajar&orden=$orden'><input type='button' value='Bajar'></a></td>";
+                        echo "<td colspan=5>$orden</td>";
+                        if (++$counter == $numResults) {
+                            echo "<td><a href='edit_con_fac_ord.php?cod_fac=$data&concepto=$concepto&accion=subir&orden=$orden'><input type='button' value='Subir'></a></td>";
+                        } elseif ($counter == 1) {
+                            echo "<td><a href='edit_con_fac_ord.php?cod_fac=$data&concepto=$concepto&accion=bajar&orden=$orden'><input type='button' value='Bajar'></a></td>";
+                        } else {
+                            echo "<td><a href='edit_con_fac_ord.php?cod_fac=$data&concepto=$concepto&accion=subir&orden=$orden'><input type='button' value='Subir'></a><br/>";
+                            echo "<a href='edit_con_fac_ord.php?cod_fac=$data&concepto=$concepto&accion=bajar&orden=$orden'><input type='button' value='Bajar'></a></td>";
+                        }
                         //echo "<td>";
                         echo "<td><select name='concepto3' onchange='change(this,1,$row2[precio])' style='white-space:pre-wrap; width: 250px;'>";
                         echo "<option value='1' selected='selected'>Otro</option>";
@@ -140,8 +149,15 @@ $num_fila = 0;
                         else 
                             echo "bgcolor=#ddddff"; //si el resto de la división NO es 0 pongo otro color 
                         echo ">";
-                        echo "<td colspan=5>$orden</td><td><a href='edit_con_fac_ord.php?cod_fac=$data&concepto=$concepto&accion=subir&orden=$orden'><input type='button' value='Subir'></a><br/>";
-                        echo "<a href='edit_con_fac_ord.php?cod_fac=$data&concepto=$concepto&accion=bajar&orden=$orden'><input type='button' value='Bajar'></a></td>";
+                        echo "<td colspan=5>$orden</td>";
+                        if (++$counter == $numResults) {
+                            echo "<td><a href='edit_con_fac_ord.php?cod_fac=$data&concepto=$concepto&accion=subir&orden=$orden'><input type='button' value='Subir'></a></td>";
+                        } elseif ($counter == 1) {
+                            echo "<td><a href='edit_con_fac_ord.php?cod_fac=$data&concepto=$concepto&accion=bajar&orden=$orden'><input type='button' value='Bajar'></a></td>";
+                        } else {
+                            echo "<td><a href='edit_con_fac_ord.php?cod_fac=$data&concepto=$concepto&accion=subir&orden=$orden'><input type='button' value='Subir'></a><br/>";
+                            echo "<a href='edit_con_fac_ord.php?cod_fac=$data&concepto=$concepto&accion=bajar&orden=$orden'><input type='button' value='Bajar'></a></td>";
+                        }
 
                         echo "<td><textarea rows='3' cols='40' disabled>$row2[concepto]</textarea></td>";
                         echo "<td><input type='number' value='$row2[cantidad]' Style='width:40Px' disabled/></td>";

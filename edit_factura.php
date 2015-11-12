@@ -136,6 +136,8 @@ $num_fila = 0;
 				echo "</form>";
                 $selec2 = mysql_query("SELECT concepto, cantidad, precio_u, orden FROM tener_f_c WHERE cod_fac=$data ORDER BY orden");
                 //$nu = 1;
+                $numResults = mysql_num_rows($selec2);
+                $counter = 0;
                 while ($row2 = mysql_fetch_assoc($selec2)) {
                     $concepto = $row2['concepto'];
                     $precio = $row2['precio_u'];
@@ -147,8 +149,17 @@ $num_fila = 0;
                     else 
                         echo "bgcolor=#ddddff"; //si el resto de la división NO es 0 pongo otro color 
                     echo ">";
-                    echo "<td colspan='5'/>$orden<td><a href='edit_con_fac_ord.php?cod_fac=$data&concepto=$concepto&accion=subir&orden=$orden'><input type='button' value='Subir'></a><br/>";
-                    echo "<a href='edit_con_fac_ord.php?cod_fac=$data&concepto=$concepto&accion=bajar&orden=$orden'><input type='button' value='Bajar'></a></td>";
+                    echo "<td colspan='5'>$orden</td>";
+                    if (++$counter == $numResults) {
+                        echo "<td><a href='edit_con_fac_ord.php?cod_fac=$data&concepto=$concepto&accion=subir&orden=$orden'><input type='button' value='Subir'></a></td>";
+                    } elseif ($counter == 1) {
+                        echo "<td><a href='edit_con_fac_ord.php?cod_fac=$data&concepto=$concepto&accion=bajar&orden=$orden'><input type='button' value='Bajar'></a></td>";
+                    } else {
+                        echo "<td><a href='edit_con_fac_ord.php?cod_fac=$data&concepto=$concepto&accion=subir&orden=$orden'><input type='button' value='Subir'></a><br/>";
+                        echo "<a href='edit_con_fac_ord.php?cod_fac=$data&concepto=$concepto&accion=bajar&orden=$orden'><input type='button' value='Bajar'></a></td>";
+                    }
+                    
+                    
                     echo "<td><textarea rows='3' cols='40' disabled>".$concepto."</textarea></td>";
                     //echo "<td>".$concepto."</td>";
                     echo "<td><input type='number' value=".$row2['cantidad']." Style='width:40Px' disabled/></td>";
