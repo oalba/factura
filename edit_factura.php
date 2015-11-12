@@ -43,13 +43,13 @@
         }
     }
 
-    function seguro($con,$fac){
+    function seguro($con,$fac,$ord){
     //var con = document.getElementById('cod_con').value;
     confirmar=confirm("¿Seguro que desea eliminar el concepto \"" + $con + "\" de la factura \"" + $fac + "\"?");
         if (confirmar) {
             // si pulsamos en aceptar
             alert('El concepto será eliminado.');
-            window.location='delete_con_fac.php?concepto='+$con+'&cod_fac='+$fac;
+            window.location='delete_con_fac.php?concepto='+$con+'&cod_fac='+$fac+'&orden='+$ord;
             return true;
         }else{ 
             // si pulsamos en cancelar
@@ -74,7 +74,7 @@ $facs = mysql_query($sql);
 
 $num_fila = 0; 
             echo "<table border=1>";
-            echo "<tr bgcolor=\"bbbbbb\" align=center><th>Codigo</th><th>Fecha</th><th>Cliente</th><th>CIF</th><th>IVA %</th><th>Concepto</th><th>Cantidad</th><th>Precio</th></tr>";
+            echo "<tr bgcolor=\"bbbbbb\" align=center><th>Codigo</th><th>Fecha</th><th>Cliente</th><th>CIF</th><th>IVA %</th><th></th><th>Concepto</th><th>Cantidad</th><th>Precio</th></tr>";
             while ($row = mysql_fetch_assoc($facs)) {
                 echo "<form enctype='multipart/form-data' action='edit_fac_act.php?cod_fac=$data' method='post'>";
                 echo "<tr "; 
@@ -130,15 +130,16 @@ $num_fila = 0;
                     //}
 
                 }
-                echo "<td><input type='number' name='iva' value='$row[IVA]' Style='width:40Px'/>%</td><th>Concepto</th><th>Cantidad</th><th>Precio</th>";
+                echo "<td><input type='number' name='iva' value='$row[IVA]' Style='width:40Px'/>%</td><th></th><th>Concepto</th><th>Cantidad</th><th>Precio</th>";
                 echo "<td><input type='submit' name='guardarf' value='Guardar'/></td>";
 				echo "</tr>";
 				echo "</form>";
-                $selec2 = mysql_query("SELECT concepto, cantidad, precio_u FROM tener_f_c WHERE cod_fac=$data ORDER BY orden");
+                $selec2 = mysql_query("SELECT concepto, cantidad, precio_u, orden FROM tener_f_c WHERE cod_fac=$data ORDER BY orden");
                 //$nu = 1;
                 while ($row2 = mysql_fetch_assoc($selec2)) {
                     $concepto = $row2['concepto'];
                     $precio = $row2['precio_u'];
+                    $orden = $row2['orden'];
                 	//echo "<form enctype='multipart/form-data' action='edit_con_fac.php' method='post'>";
                     echo "<tr "; 
                     if ($num_fila%2==0) 
@@ -146,14 +147,15 @@ $num_fila = 0;
                     else 
                         echo "bgcolor=#ddddff"; //si el resto de la división NO es 0 pongo otro color 
                     echo ">";
-                    echo "<td colspan='5'/>";
+                    echo "<td colspan='5'/>$orden<td><a href='edit_con_fac_ord.php?cod_fac=$data&concepto=$concepto&accion=subir&orden=$orden'><input type='button' value='Subir'></a><br/>";
+                    echo "<a href='edit_con_fac_ord.php?cod_fac=$data&concepto=$concepto&accion=bajar&orden=$orden'><input type='button' value='Bajar'></a></td>";
                     echo "<td><textarea rows='3' cols='40' disabled>".$concepto."</textarea></td>";
                     //echo "<td>".$concepto."</td>";
                     echo "<td><input type='number' value=".$row2['cantidad']." Style='width:40Px' disabled/></td>";
                     //echo "<td>$row2[cantidad]</td>";
                     echo "<td><input type='number' step='any' Style='width:60Px' value='$precio' disabled/>€</td>";
                     echo "<td><a href='edit_con_fac.php?cod_fac=$data&concepto=$concepto'><input type='button' value='Editar'></a><br/>";
-                    echo "<button onclick=\"seguro('".$row2['concepto']."',".$row['cod_fac'].");\">Eliminar</button></td>";
+                    echo "<button onclick=\"seguro('".$row2['concepto']."',".$row['cod_fac'].",".$row2['orden'].");\">Eliminar</button></td>";
 					echo "</tr>";
                 }
                 //echo "<td><button onclick=\"seguro($row[cod_con]);\">Delete</button></td>";
@@ -161,7 +163,7 @@ $num_fila = 0;
                 
 
                 echo "<form enctype='multipart/form-data' action='add_con_fact_act.php?cod_fac=$data' method='post'>"; 
-                echo "<tr><td colspan=5></td>";
+                echo "<tr><td colspan=6></td>";
                 echo "<td><select name='concepto3' onchange='change(this,2,0)' style='white-space:pre-wrap; width: 250px;'>";
                 echo "<option selected='selected'></option>";
                 echo "<option value='1'>Otro</option>";
