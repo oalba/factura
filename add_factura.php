@@ -167,7 +167,11 @@
     <form enctype="multipart/form-data" action="" method="post">
         Fecha: <input type="date" name="fecha" value="<?php echo date('Y-m-d'); ?>"/><br><br>
 
-        Nº de factura: <input type="number" name="num" required/><br><br>
+        Nº de factura: <input type="number" name="num" value="<?php 
+            $orde = mysql_query('SELECT MAX(cod_fac) AS cod_fac FROM facturas');
+            $ordee = mysql_result($orde,0,0);
+            $orden = $ordee+1; 
+            echo $orden ?>" required/><br><br>
 
         <label>Cliente:</label> 
         <select name="cli1" onchange="changeCli(this)" style="white-space:pre-wrap; width: 100px;">
