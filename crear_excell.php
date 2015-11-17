@@ -32,8 +32,23 @@ $objPHPExcel = new PHPExcel();
 
 $worksheet = $objPHPExcel->getActiveSheet();
 
+//Margin
+$objPHPExcel->getActiveSheet()
+    ->getPageMargins()->setTop(0.39);
+$objPHPExcel->getActiveSheet()
+    ->getPageMargins()->setBottom(0.39);
+//$objPHPExcel->getActiveSheet()
+//    ->getPageMargins()->setRight(0.75);
+//$objPHPExcel->getActiveSheet()
+//    ->getPageMargins()->setLeft(0.75);
+
+//Hide lines - Ocultar lineas
+$objPHPExcel->getActiveSheet()
+    ->setShowGridlines(false);
+
+
 //Uniendo celdas - Merge Cells
-$arrayMerges = array('E2:G6','A46:G46','A1:C2','A3:C3','A4:C4','A5:C5','A6:C6','A7:C7','B12:E12','F44:G44');
+$arrayMerges = array('E2:G6','A51:G51','A1:C2','A3:C3','A4:C4','A5:C5','A6:C6','A7:C7','B12:E12','F49:G49');
 
 foreach ($arrayMerges as &$valor) {
     $objPHPExcel->setActiveSheetIndex(0)->mergeCells($valor);
@@ -50,7 +65,7 @@ $borderArray = array(
   )
 );
 
-$arrayBordes = array('E2:G6', 'A10:B10', 'C10:E10', 'F10:G10', 'A12', 'B12:E12', 'F12', 'G12', 'A13:A41', 'B13:E41', 'F13:F41', 'G13:G41');
+$arrayBordes = array('E2:G6', 'A10:B10', 'C10:E10', 'F10:G10', 'A12', 'B12:E12', 'F12', 'G12', 'A13:A46', 'B13:E46', 'F13:F46', 'G13:G46');
 
 foreach ($arrayBordes as &$valor) {
     $worksheet->getStyle($valor)->applyFromArray($borderArray);
@@ -61,36 +76,36 @@ unset($valor);
 unset($borderArray);
 
 //Añadiendo lineas de puntos - Adding dotted lines
-$worksheet->getStyle('A13:G41')->getBorders()->getHorizontal()->setBorderStyle(PHPExcel_Style_Border::BORDER_DOTTED);
-$worksheet->getStyle('F44:G44')->getBorders()->getOutline()->setBorderStyle(PHPExcel_Style_Border::BORDER_THICK);
+$worksheet->getStyle('A13:G46')->getBorders()->getHorizontal()->setBorderStyle(PHPExcel_Style_Border::BORDER_DOTTED);
+$worksheet->getStyle('F49:G49')->getBorders()->getOutline()->setBorderStyle(PHPExcel_Style_Border::BORDER_THICK);
 
 //Cambiando tamaño de las celdas - Changing cells dimensions
 $worksheet->getColumnDimension('A')->setWidth(11);
 $worksheet->getColumnDimension('B')->setWidth(13);
 $worksheet->getColumnDimension('C')->setWidth(11);
-$worksheet->getColumnDimension('D')->setWidth(13);
+$worksheet->getColumnDimension('D')->setWidth(15);
 $worksheet->getColumnDimension('E')->setWidth(13);
 $worksheet->getColumnDimension('G')->setWidth(11);
 
-$worksheet->getRowDimension(46)->setRowHeight(45);
-//$worksheet->getRowDimension(46)->setRowHeight(-1);
+$worksheet->getRowDimension(51)->setRowHeight(45);
+//$worksheet->getRowDimension(51)->setRowHeight(-1);
 //$excel->getActiveSheet()->getRowDimension($_row_number)->setRowHeight(-1);
 
 //Centrando texto - Text alignement
 $worksheet->getStyle('A1:A7')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 $worksheet->getStyle('A12:G12')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 $worksheet->getStyle('B2:G6')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
-$worksheet->getStyle('A13:G41')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
-$worksheet->getStyle('F44')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+$worksheet->getStyle('A13:G46')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+$worksheet->getStyle('F49')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 $worksheet->getStyle('B10')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
 $worksheet->getStyle('G10')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
 $worksheet->getStyle('A10')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
 $worksheet->getStyle('F10')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
 $worksheet->getStyle('E10')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
-$worksheet->getStyle('E44')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+$worksheet->getStyle('E49')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
 $worksheet->getStyle('E2:G6')->getAlignment()->setWrapText(true);
-$worksheet->getStyle('A46')->getAlignment()->setWrapText(true);
-$worksheet->getStyle('A13:G41')->getAlignment()->setWrapText(true);
+$worksheet->getStyle('A51')->getAlignment()->setWrapText(true);
+$worksheet->getStyle('A13:G46')->getAlignment()->setWrapText(true);
 
 //Cambiando tipo de letra, tamaño, ... - Changing letter type, size, ...
 $worksheet->getStyle('A1')->getFont()->setName('Britannic Bold')->setSize(13)->setBold(true);
@@ -102,15 +117,15 @@ $worksheet->getStyle('A10')->getFont()->setName('Centaur')->setSize(10)->setBold
 $worksheet->getStyle('F10')->getFont()->setName('Centaur')->setSize(10)->setBold(true)->setItalic(true);
 //$worksheet->getStyle('E10')->getFont()->setName('Centaur')->setSize(10)->setBold(true)->setItalic(true);
 
-$worksheet->getStyle('A46')->getFont()->setName('Arial')->setSize(6); 
+$worksheet->getStyle('A51')->getFont()->setName('Arial')->setSize(6); 
 
 //Dando formato al texto - Formating text
 $worksheet->getStyle('G10')->getNumberFormat()->setFormatCode('dd/mm/yyyy');
-$worksheet->getStyle('A13:A41')->getNumberFormat()->setFormatCode('0');
-$worksheet->getStyle('F13:G41')->getNumberFormat()->setFormatCode('0.00€');
-$worksheet->getStyle('A44')->getNumberFormat()->setFormatCode('0.00€');
-$worksheet->getStyle('C44')->getNumberFormat()->setFormatCode('0.00€');
-$worksheet->getStyle('F44')->getNumberFormat()->setFormatCode('0.00€');
+$worksheet->getStyle('A13:A46')->getNumberFormat()->setFormatCode('0');
+$worksheet->getStyle('F13:G46')->getNumberFormat()->setFormatCode('0.00€');
+$worksheet->getStyle('A49')->getNumberFormat()->setFormatCode('0.00€');
+$worksheet->getStyle('C49')->getNumberFormat()->setFormatCode('0.00€');
+$worksheet->getStyle('F49')->getNumberFormat()->setFormatCode('0.00€');
 
 //Añadiendo datos por defecto - Adding default data
 $objPHPExcel->setActiveSheetIndex(0)
@@ -152,7 +167,7 @@ $objPHPExcel->setActiveSheetIndex(0)
                 $concepto = $row2['concepto'];
                 $cantidad = $row2['cantidad'];
                 $precio = $row2['precio_u'];
-                //for ($i=13; $i<=41; $i++){
+                //for ($i=13; $i<=46; $i++){
 
                 //if (isset($_POST['cant'.$a])){
 
@@ -168,7 +183,7 @@ $objPHPExcel->setActiveSheetIndex(0)
 
                 if ($letras > 47){
                         
-                    for ($t=1; $t<=30; $t++){
+                    for ($t=1; $t<=34; $t++){
                         if ($letras > (47*$t)){
                              $s = $i + $t;
                         }
@@ -205,7 +220,8 @@ $objPHPExcel->setActiveSheetIndex(0)
                 $i++;
             }
 
-            for ($u=13; $u<=41; $u++){
+            for ($u=13; $u<=46; $u++){
+                //$worksheet->getRowDimension($u)->setRowHeight(14);
                 $vaca = $worksheet->getCell('A'.$u)->getValue();
                 $vacf = $worksheet->getCell('F'.$u)->getValue();
                 if (($vaca!=0||$vaca!="")||($vacf!=0||$vacf!="")){
@@ -214,14 +230,19 @@ $objPHPExcel->setActiveSheetIndex(0)
             }
 
 $objPHPExcel->setActiveSheetIndex(0)
-            ->setCellValue('A43', 'Subtotal')
-            ->setCellValue('A44', '=SUM(G13:G41)')
-            ->setCellValue('C43', 'IVA '.$iva.'%')
-            ->setCellValue('C44', '=A44*'.$iva.'%')
-            ->setCellValue('E44', 'TOTAL:')
-            ->setCellValue('F44', '=A44+C44')
+            ->setCellValue('A48', 'Subtotal')
+            ->setCellValue('A49', '=SUM(G13:G46)')
+            ->setCellValue('C48', 'IVA '.$iva.'%')
+            ->setCellValue('C49', '=A49*'.$iva.'%')
+            ->setCellValue('E49', 'TOTAL:')
+            ->setCellValue('F49', '=A49+C49')
 
-            ->setCellValue('A46', 'De conformidad con la Ley Orgánica de Protección de Datos de Carácter Personal 15/1999, le recordamos que sus datos han sido incorporados en un fichero de datos de carácter personal del que es titular ******* **** *******, debidamente registrado ante la AEPD y cuya finalidad es de gestión de datos de clientes para tareas contable, fiscal y administrativas, Así mismo, le informamos que sus datos podrán ser cedidos, siempre protegiendo los datos adecuadamente, a: administración tributaria y bancos, cajas de ahorros y cajas rurales. Puede ejercitar sus derechos de Acceso, Rectificación, Cancelación y Oposición en ******* ** - *****, ******* (*********) o enviando un correo electrónico a *****.****@hotmail.com.');
+            ->setCellValue('A51', 'De conformidad con la Ley Orgánica de Protección de Datos de Carácter Personal 15/1999, le recordamos que sus datos han sido incorporados en un fichero de datos de carácter personal del que es titular ******* **** *******, debidamente registrado ante la AEPD y cuya finalidad es de gestión de datos de clientes para tareas contable, fiscal y administrativas, Así mismo, le informamos que sus datos podrán ser cedidos, siempre protegiendo los datos adecuadamente, a: administración tributaria y bancos, cajas de ahorros y cajas rurales. Puede ejercitar sus derechos de Acceso, Rectificación, Cancelación y Oposición en ******* ** - *****, ******* (*********) o enviando un correo electrónico a *****.****@hotmail.com.');
+
+//No esta permitido un footer tan largp
+//$objPHPExcel->getActiveSheet()->getHeaderFooter()->setOddFooter('&L&6&ArialDe conformidad con la Ley Orgánica de Protección de Datos de Carácter Personal 15/1999, le recordamos que sus datos han sido incorporados en un fichero de datos de carácter personal del que es titular ******* **** *******, debidamente registrado ante la AEPD y cuya finalidad es de gestión de datos de clientes para tareas contable, fiscal y administrativas, Así mismo, le informamos que sus datos podrán ser cedidos, siempre protegiendo los datos adecuadamente, a: administración tributaria y bancos, cajas de ahorros y cajas rurales. Puede ejercitar sus derechos de Acceso, Rectificación, Cancelación y Oposición en ******* ** - *****, ******* (*********) o enviando un correo electrónico a *****.****@hotmail.com.');
+//$objPHPExcel->getActiveSheet()->getHeaderFooter()->setEvenFooter('&L&6&ArialDe conformidad con la Ley Orgánica de Protección de Datos de Carácter Personal 15/1999, le recordamos que sus datos han sido incorporados en un fichero de datos de carácter personal del que es titular ******* **** *******, debidamente registrado ante la AEPD y cuya finalidad es de gestión de datos de clientes para tareas contable, fiscal y administrativas, Así mismo, le informamos que sus datos podrán ser cedidos, siempre protegiendo los datos adecuadamente, a: administración tributaria y bancos, cajas de ahorros y cajas rurales. Puede ejercitar sus derechos de Acceso, Rectificación, Cancelación y Oposición en ******* ** - *****, ******* (*********) o enviando un correo electrónico a *****.****@hotmail.com.');
+
 
 //$objPHPExcel->getActiveSheet()->getHeaderFooter()->setOddFooter('&L&6&ArialDe conformidad con la Ley Orgánica de Protección de Datos de Carácter Personal 15/1999, le recordamos que sus datos han sido incorporados en un fichero de datos de carácter personal del que es titular ******* **** *******, debidamente registrado ante la AEPD y cuya finalidad es de gestión de datos de clientes para tareas contable, fiscal y administrativas, Así mismo, le informamos que sus datos podrán ser cedidos, siempre protegiendo los datos adecuadamente, a: administración tributaria y bancos, cajas de ahorros y cajas rurales. Puede ejercitar sus derechos de Acceso, Rectificación, Cancelación y Oposición en ******* ** - *****, ******* (*********) o enviando un correo electrónico a *****.****@hotmail.com.');
 // Rename worksheet
