@@ -27,6 +27,16 @@ orden integer,
 primary key(concepto, cod_fac));
 
 
+
+alter table facturas
+add column cuenta_laboral varchar(50);
+
+alter table facturas
+add column cuenta_kutxa varchar(50);
+
+
+
+
 alter table tener_f_c
 modify column precio_u decimal(10,2);
 

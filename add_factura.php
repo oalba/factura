@@ -206,10 +206,24 @@
         </table>
         <button type="button" onclick="myFunction()">Añadir</button><br><br>
         IVA: <input type="number" name="iva" value="21" Style="width:40Px"/><br><br>
+        Mostrar Nº de cuenta:<br>
+        <input type="checkbox" name="cuenta[]" value="laboral"/> Nº Cta. Laboral: 11111 <br>
+        <input type="checkbox" name="cuenta[]" value="kutxa"/> Nº Cta. Kutxa: 111111<br><br>
         <input type="submit" name="crear" value="Crear"/>
     </form>
 <?php
 if(isset($_POST['crear'])){
+    function IsChecked($chkname,$value){
+        if(!empty($_POST[$chkname])){
+            foreach($_POST[$chkname] as $chkval){
+                if($chkval == $value){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     $fecha = date_format(date_create_from_format('Y-m-d', $_POST['fecha']), 'd/m/Y');
     $insfecha = date("Y-m-d",strtotime($_POST['fecha']));
     $numero = $_POST['num'];
@@ -221,6 +235,15 @@ if(isset($_POST['crear'])){
     if (mysql_num_rows($compro) != 0){
         echo "¡ERROR! La factura con este código ya existe.";
     }else{
+        $laboral = NULL;
+        $kutxa = NULL;
+        if (IsChecked('cuenta','laboral')){
+            $laboral = "Nº Cta. Laboral: ";
+        }
+        if (IsChecked('cuenta','kutxa')){
+            $kutxa = "Nº Cta. Kutxa: ";
+        }
+
         if ($_POST['cli1'] == 1) {
             $cliente = $_POST['cliente1'];
             $inscli = $_POST['cliente1'];
@@ -255,7 +278,7 @@ if(isset($_POST['crear'])){
             //$a++;
         }
 
-        $insertfac = "INSERT INTO facturas (cod_fac,fecha,IVA,existe_cli,cliente) VALUES ($numero,'$insfecha',$iva,$existe,'$inscli')";
+        $insertfac = "INSERT INTO facturas (cod_fac,fecha,IVA,existe_cli,cliente,cuenta_laboral,cuenta_kutxa) VALUES ($numero,'$insfecha',$iva,$existe,'$inscli','$laboral','$kutxa')";
         mysql_query($insertfac);
     }
 

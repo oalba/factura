@@ -3,12 +3,14 @@ $dp = mysql_connect("localhost", "root", "" );
 mysql_select_db("facturas", $dp);
 
 $numero = $_GET['cod_fac'];
-$selfac = mysql_query("SELECT fecha,cliente,existe_cli,IVA FROM facturas WHERE cod_fac=$numero");
+$selfac = mysql_query("SELECT fecha,cliente,existe_cli,IVA,cuenta_laboral,cuenta_kutxa FROM facturas WHERE cod_fac=$numero");
 $fecha = mysql_result($selfac,0,0);
 $fecha = date_format(date_create_from_format('Y-m-d', $fecha), 'd/m/Y');
 $cli1 = mysql_result($selfac,0,1);
 $excli = mysql_result($selfac,0,2);
 $iva = mysql_result($selfac,0,3);
+$laboral = mysql_result($selfac,0,4);
+$kutxa = mysql_result($selfac,0,5);
 
 //while ($row = mysql_fetch_assoc($selfac)) {
     //$fecha = $row['fecha'];
@@ -248,6 +250,14 @@ $objPHPExcel->setActiveSheetIndex(0)
                 if (($vaca!=0||$vaca!="")||($vacf!=0||$vacf!="")){
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G'.$u, '=A'.$u.'*F'.$u);
                 }
+            }
+            if ($laboral != NULL) {
+                $objPHPExcel->setActiveSheetIndex(0)->mergeCells('B44:E44');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B44', $laboral);
+            }
+            if ($kutxa != NULL) {
+                $objPHPExcel->setActiveSheetIndex(0)->mergeCells('B45:E45');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B45', $kutxa);
             }
 
 $objPHPExcel->setActiveSheetIndex(0)

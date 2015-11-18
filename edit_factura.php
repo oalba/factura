@@ -174,7 +174,12 @@ $num_fila = 0;
                 
 
                 echo "<form enctype='multipart/form-data' action='add_con_fact_act.php?cod_fac=$data' method='post'>"; 
-                echo "<tr><td colspan=6></td>";
+                echo "<tr "; 
+                if ($num_fila%2==0) 
+                    echo "bgcolor=#dddddd"; //si el resto de la división es 0 pongo un color 
+                else 
+                    echo "bgcolor=#ddddff"; //si el resto de la división NO es 0 pongo otro color 
+                echo "><td colspan=6></td>";
                 echo "<td><select name='concepto3' onchange='change(this,2,0)' style='white-space:pre-wrap; width: 250px;'>";
                 echo "<option selected='selected'></option>";
                 echo "<option value='1'>Otro</option>";
@@ -196,6 +201,31 @@ $num_fila = 0;
                 echo "<td><input type='submit' name='addc' value='Añadir'/></td>";
                 echo "</tr>";
                 echo "</form>";
+
+                echo "<tr "; 
+                if ($num_fila%2==0) 
+                    echo "bgcolor=#dddddd>"; //si el resto de la división es 0 pongo un color 
+                else 
+                    echo "bgcolor=#ddddff>"; //si el resto de la división NO es 0 pongo otro color 
+                echo "<td colspan=9>";
+                if ($row['cuenta_laboral'] != NULL) {
+                    echo "<input type='checkbox' name='cuenta[]' value='laboral' disabled='disabled' checked='checked'/>";
+                } else {
+                    echo "<input type='checkbox' name='cuenta[]' value='laboral' disabled='disabled'/>";
+                }
+                echo "Nº Cta. Laboral: 11111<br/>";
+                if ($row['cuenta_kutxa'] != NULL) {
+                    echo "<input type='checkbox' name='cuenta[]' value='kutxa' disabled='disabled' checked='checked'/>";
+                } else {
+                    echo "<input type='checkbox' name='cuenta[]' value='kutxa' disabled='disabled'/>";
+                }
+                echo "Nº Cta. Kutxa: 111111";
+                echo "</td>";
+
+                echo "<td><a href='edit_cue_fac.php?cod_fac=$data'><input type='button' value='Editar'></a></td>";
+                echo "</tr>";
+
+
 
                 $num_fila++;
             }

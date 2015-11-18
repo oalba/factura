@@ -260,7 +260,32 @@
                 //echo "<td>$row[precio]€</td>";
                 //echo "<td><a href=\"edit_conce.php?concepto=$row[cod_con]\"><input type=\"button\" value=\"Editar\"></a></td>";
                 //echo "<td><button onclick=\"seguro($row[cod_con]);\">Delete</button></td>";
-                echo "</tr><tr/>";
+                echo "</tr>";
+
+                $seleccu = mysql_query("SELECT cuenta_laboral,cuenta_kutxa FROM facturas WHERE cod_fac=$row[cod_fac]");
+                $laboral = mysql_result($seleccu,0,0);
+                $kutxa = mysql_result($seleccu,0,1);
+                
+                if ($laboral != NULL) {
+                    echo "<tr "; 
+                    if ($num_fila%2==0) 
+                        echo "bgcolor=#dddddd"; //si el resto de la división es 0 pongo un color 
+                    else 
+                        echo "bgcolor=#ddddff"; //si el resto de la división NO es 0 pongo otro color 
+                    echo ">";
+                    echo "<td colspan=11>$laboral</td></tr>";
+                }
+                if ($kutxa != NULL) {
+                    echo "<tr "; 
+                    if ($num_fila%2==0) 
+                        echo "bgcolor=#dddddd"; //si el resto de la división es 0 pongo un color 
+                    else 
+                        echo "bgcolor=#ddddff"; //si el resto de la división NO es 0 pongo otro color 
+                    echo ">";
+                    echo "<td colspan=11>$kutxa</td></tr>";
+                }
+                
+                echo "<tr/>";
                 $num_fila++;
             }
             echo "</table><br/> Se han encontrado $num_fila facturas que cumplen esas condiciones.";

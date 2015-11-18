@@ -39,7 +39,6 @@
     </script>
 <?php
 $data = $_GET['cod_fac'];
-$data2 = $_GET['concepto'];
 
 $dp = mysql_connect("localhost", "root", "" );
 mysql_select_db("facturas", $dp);
@@ -103,8 +102,8 @@ $num_fila = 0;
                 while ($row2 = mysql_fetch_assoc($selec2)) {
                     $concepto = $row2['concepto'];
                     $orden = $row2['orden'];
-                    if ($row2['concepto'] == $data2) {
-                        echo "<form enctype='multipart/form-data' action='edit_con_fact_act.php?cod_fac=$data' method='post'>";
+                    //if ($row2['concepto'] == $data2) {
+                        /*echo "<form enctype='multipart/form-data' action='edit_con_fact_act.php?cod_fac=$data' method='post'>";
 
                         echo "<tr "; 
                         if ($num_fila%2==0) 
@@ -141,7 +140,7 @@ $num_fila = 0;
                         echo "</tr>";
                         echo "</form>";
                         //$nu++;
-                    } else {
+                    } else {*/
                         //echo "<form enctype='multipart/form-data' action='' method='post'>";
                         echo "<tr "; 
                         if ($num_fila%2==0) 
@@ -166,7 +165,7 @@ $num_fila = 0;
                         echo "<button onclick=\"seguro('".$row2['concepto']."',".$row['cod_fac'].",".$row2['orden'].");\">Eliminar</button></td>";
                         echo "</tr>";
                         //echo "</form>";
-                    }
+                    //}
                     
                 }
                 //echo "<td>$row[precio]€</td>";
@@ -203,7 +202,7 @@ $num_fila = 0;
                 echo "</tr>";
                 echo "</form>";
 
-
+                echo "<form enctype='multipart/form-data' action='edit_cue_fact_act.php?cod_fac=$data' method='post'>";
                 echo "<tr "; 
                 if ($num_fila%2==0) 
                     echo "bgcolor=#dddddd>"; //si el resto de la división es 0 pongo un color 
@@ -211,21 +210,22 @@ $num_fila = 0;
                     echo "bgcolor=#ddddff>"; //si el resto de la división NO es 0 pongo otro color 
                 echo "<td colspan=9>";
                 if ($row['cuenta_laboral'] != NULL) {
-                    echo "<input type='checkbox' name='cuenta[]' value='laboral' disabled='disabled' checked='checked'/>";
+                    echo "<input type='checkbox' name='cuenta[]' value='laboral' checked='checked'/>";
                 } else {
-                    echo "<input type='checkbox' name='cuenta[]' value='laboral' disabled='disabled'/>";
+                    echo "<input type='checkbox' name='cuenta[]' value='laboral'/>";
                 }
                 echo "Nº Cta. Laboral: 11111<br/>";
                 if ($row['cuenta_kutxa'] != NULL) {
-                    echo "<input type='checkbox' name='cuenta[]' value='kutxa' disabled='disabled' checked='checked'/>";
+                    echo "<input type='checkbox' name='cuenta[]' value='kutxa' checked='checked'/>";
                 } else {
-                    echo "<input type='checkbox' name='cuenta[]' value='kutxa' disabled='disabled'/>";
+                    echo "<input type='checkbox' name='cuenta[]' value='kutxa'/>";
                 }
                 echo "Nº Cta. Kutxa: 111111";
                 echo "</td>";
 
-                echo "<td><a href='edit_cue_fac.php?cod_fac=$data'><input type='button' value='Editar'></a></td>";
+                echo "<td><input type='submit' name='guardarcu' value='Guardar'/></td>";
                 echo "</tr>";
+                echo "</form>";
 
 
                 $num_fila++;
