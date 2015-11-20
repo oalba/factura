@@ -29,6 +29,16 @@ primary key(concepto, cod_fac));
 
 
 alter table facturas
+add column detalles varchar(600);
+
+
+
+
+
+
+
+
+alter table facturas
 add column cuenta_laboral varchar(50);
 
 alter table facturas

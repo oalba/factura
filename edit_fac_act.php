@@ -5,6 +5,7 @@ mysql_select_db("facturas", $dp);
 $data = $_GET['cod_fac'];
 $cli = $_POST['cli1'];
 $iva = $_POST['iva'];
+$detalles = $_POST['detalles'];
 $insfecha = date("Y-m-d",strtotime($_POST['fecha']));
 //$direccion = trim(preg_replace('/\s\s+/', ' ', $direccion));
 if ($_POST['cli1'] == 1) {

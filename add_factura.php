@@ -185,6 +185,9 @@
             }
         ?></select><input id="cif1" type="text" name="cif1" value="" style="display: none" disabled/><textarea id="cliente1" name="cliente1" rows="5" style="display: none"></textarea><br><br>
 
+        Detalles:<br/>
+        <textarea name="detalles" rows="3" cols="60"></textarea><br/><br/>
+
         Conceptos: 
         <table id="myTable">
             <tr>
@@ -229,6 +232,7 @@ if(isset($_POST['crear'])){
     $numero = $_POST['num'];
     $cli1 = $_POST['cli1'];
     $iva = $_POST['iva'];
+    $detalles = $_POST['detalles'];
 
     $comprobar = "SELECT * FROM facturas WHERE cod_fac=$numero";
     $compro = mysql_query($comprobar);
@@ -278,7 +282,7 @@ if(isset($_POST['crear'])){
             //$a++;
         }
 
-        $insertfac = "INSERT INTO facturas (cod_fac,fecha,IVA,existe_cli,cliente,cuenta_laboral,cuenta_kutxa) VALUES ($numero,'$insfecha',$iva,$existe,'$inscli','$laboral','$kutxa')";
+        $insertfac = "INSERT INTO facturas (cod_fac,fecha,IVA,existe_cli,cliente,cuenta_laboral,cuenta_kutxa,detalles) VALUES ($numero,'$insfecha',$iva,$existe,'$inscli','$laboral','$kutxa','$detalles')";
         mysql_query($insertfac);
     }
 

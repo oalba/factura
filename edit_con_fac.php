@@ -49,7 +49,7 @@ $facs = mysql_query($sql);
 
 $num_fila = 0; 
             echo "<table border=1>";
-            echo "<tr bgcolor=\"bbbbbb\" align=center><th>Codigo</th><th>Fecha</th><th>Cliente</th><th>CIF</th><th>IVA %</th><th></th><th>Concepto</th><th>Cantidad</th><th>Precio</th></tr>";
+            echo "<tr bgcolor=\"bbbbbb\" align=center><th>Codigo</th><th>Fecha</th><th>Cliente</th><th>CIF</th><th>IVA %</th></tr>";
             while ($row = mysql_fetch_assoc($facs)) {
                 echo "<form enctype='multipart/form-data' action='' method='post'>";
                 echo "<tr "; 
@@ -92,10 +92,56 @@ $num_fila = 0;
         			echo "</select><br/><textarea id='cliente1' name='cliente1' rows='5' style='display: none' disabled></textarea></td><td><input id='cif1' type='text' name='cif1' value='$cif' disabled/></td>";
 
                 }
-                echo "<td><input type='number' name='iva' value='$row[IVA]' Style='width:40Px' disabled/>%</td><th></th><th>Concepto</th><th>Cantidad</th><th>Precio</th>";
-				echo "<td><a href=\"edit_factura.php?cod_fac=$data\"><input type=\"button\" value=\"Editar\"></a></td>";
+                echo "<td><input type='number' name='iva' value='$row[IVA]' Style='width:40Px' disabled/>%</td>";
+				echo "<td rowspan=3><a href=\"edit_factura.php?cod_fac=$data\"><input type=\"button\" value=\"Editar\"></a></td>";
                 echo "</tr>";
-				echo "</form>";
+
+                echo "<tr ";
+                if ($num_fila%2==0) 
+                    echo "bgcolor=#dddddd>"; //si el resto de la división es 0 pongo un color 
+                else 
+                    echo "bgcolor=#ddddff>"; //si el resto de la división NO es 0 pongo otro color 
+                echo "<td colspan=5>";
+                echo "Detalles:<br/>";
+                if ($row['detalles'] != NULL) {
+                    echo "<textarea name='detalles' rows='3' cols='60'>$row[detalles]</textarea>";
+                } else {
+                    echo "<textarea name='detalles' rows='3' cols='60'></textarea>";
+                }
+                echo "</td>";
+
+                //echo "<td><a href='edit_det_fac.php?cod_fac=$data'><input type='button' value='Editar'></a></td>";
+                echo "</tr>";
+
+                echo "<tr "; 
+                if ($num_fila%2==0) 
+                    echo "bgcolor=#dddddd>"; //si el resto de la división es 0 pongo un color 
+                else 
+                    echo "bgcolor=#ddddff>"; //si el resto de la división NO es 0 pongo otro color 
+                echo "<td colspan=5>";
+                if ($row['cuenta_laboral'] != NULL) {
+                    echo "<input type='checkbox' name='cuenta[]' value='laboral' checked='checked'/>";
+                } else {
+                    echo "<input type='checkbox' name='cuenta[]' value='laboral'/>";
+                }
+                echo "Nº Cta. Laboral: 11111<br/>";
+                if ($row['cuenta_kutxa'] != NULL) {
+                    echo "<input type='checkbox' name='cuenta[]' value='kutxa' checked='checked'/>";
+                } else {
+                    echo "<input type='checkbox' name='cuenta[]' value='kutxa'/>";
+                }
+                echo "Nº Cta. Kutxa: 111111";
+                echo "</td>";
+
+                //echo "<td><a href='edit_cue_fac.php?cod_fac=$data'><input type='button' value='Editar'></a></td>";
+                echo "</tr>";
+                echo "</form>";
+                echo "</table>";
+
+                echo "<br/>";
+
+                echo "<table border=1>";
+                echo "<tr bgcolor=\"bbbbbb\" align=center><th colspan=2>Orden</th><th>Concepto</th><th>Cantidad</th><th>Precio</th></tr>";
                 
                 $selec2 = mysql_query("SELECT concepto, cantidad, precio_u as precio, orden FROM tener_f_c WHERE cod_fac='$data' ORDER BY orden");
                 $numResults = mysql_num_rows($selec2);
@@ -113,7 +159,7 @@ $num_fila = 0;
                             echo "bgcolor=#ddddff"; //si el resto de la división NO es 0 pongo otro color 
                         echo ">";
 
-                        echo "<td colspan=5>$orden</td>";
+                        echo "<td>$orden</td>";
                         if (++$counter == $numResults) {
                             echo "<td><a href='edit_con_fac_ord.php?cod_fac=$data&concepto=$concepto&accion=subir&orden=$orden'><input type='button' value='Subir'></a></td>";
                         } elseif ($counter == 1) {
@@ -149,7 +195,7 @@ $num_fila = 0;
                         else 
                             echo "bgcolor=#ddddff"; //si el resto de la división NO es 0 pongo otro color 
                         echo ">";
-                        echo "<td colspan=5>$orden</td>";
+                        echo "<td>$orden</td>";
                         if (++$counter == $numResults) {
                             echo "<td><a href='edit_con_fac_ord.php?cod_fac=$data&concepto=$concepto&accion=subir&orden=$orden'><input type='button' value='Subir'></a></td>";
                         } elseif ($counter == 1) {
@@ -180,7 +226,7 @@ $num_fila = 0;
                     echo "bgcolor=#dddddd"; //si el resto de la división es 0 pongo un color 
                 else 
                     echo "bgcolor=#ddddff"; //si el resto de la división NO es 0 pongo otro color 
-                echo "><td colspan=6></td>";
+                echo "><td colspan=2></td>";
                 echo "<td><select name='concepto3' onchange='change(this,2,0)' style='white-space:pre-wrap; width: 250px;'>";
                 echo "<option selected='selected'></option>";
                 echo "<option value='1'>Otro</option>";
@@ -202,31 +248,6 @@ $num_fila = 0;
                 echo "<td><input type='submit' name='addc' value='Añadir'/></td>";
                 echo "</tr>";
                 echo "</form>";
-
-
-                echo "<tr "; 
-                if ($num_fila%2==0) 
-                    echo "bgcolor=#dddddd>"; //si el resto de la división es 0 pongo un color 
-                else 
-                    echo "bgcolor=#ddddff>"; //si el resto de la división NO es 0 pongo otro color 
-                echo "<td colspan=9>";
-                if ($row['cuenta_laboral'] != NULL) {
-                    echo "<input type='checkbox' name='cuenta[]' value='laboral' disabled='disabled' checked='checked'/>";
-                } else {
-                    echo "<input type='checkbox' name='cuenta[]' value='laboral' disabled='disabled'/>";
-                }
-                echo "Nº Cta. Laboral: 11111<br/>";
-                if ($row['cuenta_kutxa'] != NULL) {
-                    echo "<input type='checkbox' name='cuenta[]' value='kutxa' disabled='disabled' checked='checked'/>";
-                } else {
-                    echo "<input type='checkbox' name='cuenta[]' value='kutxa' disabled='disabled'/>";
-                }
-                echo "Nº Cta. Kutxa: 111111";
-                echo "</td>";
-
-                echo "<td><a href='edit_cue_fac.php?cod_fac=$data'><input type='button' value='Editar'></a></td>";
-                echo "</tr>";
-
 
                 $num_fila++;
             }
