@@ -104,9 +104,9 @@ $num_fila = 0;
                 echo "<td colspan=5>";
                 echo "Detalles:<br/>";
                 if ($row['detalles'] != NULL) {
-                    echo "<textarea name='detalles' rows='3' cols='60'>$row[detalles]</textarea>";
+                    echo "<textarea name='detalles' rows='3' cols='60' disabled>$row[detalles]</textarea>";
                 } else {
-                    echo "<textarea name='detalles' rows='3' cols='60'></textarea>";
+                    echo "<textarea name='detalles' rows='3' cols='60' disabled></textarea>";
                 }
                 echo "</td>";
 
@@ -120,15 +120,15 @@ $num_fila = 0;
                     echo "bgcolor=#ddddff>"; //si el resto de la división NO es 0 pongo otro color 
                 echo "<td colspan=5>";
                 if ($row['cuenta_laboral'] != NULL) {
-                    echo "<input type='checkbox' name='cuenta[]' value='laboral' checked='checked'/>";
+                    echo "<input type='checkbox' name='cuenta[]' value='laboral' checked='checked' disabled/>";
                 } else {
-                    echo "<input type='checkbox' name='cuenta[]' value='laboral'/>";
+                    echo "<input type='checkbox' name='cuenta[]' value='laboral' disabled/>";
                 }
                 echo "Nº Cta. Laboral: 11111<br/>";
                 if ($row['cuenta_kutxa'] != NULL) {
-                    echo "<input type='checkbox' name='cuenta[]' value='kutxa' checked='checked'/>";
+                    echo "<input type='checkbox' name='cuenta[]' value='kutxa' checked='checked' disabled/>";
                 } else {
-                    echo "<input type='checkbox' name='cuenta[]' value='kutxa'/>";
+                    echo "<input type='checkbox' name='cuenta[]' value='kutxa' disabled/>";
                 }
                 echo "Nº Cta. Kutxa: 111111";
                 echo "</td>";

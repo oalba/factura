@@ -3,7 +3,7 @@ $dp = mysql_connect("localhost", "root", "" );
 mysql_select_db("facturas", $dp);
 
 $numero = $_GET['cod_fac'];
-$selfac = mysql_query("SELECT fecha,cliente,existe_cli,IVA,cuenta_laboral,cuenta_kutxa FROM facturas WHERE cod_fac=$numero");
+$selfac = mysql_query("SELECT fecha,cliente,existe_cli,IVA,cuenta_laboral,cuenta_kutxa,detalles FROM facturas WHERE cod_fac=$numero");
 $fecha = mysql_result($selfac,0,0);
 $fecha = date_format(date_create_from_format('Y-m-d', $fecha), 'd/m/Y');
 $cli1 = mysql_result($selfac,0,1);
@@ -11,6 +11,7 @@ $excli = mysql_result($selfac,0,2);
 $iva = mysql_result($selfac,0,3);
 $laboral = mysql_result($selfac,0,4);
 $kutxa = mysql_result($selfac,0,5);
+$detalles = mysql_result($selfac,0,6);
 
 //while ($row = mysql_fetch_assoc($selfac)) {
     //$fecha = $row['fecha'];
@@ -50,7 +51,7 @@ $objPHPExcel->getActiveSheet()
 
 
 //Uniendo celdas - Merge Cells
-$arrayMerges = array('E2:G6','A51:G51','A1:C2','A3:C3','A4:C4','A5:C5','A6:C6','A7:C7','B12:E12','F49:G49');
+$arrayMerges = array('E2:G6','A51:G51','A1:C2','A3:C3','A4:C4','A5:C5','A6:C6','A7:C7','B15:E15','F49:G49','A11:G11','A12:G13');
 
 foreach ($arrayMerges as &$valor) {
     $objPHPExcel->setActiveSheetIndex(0)->mergeCells($valor);
@@ -67,7 +68,7 @@ $borderArray = array(
   )
 );
 
-$arrayBordes = array('E2:G6', 'A10:B10', 'C10:E10', 'F10:G10', 'A12', 'B12:E12', 'F12', 'G12', 'A13:A46', 'B13:E46', 'F13:F46', 'G13:G46');
+$arrayBordes = array('E2:G6', 'A10:B10', 'C10:E10', 'F10:G10', 'A15', 'B15:E15', 'F15', 'G15', 'A16:A46', 'B16:E46', 'F16:F46', 'G16:G46', 'A11:G11', 'A12:G13');
 
 foreach ($arrayBordes as &$valor) {
     $worksheet->getStyle($valor)->applyFromArray($borderArray);
@@ -78,7 +79,7 @@ unset($valor);
 unset($borderArray);
 
 //Añadiendo lineas de puntos - Adding dotted lines
-$worksheet->getStyle('A13:G46')->getBorders()->getHorizontal()->setBorderStyle(PHPExcel_Style_Border::BORDER_DOTTED);
+$worksheet->getStyle('A16:G46')->getBorders()->getHorizontal()->setBorderStyle(PHPExcel_Style_Border::BORDER_DOTTED);
 $worksheet->getStyle('F49:G49')->getBorders()->getOutline()->setBorderStyle(PHPExcel_Style_Border::BORDER_THICK);
 
 //Cambiando tamaño de las celdas - Changing cells dimensions
@@ -95,10 +96,12 @@ $worksheet->getRowDimension(51)->setRowHeight(45);
 
 //Centrando texto - Text alignement
 $worksheet->getStyle('A1:A7')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
-$worksheet->getStyle('A12:G12')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+$worksheet->getStyle('A15:G15')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 $worksheet->getStyle('B2:G6')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
-$worksheet->getStyle('A13:G46')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+$worksheet->getStyle('A16:G46')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 $worksheet->getStyle('F49')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+$worksheet->getStyle('A11:G11')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+$worksheet->getStyle('A12:G13')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT)->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
 $worksheet->getStyle('B10')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
 $worksheet->getStyle('G10')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
 $worksheet->getStyle('A10')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
@@ -107,24 +110,27 @@ $worksheet->getStyle('E10')->getAlignment()->setHorizontal(PHPExcel_Style_Alignm
 $worksheet->getStyle('E49')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
 $worksheet->getStyle('E2:G6')->getAlignment()->setWrapText(true);
 $worksheet->getStyle('A51')->getAlignment()->setWrapText(true);
-$worksheet->getStyle('A13:G46')->getAlignment()->setWrapText(true);
+$worksheet->getStyle('A16:G46')->getAlignment()->setWrapText(true);
+$worksheet->getStyle('A12:G13')->getAlignment()->setWrapText(true);
 
 //Cambiando tipo de letra, tamaño, ... - Changing letter type, size, ...
 $worksheet->getStyle('A1')->getFont()->setName('Britannic Bold')->setSize(13)->setBold(true);
 $worksheet->getStyle('A3')->getFont()->setName('Lucida Calligraphy')->setSize(10);
 $worksheet->getStyle('A4:A7')->getFont()->setName('Palatino Linotype')->setSize(10);
-$worksheet->getStyle('A12:G12')->getFont()->setName('Century')->setSize(10);
+$worksheet->getStyle('A15:G15')->getFont()->setName('Century')->setSize(10);
 
 $worksheet->getStyle('A10')->getFont()->setName('Centaur')->setSize(10)->setBold(true)->setItalic(true);
 $worksheet->getStyle('F10')->getFont()->setName('Centaur')->setSize(10)->setBold(true)->setItalic(true);
+$worksheet->getStyle('A11:G11')->getFont()->setName('Centaur')->setSize(10)->setBold(true)->setItalic(true);
+$worksheet->getStyle('A12:G13')->getFont()->setName('Calibri')->setSize(11);
 //$worksheet->getStyle('E10')->getFont()->setName('Centaur')->setSize(10)->setBold(true)->setItalic(true);
 
 $worksheet->getStyle('A51')->getFont()->setName('Arial')->setSize(6); 
 
 //Dando formato al texto - Formating text
 $worksheet->getStyle('G10')->getNumberFormat()->setFormatCode('dd/mm/yyyy');
-$worksheet->getStyle('A13:A46')->getNumberFormat()->setFormatCode('0');
-$worksheet->getStyle('F13:G46')->getNumberFormat()->setFormatCode('0.00€');
+$worksheet->getStyle('A16:A46')->getNumberFormat()->setFormatCode('0');
+$worksheet->getStyle('F16:G46')->getNumberFormat()->setFormatCode('0.00€');
 $worksheet->getStyle('A49')->getNumberFormat()->setFormatCode('0.00€');
 $worksheet->getStyle('C49')->getNumberFormat()->setFormatCode('0.00€');
 $worksheet->getStyle('F49')->getNumberFormat()->setFormatCode('0.00€');
@@ -152,24 +158,32 @@ $objPHPExcel->setActiveSheetIndex(0)
 
             ->setCellValue('A10', 'Factura Nº: ')
             ->setCellValue('B10', $numero)
+
+            ->setCellValue('A11', 'Detalles:');
+            if ($detalles != NULL) {
+                //$objPHPExcel->setActiveSheetIndex(0)->mergeCells('B45:E45');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A12', $detalles);
+            }
+
+$objPHPExcel->setActiveSheetIndex(0)
             /*->setCellValue('E10', 'Método de pago: ')
             ->setCellValue('F10', $pago)*/
             ->setCellValue('F10', 'Fecha: ')
             ->setCellValue('G10', $fecha)
 
-            ->setCellValue('A12', 'Cantidad')
-            ->setCellValue('B12', 'Concepto')
-            ->setCellValue('F12', 'Precio')
-            ->setCellValue('G12', 'Importe');
+            ->setCellValue('A15', 'Cantidad')
+            ->setCellValue('B15', 'Concepto')
+            ->setCellValue('F15', 'Precio')
+            ->setCellValue('G15', 'Importe');
 
             //$a = 1;
-            $i=13;
+            $i=16;
             $conce = mysql_query("SELECT * FROM tener_f_c WHERE cod_fac=$numero ORDER BY orden");
             while ($row2 = mysql_fetch_assoc($conce)) {
                 $concepto = $row2['concepto'];
                 $cantidad = $row2['cantidad'];
                 $precio = $row2['precio_u'];
-                //for ($i=13; $i<=46; $i++){
+                //for ($i=16; $i<=46; $i++){
 
                 //if (isset($_POST['cant'.$a])){
 
@@ -222,7 +236,7 @@ $objPHPExcel->setActiveSheetIndex(0)
                 $i++;
             }
 
-            for ($u=13; $u<=46; $u++){
+            for ($u=16; $u<=46; $u++){
                 //$worksheet->getRowDimension($u)->setRowHeight(14);
                 $vaca = $worksheet->getCell('A'.$u)->getValue();
                 $vacf = $worksheet->getCell('F'.$u)->getValue();
@@ -241,7 +255,7 @@ $objPHPExcel->setActiveSheetIndex(0)
 
 $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('A48', 'Subtotal')
-            ->setCellValue('A49', '=SUM(G13:G46)')
+            ->setCellValue('A49', '=SUM(G16:G46)')
             ->setCellValue('C48', 'IVA '.$iva.'%')
             ->setCellValue('C49', '=A49*'.$iva.'%')
             ->setCellValue('E49', 'TOTAL:')

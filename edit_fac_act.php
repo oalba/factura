@@ -17,7 +17,7 @@ if ($_POST['cli1'] == 1) {
 	$exi = "TRUE";
 }
 
-$aldatu="UPDATE facturas SET fecha='$insfecha',IVA=$iva,existe_cli=$exi,cliente='$inscli' WHERE cod_fac=$data";
+$aldatu="UPDATE facturas SET fecha='$insfecha',IVA=$iva,existe_cli=$exi,cliente='$inscli',detalles='$detalles' WHERE cod_fac=$data";
 mysql_query($aldatu);
 //f5($data);
 header("Location: edit_factura.php?cod_fac=$data");
