@@ -107,7 +107,6 @@ $worksheet->getStyle('A16:G46')->getBorders()->getHorizontal()->setBorderStyle(P
 
 $worksheet->getStyle('A11:G11')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
 $worksheet->getStyle('A12:G13')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
-$worksheet->getStyle('A12:G13')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
 
 //Cambiando tamaño de las celdas - Changing cells dimensions
 $worksheet->getColumnDimension('A')->setWidth(11);
@@ -167,13 +166,14 @@ $worksheet->getStyle('F49')->getNumberFormat()->setFormatCode('0.00€');
 
 //Añadiendo datos por defecto - Adding default data
 $objPHPExcel->setActiveSheetIndex(0)
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
             ->setCellValue('A1', 'MANTENIMIENTO DEL HOGAR')
             ->setCellValue('A3', '******* **** *******')
             ->setCellValue('A4', 'Telf: *** *** ***  - *** *** ***')
             ->setCellValue('A5', '******* *****, ** ***** *******')
             ->setCellValue('A6', 'D.N.I **.***.***-*')
             ->setCellValue('A7', 'E-mail: *****.****@hotmail.com');
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
             if ($excli == 0) {
                 $cliente = $cli1;
             }else{
@@ -290,8 +290,9 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('C49', '=A49*'.$iva.'%')
             ->setCellValue('E49', 'TOTAL:')
             ->setCellValue('F49', '=A49+C49')
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
             ->setCellValue('A51', 'De conformidad con la Ley Orgánica de Protección de Datos de Carácter Personal 15/1999, le recordamos que sus datos han sido incorporados en un fichero de datos de carácter personal del que es titular ******* **** *******, debidamente registrado ante la AEPD y cuya finalidad es de gestión de datos de clientes para tareas contable, fiscal y administrativas, Así mismo, le informamos que sus datos podrán ser cedidos, siempre protegiendo los datos adecuadamente, a: administración tributaria y bancos, cajas de ahorros y cajas rurales. Puede ejercitar sus derechos de Acceso, Rectificación, Cancelación y Oposición en ******* ** - *****, ******* (*********) o enviando un correo electrónico a *****.****@hotmail.com.');
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //$objPHPExcel->getActiveSheet()->getHeaderFooter()->setOddFooter('&L&6&ArialDe conformidad con la Ley Orgánica de Protección de Datos de Carácter Personal 15/1999, le recordamos que sus datos han sido incorporados en un fichero de datos de carácter personal del que es titular ******* **** *******, debidamente registrado ante la AEPD y cuya finalidad es de gestión de datos de clientes para tareas contable, fiscal y administrativas, Así mismo, le informamos que sus datos podrán ser cedidos, siempre protegiendo los datos adecuadamente, a: administración tributaria y bancos, cajas de ahorros y cajas rurales. Puede ejercitar sus derechos de Acceso, Rectificación, Cancelación y Oposición en ******* ** - *****, ******* (*********) o enviando un correo electrónico a *****.****@hotmail.com.');
 // Rename worksheet
@@ -319,7 +320,9 @@ header('Cache-Control: max-age=0');*/
 $objWriter = new PHPExcel_Writer_PDF($objPHPExcel);
 //$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'PDF');
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 $objWriter->save('C:\facturas/'.$numero.'.pdf');
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //echo date('H:i:s') , " File written to " , str_replace('.php', '.xlsx', pathinfo(__FILE__, PATHINFO_BASENAME)) , EOL;
 
