@@ -4,6 +4,10 @@
 </head>
 <body>
     <h1><u><i>Editar factura</i></u></h1>
+    <style type="text/css">
+        .button1 {width:100%;height:100%;}
+        .button2 {width:100%;height:50%;}
+    </style>
 	<script type="text/javascript">
     function change(obj,num,pan) {
         var selectBox = obj;
@@ -93,7 +97,7 @@ $num_fila = 0;
 
                 }
                 echo "<td><input type='number' name='iva' value='$row[IVA]' Style='width:40Px' disabled/>%</td>";
-				echo "<td rowspan=3><a href=\"edit_factura.php?cod_fac=$data\"><input type=\"button\" value=\"Editar\"></a></td>";
+				echo "<td rowspan=3><a href=\"edit_factura.php?cod_fac=$data\"><input type=\"button\" value=\"Editar\" class='button1'/></a></td>";
                 echo "</tr>";
 
                 echo "<tr ";
@@ -161,12 +165,12 @@ $num_fila = 0;
 
                         echo "<td>$orden</td>";
                         if (++$counter == $numResults) {
-                            echo "<td><a href='edit_con_fac_ord.php?cod_fac=$data&concepto=$concepto&accion=subir&orden=$orden'><input type='button' value='Subir'></a></td>";
+                            echo "<td><a href='edit_con_fac_ord.php?cod_fac=$data&concepto=$concepto&accion=subir&orden=$orden'><input type='button' value='Subir' class='button1'></a></td>";
                         } elseif ($counter == 1) {
-                            echo "<td><a href='edit_con_fac_ord.php?cod_fac=$data&concepto=$concepto&accion=bajar&orden=$orden'><input type='button' value='Bajar'></a></td>";
+                            echo "<td><a href='edit_con_fac_ord.php?cod_fac=$data&concepto=$concepto&accion=bajar&orden=$orden'><input type='button' value='Bajar' class='button1'></a></td>";
                         } else {
-                            echo "<td><a href='edit_con_fac_ord.php?cod_fac=$data&concepto=$concepto&accion=subir&orden=$orden'><input type='button' value='Subir'></a><br/>";
-                            echo "<a href='edit_con_fac_ord.php?cod_fac=$data&concepto=$concepto&accion=bajar&orden=$orden'><input type='button' value='Bajar'></a></td>";
+                            echo "<td><a href='edit_con_fac_ord.php?cod_fac=$data&concepto=$concepto&accion=subir&orden=$orden'><input type='button' value='Subir' class='button2'></a><br/>";
+                            echo "<a href='edit_con_fac_ord.php?cod_fac=$data&concepto=$concepto&accion=bajar&orden=$orden'><input type='button' value='Bajar' class='button2'></a></td>";
                         }
                         //echo "<td>";
                         echo "<td><select name='concepto3' onchange='change(this,1,$row2[precio])' style='white-space:pre-wrap; width: 250px;'>";
@@ -182,7 +186,7 @@ $num_fila = 0;
                         echo "</td>";
                         echo "<td><input type='number' name='cant1' value='$row2[cantidad]' Style='width:40Px'/></td>";
                         echo "<td><input id='precio1' type='number' name='precio1' step='any' Style='width:60Px' value='$row2[precio]'/>€</td>";
-                        echo "<td><input type='submit' name='guardarc' value='Guardar'/></td>";
+                        echo "<td><input type='submit' name='guardarc' value='Guardar' class='button1'/></td>";
                         //echo "<td><a href=\"edit_con_fac.php?cod_fac=$data&concepto='$row2[concepto]'\"><input type=\"button\" value=\"Editar\"></a></td>";
                         echo "</tr>";
                         echo "</form>";
@@ -197,19 +201,19 @@ $num_fila = 0;
                         echo ">";
                         echo "<td>$orden</td>";
                         if (++$counter == $numResults) {
-                            echo "<td><a href='edit_con_fac_ord.php?cod_fac=$data&concepto=$concepto&accion=subir&orden=$orden'><input type='button' value='Subir'></a></td>";
+                            echo "<td><a href='edit_con_fac_ord.php?cod_fac=$data&concepto=$concepto&accion=subir&orden=$orden'><input type='button' value='Subir' class='button1'></a></td>";
                         } elseif ($counter == 1) {
-                            echo "<td><a href='edit_con_fac_ord.php?cod_fac=$data&concepto=$concepto&accion=bajar&orden=$orden'><input type='button' value='Bajar'></a></td>";
+                            echo "<td><a href='edit_con_fac_ord.php?cod_fac=$data&concepto=$concepto&accion=bajar&orden=$orden'><input type='button' value='Bajar' class='button1'></a></td>";
                         } else {
-                            echo "<td><a href='edit_con_fac_ord.php?cod_fac=$data&concepto=$concepto&accion=subir&orden=$orden'><input type='button' value='Subir'></a><br/>";
-                            echo "<a href='edit_con_fac_ord.php?cod_fac=$data&concepto=$concepto&accion=bajar&orden=$orden'><input type='button' value='Bajar'></a></td>";
+                            echo "<td><a href='edit_con_fac_ord.php?cod_fac=$data&concepto=$concepto&accion=subir&orden=$orden'><input type='button' value='Subir' class='button2'></a><br/>";
+                            echo "<a href='edit_con_fac_ord.php?cod_fac=$data&concepto=$concepto&accion=bajar&orden=$orden'><input type='button' value='Bajar' class='button2'></a></td>";
                         }
 
                         echo "<td><textarea rows='3' cols='40' disabled>$row2[concepto]</textarea></td>";
                         echo "<td><input type='number' value='$row2[cantidad]' Style='width:40Px' disabled/></td>";
                         echo "<td><input type='number' step='any' Style='width:60Px' value='$row2[precio]' disabled/>€</td>";
-                        echo "<td><a href=\"edit_con_fac.php?cod_fac=$data&concepto=$row2[concepto]\"><input type=\"button\" value=\"Editar\"></a><br/>";
-                        echo "<button onclick=\"seguro('".$row2['concepto']."',".$row['cod_fac'].",".$row2['orden'].");\">Eliminar</button></td>";
+                        echo "<td><a href=\"edit_con_fac.php?cod_fac=$data&concepto=$row2[concepto]\"><input type=\"button\" value=\"Editar\" class='button2'></a><br/>";
+                        echo "<button onclick=\"seguro('".$row2['concepto']."',".$row['cod_fac'].",".$row2['orden'].");\" class='button2'>Eliminar</button></td>";
                         echo "</tr>";
                         //echo "</form>";
                     }
@@ -245,7 +249,7 @@ $num_fila = 0;
                 echo "</td>";
                 echo "<td><input type='number' name='cant2' value='1' Style='width:40Px'/></td>";
                 echo "<td><input id='precio2' type='number' name='precio2' step='any' Style='width:60Px' value=''/>€</td>";
-                echo "<td><input type='submit' name='addc' value='Añadir'/></td>";
+                echo "<td><input type='submit' name='addc' value='Añadir' class='button1'/></td>";
                 echo "</tr>";
                 echo "</form>";
 

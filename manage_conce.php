@@ -4,6 +4,10 @@
 </head>
 <body>
 	<h1><u><i>Administrar conceptos</i></u></h1>
+	<style type="text/css">
+        .button1 {width:100%;height:100%;}
+        .button2 {width:100%;height:50%;}
+    </style>
 <form enctype="multipart/form-data" action="" method="post">
 	Insertar dato: <br/>
 	<textarea name="data" rows="3" cols="50" placeholder="Concepto o Precio"></textarea><br/><br/>
@@ -44,8 +48,10 @@ while ($row = mysql_fetch_assoc($conce)) {
    	echo ">";
 	echo "<td>$row[concepto]</td>";
     echo "<td>$row[precio]€</td>";
-	echo "<td><a href=\"edit_conce.php?cod_con=$row[cod_con]\"><input type=\"button\" value=\"Editar\"></a></td>";
+	echo "<td><button onclick=\"window.location.href='edit_conce.php?cod_con=$row[cod_con]'\">Editar</button></td>";
 	echo "<td><button onclick=\"seguro($row[cod_con],'$row[concepto]');\">Eliminar</button></td>";
+	//echo "<td><button onclick=\"window.location.href='edit_conce.php?cod_con=$row[cod_con]'\" class='button1'>Editar</button></td>";
+	//echo "<td><button onclick=\"seguro($row[cod_con],'$row[concepto]');\" class='button1'>Eliminar</button></td>";
 	echo "</tr>";
 	$num_fila++; 
 };

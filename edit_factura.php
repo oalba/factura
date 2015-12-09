@@ -4,6 +4,10 @@
 </head>
 <body>
     <h1><u><i>Editar factura</i></u></h1>
+    <style type="text/css">
+        .button1 {width:100%;height:100%;}
+        .button2 {width:100%;height:50%;}
+    </style>
 	<script type="text/javascript">
 	function changeCli(obj) {
         var selectBox = obj;
@@ -130,7 +134,7 @@ while ($row = mysql_fetch_assoc($facs)) {
         //}
     }
     echo "<td><input type='number' name='iva' value='$row[IVA]' Style='width:40Px'/>%</td>";
-    echo "<td rowspan=3><input type='submit' name='guardarf' value='Guardar'/></td>";
+    echo "<td rowspan=3><input type='submit' name='guardarf' value='Guardar' class='button1'/></td>";
     echo "</tr>";
     echo "<tr ";
     if ($num_fila%2==0) 
@@ -198,12 +202,12 @@ while ($row = mysql_fetch_assoc($facs)) {
         echo ">";
         echo "<td>$orden</td>";
         if (++$counter == $numResults) {
-            echo "<td><a href='edit_con_fac_ord.php?cod_fac=$data&concepto=$concepto&accion=subir&orden=$orden'><input type='button' value='Subir'></a></td>";
+            echo "<td><a href='edit_con_fac_ord.php?cod_fac=$data&concepto=$concepto&accion=subir&orden=$orden'><input type='button' value='Subir' class='button1'/></a></td>";
         } elseif ($counter == 1) {
-            echo "<td><a href='edit_con_fac_ord.php?cod_fac=$data&concepto=$concepto&accion=bajar&orden=$orden'><input type='button' value='Bajar'></a></td>";
+            echo "<td><a href='edit_con_fac_ord.php?cod_fac=$data&concepto=$concepto&accion=bajar&orden=$orden'><input type='button' value='Bajar' class='button1'/></a></td>";
         } else {
-            echo "<td><a href='edit_con_fac_ord.php?cod_fac=$data&concepto=$concepto&accion=subir&orden=$orden'><input type='button' value='Subir'></a><br/>";
-            echo "<a href='edit_con_fac_ord.php?cod_fac=$data&concepto=$concepto&accion=bajar&orden=$orden'><input type='button' value='Bajar'></a></td>";
+            echo "<td><a href='edit_con_fac_ord.php?cod_fac=$data&concepto=$concepto&accion=subir&orden=$orden'><input type='button' value='Subir' class='button2'/></a><br/>";
+            echo "<a href='edit_con_fac_ord.php?cod_fac=$data&concepto=$concepto&accion=bajar&orden=$orden'><input type='button' value='Bajar' class='button2'/></a></td>";
         }
                    
                     
@@ -212,8 +216,8 @@ while ($row = mysql_fetch_assoc($facs)) {
         echo "<td><input type='number' value=".$row2['cantidad']." Style='width:40Px' disabled/></td>";
         //echo "<td>$row2[cantidad]</td>";
         echo "<td><input type='number' step='any' Style='width:60Px' value='$precio' disabled/>€</td>";
-        echo "<td><a href='edit_con_fac.php?cod_fac=$data&concepto=$concepto'><input type='button' value='Editar'></a><br/>";
-        echo "<button onclick=\"seguro('".$row2['concepto']."',".$row['cod_fac'].",".$row2['orden'].");\">Eliminar</button></td>";
+        echo "<td><a href='edit_con_fac.php?cod_fac=$data&concepto=$concepto'><input type='button' value='Editar' class='button2'/></a><br/>";
+        echo "<button onclick=\"seguro('".$row2['concepto']."',".$row['cod_fac'].",".$row2['orden'].");\" class='button2'>Eliminar</button></td>";
         echo "</tr>";
     }
     //echo "<td><button onclick=\"seguro($row[cod_con]);\">Delete</button></td>";
@@ -245,7 +249,7 @@ while ($row = mysql_fetch_assoc($facs)) {
     echo "</td>";
     echo "<td><input type='number' name='cant2' value='1' Style='width:40Px'/></td>";
     echo "<td><input id='precio2' type='number' name='precio2' step='any' Style='width:60Px' value=''/>€</td>";
-    echo "<td><input type='submit' name='addc' value='Añadir'/></td>";
+    echo "<td><input type='submit' name='addc' value='Añadir' class='button1'/></td>";
     echo "</tr>";
     echo "</form>";
 

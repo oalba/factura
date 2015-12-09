@@ -7,11 +7,6 @@
     mysql_select_db("facturas", $dp);
     ?>
  
-    <style type="text/css">
-        .button1 {width:100%;height:100%;}
-        .button2 {width:100%;height:50%;}
-    </style>
-
     <script type="text/javascript">
     function change(obj) {
         var selectBox = obj;
@@ -195,10 +190,9 @@
             echo "<br/>¡ERROR! No hay facturas que cumplan esas condiciones.";
         }else{
             $num_fila = 0; 
-            echo "<table border=1 style='width: 100%;'>";
+            echo "<table border=1>";
             while ($row = mysql_fetch_assoc($selec)) {
-                echo "<tr><td><table style='width: 100%;'>";
-                echo "<tr bgcolor=\"bbbbbb\" align=center><th>Codigo</th><th style='width: 15%;'>Fecha</th><th>Cliente</th><th>CIF</th><th style='width: 15%;'>IVA %</th></tr>";
+                echo "<tr bgcolor=\"bbbbbb\" align=center><th>Codigo</th><th>Fecha</th><th>Cliente</th><th>CIF</th><th>IVA %</th><th>Concepto</th><th>Cantidad</th><th>Precio</th><th>Subtotal</th><th>IVA €</th><th>TOTAL</th></tr>";
                 $precio = 0;
                 echo "<tr "; 
                 if ($num_fila%2==0) 
@@ -209,7 +203,7 @@
                 echo ">";
                 echo "<td>$row[cod_fac]</td>";
                 $fecha = date_format(date_create_from_format('Y-m-d', $row['fecha']), 'd/m/Y');
-                echo "<td style='text-align:center'>$fecha</td>";
+                echo "<td>$fecha</td>";
                 $exis = "$row[existe]";
                 if ($exis==0) {
                     echo "<td>";
@@ -229,7 +223,45 @@
                         //echo "<td>$row3[cif]</td>";
                     //}
                 }
-                echo "<td style='text-align:center'>$row[iva]%</td></tr>";
+                echo "<td>$row[iva]%</td><th>Concepto</th><th>Cantidad</th><th>Precio</th><th>Subtotal</th><th>IVA €</th><th>TOTAL</th><td><a href=\"edit_factura.php?cod_fac=$row[cod_fac]\"><input type=\"button\" value=\"Editar\"></a></td>";
+                echo "<td><a href=\"crear_excell.php?cod_fac=$row[cod_fac]\"><input type=\"button\" value=\"Crear Excel\"></a>";
+                echo "<br/><a href=\"crear_pdf.php?cod_fac=$row[cod_fac]\"><input type=\"button\" value=\"Crear PDF\"></a></td>";
+                echo "<td><button onclick=\"seguro($row[cod_fac]);\">Eliminar</button></td>";
+                echo "</tr>";
+                $selec2 = mysql_query("SELECT concepto, cantidad, precio_u as precio FROM tener_f_c WHERE cod_fac='$row[cod_fac]' ORDER BY orden");
+                while ($row2 = mysql_fetch_assoc($selec2)) {
+                    echo "<tr "; 
+                    if ($num_fila%2==0) 
+                        echo "bgcolor=#dddddd"; //si el resto de la división es 0 pongo un color 
+                    else 
+                        echo "bgcolor=#ddddff"; //si el resto de la división NO es 0 pongo otro color 
+                    echo ">";
+                    echo "<td colspan=5>";
+                    echo "<td>$row2[concepto]</td>";
+                    echo "<td>$row2[cantidad]</td>";
+                    echo "<td>$row2[precio]€</td>";
+                    echo "<td colspan=3>";
+                    echo "</tr>";
+                    $precio = $precio + ($row2['precio'] * $row2['cantidad']);
+                }
+                echo "<tr "; 
+                if ($num_fila%2==0) 
+                    echo "bgcolor=#dddddd"; //si el resto de la división es 0 pongo un color 
+                else 
+                    echo "bgcolor=#ddddff"; //si el resto de la división NO es 0 pongo otro color 
+                echo ">";
+                echo "<td colspan=8>";
+                echo "<td>$precio €</td>";
+                $ivatot = $precio * $row['iva'] / 100;
+                echo "<td>$ivatot €</td>";
+                $total = $ivatot + $precio;
+                echo "<th style='color:red'>$total €</th>";
+                //echo "</tr>";
+                //echo "<td>$row[precio]€</td>";
+                //echo "<td><a href=\"edit_conce.php?concepto=$row[cod_con]\"><input type=\"button\" value=\"Editar\"></a></td>";
+                //echo "<td><button onclick=\"seguro($row[cod_con]);\">Delete</button></td>";
+                echo "</tr>";
+
                 if ($row['detalles'] != NULL) {
                     echo "<tr "; 
                     if ($num_fila%2==0) 
@@ -238,10 +270,11 @@
                         echo "bgcolor=#ddddff"; //si el resto de la división NO es 0 pongo otro color 
                     echo ">";
 
-                    echo "<td colspan=5><b>Detalles:</b><br/>$row[detalles]</td>";
+                    echo "<td colspan=11><b>Detalles:</b><br/>$row[detalles]</td>";
 
                     echo "</tr>";
                 }
+
                 $seleccu = mysql_query("SELECT cuenta_laboral,cuenta_kutxa FROM facturas WHERE cod_fac=$row[cod_fac]");
                 $laboral = mysql_result($seleccu,0,0);
                 $kutxa = mysql_result($seleccu,0,1);
@@ -253,7 +286,7 @@
                     else 
                         echo "bgcolor=#ddddff"; //si el resto de la división NO es 0 pongo otro color 
                     echo ">";
-                    echo "<td colspan=5>$laboral</td></tr>";
+                    echo "<td colspan=11>$laboral</td></tr>";
                 }
                 if ($kutxa != NULL) {
                     echo "<tr "; 
@@ -262,54 +295,10 @@
                     else 
                         echo "bgcolor=#ddddff"; //si el resto de la división NO es 0 pongo otro color 
                     echo ">";
-                    echo "<td colspan=5>$kutxa</td></tr>";
+                    echo "<td colspan=11>$kutxa</td></tr>";
                 }
                 
-                echo "</table>";
-                echo "<table style='width: 100%;'>";
-
-                echo "<tr bgcolor=\"bbbbbb\" align=center><th colspan=2 style='width: 70%;'>Concepto</th><th style='width: 15%;'>Cantidad</th><th style='width: 15%;'>Precio</th></tr>";
-                $selec2 = mysql_query("SELECT concepto, cantidad, precio_u as precio FROM tener_f_c WHERE cod_fac='$row[cod_fac]' ORDER BY orden");
-                while ($row2 = mysql_fetch_assoc($selec2)) {
-                    echo "<tr "; 
-                    if ($num_fila%2==0) 
-                        echo "bgcolor=#dddddd"; //si el resto de la división es 0 pongo un color 
-                    else 
-                        echo "bgcolor=#ddddff"; //si el resto de la división NO es 0 pongo otro color 
-                    echo ">";
-                    echo "<td colspan=2>$row2[concepto]</td>";
-                    echo "<td style='text-align:right'>$row2[cantidad]</td>";
-                    echo "<td style='text-align:right'>$row2[precio]€</td>";
-                    //echo "<td colspan=3>";
-                    echo "</tr>";
-                    $precio = $precio + ($row2['precio'] * $row2['cantidad']);
-                }
-                echo "<tr bgcolor=\"bbbbbb\" align=center><th style='width: 55%;'></th><th style='width: 15%;'>Subtotal</th><th style='width: 15%;'>IVA €</th><th style='width: 15%;'>TOTAL</th></tr>";
-                echo "<tr "; 
-                if ($num_fila%2==0) 
-                    echo "bgcolor=#dddddd"; //si el resto de la división es 0 pongo un color 
-                else 
-                    echo "bgcolor=#ddddff"; //si el resto de la división NO es 0 pongo otro color 
-                echo ">";
-                echo "<td></td>";
-                echo "<td style='text-align:right'>$precio €</td>";
-                $ivatot = $precio * $row['iva'] / 100;
-                echo "<td style='text-align:right'>$ivatot €</td>";
-                $total = $ivatot + $precio;
-                echo "<th style='color:red'>$total €</th>";
-                //echo "</tr>";
-                //echo "<td>$row[precio]€</td>";
-                //echo "<td><a href=\"edit_conce.php?concepto=$row[cod_con]\"><input type=\"button\" value=\"Editar\"></a></td>";
-                //echo "<td><button onclick=\"seguro($row[cod_con]);\">Delete</button></td>";
-                echo "</table></td>";
-                echo "<td><button onclick=\"window.location.href='edit_factura.php?cod_fac=$row[cod_fac]'\" class='button1'>Editar</button></td>";
-                echo "<td><button onclick=\"window.location.href='crear_excell.php?cod_fac=$row[cod_fac]'\" class='button2'>Crear Excel</button>";
-                echo "<br/><button onclick=\"window.location.href='crear_pdf.php?cod_fac=$row[cod_fac]'\" class='button2'>Crear PDF</button></td>";
-                echo "<td><button onclick=\"seguro($row[cod_fac]);\" class='button1'>Eliminar</button></td></tr>";
-
-                
-
-                
+                echo "<tr/>";
                 $num_fila++;
             }
             echo "</table><br/> Se han encontrado $num_fila facturas que cumplen esas condiciones.";

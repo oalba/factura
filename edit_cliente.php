@@ -4,6 +4,10 @@
 </head>
 <body>
 	<h1><u><i>Editar cliente</i></u></h1>
+	<style type="text/css">
+        .button1 {width:100%;height:100%;}
+        .button2 {width:100%;height:50%;}
+    </style>
 <?php
 $data = $_GET['cif'];
 
@@ -27,7 +31,7 @@ while ($row = mysql_fetch_assoc($phones)) {
    	echo ">";
     echo "<td><textarea name='direccion' rows='3' cols='50'>$row[direccion]</textarea></td>";
     echo "<td><input type='number' name='cuenta' step='any' value='$row[cuenta]'></td>";
-	echo "<td><input type='submit' name='guardar' value='Guardar'/></td>";
+	echo "<td><input type='submit' name='guardar' value='Guardar' class='button1'/></td>";
 	echo "</tr>";
 	echo "</form>";
 	$num_fila++; 

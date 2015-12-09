@@ -5,6 +5,8 @@
 <body>
 	<style type="text/css">
 	td a { display: block; width: 100%; height: 100%; }
+    .button1 {width:100%;height:100%;}
+    .button2 {width:100%;height:50%;}
 	</style>
 	<h1><u><i>Administrar clientes</i></u></h1>
 <form enctype="multipart/form-data" action="" method="post">
@@ -49,8 +51,8 @@ while ($row = mysql_fetch_assoc($conce)) {
 	echo "<td>$row[cif]</td>";
     echo "<td>".nl2br($row['direccion'])."</td>";
     echo "<td>$row[cuenta]</td>";
-	echo "<td><a href=\"edit_cliente.php?cif=$row[cif]\"><input type=\"button\" value=\"Editar\"></a></td>";
-	echo "<td><button onclick=\"seguro('$row[cif]');\">Eliminar</button></td>";
+	echo "<td><button onclick=\"window.location.href='edit_cliente.php?cif=$row[cif]'\" class='button1'>Editar</button></td>";
+	echo "<td><button onclick=\"seguro('$row[cif]');\" class='button1'>Eliminar</button></td>";
 	echo "</tr>";
 	$num_fila++; 
 };
